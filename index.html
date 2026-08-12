@@ -1,672 +1,764 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRACO // VAMPYR</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to hell</title>
     <style>
-        /* ============================================================
-           RESET
-           ============================================================ */
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background: #000000;
+            background: #0a0a0a;
             min-height: 100vh;
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .media-player {
+            width: 1000px;
+            max-width: 100%;
+            background: #0f0f0f;
+            border: 2px solid #1a1a1a;
+            border-radius: 12px;
             overflow: hidden;
-            color: #ff2200;
-        }
-
-        /* ============================================================
-           PANTALLA DE CLICK CON SÍMBOLO SATÁNICO
-           ============================================================ */
-        #clickScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000000;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: opacity 0.8s ease;
-        }
-        #clickScreen h1 {
-            font-size: 10rem;
-            color: #ff0000;
-            text-shadow: 0 0 60px #ff0000, 0 0 120px #ff000088, 0 0 200px #ff000044;
-            animation: clickPulse 1.5s infinite alternate;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            user-select: none;
-        }
-        #clickScreen .sub {
-            color: #662222;
-            font-size: 1.2rem;
-            letter-spacing: 8px;
-            margin-top: 20px;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            animation: clickPulse 1.5s infinite alternate 0.5s;
-        }
-        @keyframes clickPulse {
-            0% { opacity: 0.4; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1.05); }
-        }
-
-        /* ============================================================
-           LAYOUT PRINCIPAL (dos columnas)
-           ============================================================ */
-        .main-wrapper {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            opacity: 0;
-            transition: opacity 1.5s ease;
+            box-shadow: 0 0 60px rgba(180, 0, 0, 0.15);
             position: relative;
         }
-        .main-wrapper.active {
-            opacity: 1;
-        }
 
-        /* ========== COLUMNA IZQUIERDA ========== */
-        .left-column {
-            flex: 1;
-            background: #000000;
+        /* ===== BANDA ROJA SUPERIOR ===== */
+        .top-bar {
+            background: linear-gradient(90deg, #8b0000, #cc0000, #8b0000);
+            padding: 12px 25px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 40px;
-            border-right: 2px solid #8b0000;
-            position: relative;
-            z-index: 5;
+            border-bottom: 2px solid #550000;
         }
-        .left-column h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
-            color: #ff2200;
-            text-shadow: 0 0 30px #ff0000, 0 0 60px #ff000088;
-            letter-spacing: 6px;
+        .top-bar .title {
             font-family: 'Georgia', 'Times New Roman', serif;
-            text-align: center;
-            line-height: 1.2;
-        }
-        .left-column .link {
-            margin-top: 30px;
-            font-size: 1.8rem;
-            color: #ff4444;
-            text-decoration: none;
+            font-size: 1.6rem;
             font-weight: 700;
-            font-family: 'Courier New', monospace;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
             letter-spacing: 2px;
-            border: 2px solid #8b0000;
-            padding: 12px 30px;
-            border-radius: 8px;
-            transition: all 0.3s;
-            display: inline-block;
-            text-shadow: 0 0 20px #ff000044;
         }
-        .left-column .link:hover {
-            background: #8b0000;
-            color: #ffffff;
-            box-shadow: 0 0 40px #ff000066;
+        .top-bar .title span {
+            color: #ff8888;
         }
 
-        /* ========== OJO HUMANO ========== */
-        .eye-container {
-            margin-top: 25px;
-            width: 100px;
-            height: 100px;
-            position: relative;
+        /* ===== PESTAÑAS ===== */
+        .tabs {
+            display: flex;
+            background: #1a1a1a;
+            border-bottom: 2px solid #2a0000;
+            padding: 0 15px;
+            gap: 5px;
+            flex-wrap: wrap;
         }
-        .eye {
-            width: 100px;
-            height: 100px;
-            background: #f5f5f5;
-            border-radius: 50%;
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 12px 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            letter-spacing: 1px;
+        }
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(139, 0, 0, 0.2);
+        }
+        .tab-btn.active {
+            color: #ff3333;
+            border-bottom-color: #cc0000;
+            background: rgba(139, 0, 0, 0.15);
+        }
+
+        /* ===== CONTENEDOR DE CONTENIDO ===== */
+        .content-area {
             position: relative;
-            box-shadow: 0 0 40px #ff000044, 0 0 80px #ff000022, inset 0 0 20px #ff000033;
-            border: 3px solid #8b0000;
+            min-height: 420px;
+            background: #0a0a0a;
             overflow: hidden;
         }
-        .iris {
-            width: 50px;
-            height: 50px;
-            background: radial-gradient(circle at 30% 30%, #8b1a1a, #4a0000);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.1s ease;
+
+        /* ===== CADA PANEL ===== */
+        .panel {
+            display: none;
+            padding: 25px 30px 30px 30px;
+            animation: fadeIn 0.4s ease;
+            min-height: 380px;
         }
-        .pupil {
-            width: 18px;
-            height: 18px;
-            background: #000000;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: inset 0 0 8px #00000088;
+        .panel.active {
+            display: block;
         }
-        .glint {
-            width: 10px;
-            height: 10px;
-            background: #ffffff;
-            border-radius: 50%;
-            position: absolute;
-            top: 20%;
-            left: 30%;
-            opacity: 0.8;
-            filter: blur(1px);
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        .eye-lid {
+
+        /* ===== HOME ===== */
+        .home-container {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: #0a0a0a;
+            border-radius: 4px;
+        }
+        .home-scroll {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: #000000;
-            border-radius: 50%;
-            animation: blink 4s infinite;
-            pointer-events: none;
-            opacity: 0;
-        }
-        @keyframes blink {
-            0%, 96%, 100% { opacity: 0; }
-            97%, 99% { opacity: 1; }
-        }
-
-        /* ========== COLUMNA DERECHA ========== */
-        .right-column {
-            flex: 1.5;
-            background: #000000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 40px 50px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .scroll-wrapper {
-            position: relative;
-            height: 75vh;
-            overflow: hidden;
-        }
-        .scroll-content {
-            animation: scrollUpRecto 45s linear infinite;
-            transform-origin: center bottom;
+            animation: scrollUpHome 45s linear infinite;
             padding: 10px 0;
         }
-        @keyframes scrollUpRecto {
-            0% { transform: translateY(60vh); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+        @keyframes scrollUpHome {
+            0% { transform: translateY(0); opacity: 0; }
+            8% { opacity: 1; }
+            92% { opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
         }
-
-        .info-line {
-            font-size: 1rem;
+        .home-scroll .info-line {
+            font-size: 0.95rem;
             color: #ffaa55;
-            text-shadow: 0 0 15px #ff6600;
-            padding: 6px 0;
-            border-bottom: 1px solid #8b000033;
+            text-shadow: 0 0 12px #ff660044;
+            padding: 5px 0;
+            border-bottom: 1px solid #2a0a0a;
             font-family: 'Courier New', monospace;
             display: flex;
             justify-content: space-between;
             gap: 20px;
+            padding-right: 10px;
         }
-        .info-line .label {
+        .home-scroll .info-line .label {
             color: #ff8844;
             font-weight: 400;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             white-space: nowrap;
         }
-        .info-line .value {
+        .home-scroll .info-line .value {
             color: #ffeecc;
-            font-weight: 700;
+            font-weight: 600;
             text-align: right;
             word-break: break-all;
-            max-width: 60%;
+            max-width: 65%;
         }
-        .info-footer {
-            margin-top: 20px;
+        .home-footer {
+            margin-top: 15px;
             font-size: 0.7rem;
             color: #442222;
             letter-spacing: 6px;
             text-align: center;
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: 'Georgia', serif;
         }
 
-        /* ========== SECCIÓN DE COMENTARIOS ========== */
-        .comments-section {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #8b000044;
-            display: none;
+        /* ===== BOTÓN PLAY (solo en Home) ===== */
+        .play-btn-wrapper {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            z-index: 10;
         }
-        .comments-section.active {
-            display: block;
+        .play-btn {
+            background: rgba(20, 0, 0, 0.85);
+            border: 2px solid #8b0000;
+            border-radius: 50%;
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #ff4444;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
         }
-        .comments-section .title {
-            color: #ff8844;
-            font-size: 0.9rem;
-            letter-spacing: 4px;
+        .play-btn:hover {
+            background: #8b0000;
+            color: #fff;
+            box-shadow: 0 0 50px rgba(139, 0, 0, 0.6);
+            transform: scale(1.05);
+        }
+        .play-btn.paused {
+            color: #ff8888;
+        }
+
+        /* ===== BOTONES DE REDES (Vampyr, Demian, Paradise) ===== */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+            margin-top: 15px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .social-btn {
+            background: #0f0f0f;
+            border: 2px solid #8b0000;
+            border-radius: 10px;
+            padding: 16px 10px;
             text-align: center;
-            margin-bottom: 15px;
+            color: #ff6644;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .social-btn:hover {
+            background: #8b0000;
+            color: #fff;
+            box-shadow: 0 0 35px rgba(139, 0, 0, 0.5);
+            transform: scale(1.03);
+            border-color: #ff3333;
+        }
+        .social-btn .icon {
+            font-size: 1.3rem;
+        }
+        .social-btn.discord-copy {
+            background: #0a0a2a;
+            border-color: #4444aa;
+        }
+        .social-btn.discord-copy:hover {
+            background: #4444aa;
+            border-color: #8888ff;
+        }
+
+        .panel-title {
             font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 2rem;
+            color: #ff2222;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+        .panel-sub {
+            text-align: center;
+            color: #662222;
+            font-size: 0.8rem;
+            letter-spacing: 6px;
+            margin-top: -10px;
+            margin-bottom: 20px;
         }
 
-        /* ============================================================
-           ESTÁTICA
-           ============================================================ */
-        .static-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(255, 0, 0, 0.03) 2px,
-                rgba(255, 0, 0, 0.03) 4px
-            );
-            animation: staticFlicker 0.12s infinite alternate;
-            opacity: 0;
-            transition: opacity 2s ease;
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .top-bar .title { font-size: 1.2rem; }
+            .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
+            .panel { padding: 15px; }
+            .home-container { height: 320px; }
+            .home-scroll .info-line { font-size: 0.75rem; flex-direction: column; align-items: flex-start; gap: 2px; }
+            .home-scroll .info-line .value { text-align: left; max-width: 100%; }
+            .social-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+            .social-btn { font-size: 0.9rem; padding: 12px 8px; }
+            .play-btn { width: 48px; height: 48px; font-size: 1.4rem; bottom: 15px; right: 18px; }
+            .panel-title { font-size: 1.5rem; }
         }
-        .static-overlay.active {
-            opacity: 1;
-        }
-        @keyframes staticFlicker {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
-        @media (max-width: 800px) {
-            .main-wrapper {
-                flex-direction: column;
-                height: auto;
-                min-height: 100vh;
-            }
-            .left-column {
-                border-right: none;
-                border-bottom: 2px solid #8b0000;
-                padding: 30px 20px;
-            }
-            .left-column h1 {
-                font-size: 2.8rem;
-            }
-            .left-column .link {
-                font-size: 1.2rem;
-                padding: 8px 20px;
-            }
-            .right-column {
-                padding: 20px 25px;
-                min-height: 60vh;
-            }
-            .scroll-wrapper {
-                height: 50vh;
-            }
-            .info-line {
-                font-size: 0.8rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 2px;
-            }
-            .info-line .value {
-                text-align: left;
-                max-width: 100%;
-            }
-            #clickScreen h1 {
-                font-size: 6rem;
-            }
-            .eye-container {
-                width: 70px;
-                height: 70px;
-            }
-            .eye {
-                width: 70px;
-                height: 70px;
-            }
-            .iris {
-                width: 35px;
-                height: 35px;
-            }
-            .pupil {
-                width: 14px;
-                height: 14px;
-            }
-            .glint {
-                width: 7px;
-                height: 7px;
-            }
-        }
-        @media (max-width: 480px) {
-            .left-column h1 {
-                font-size: 2rem;
-            }
-            .left-column .link {
-                font-size: 1rem;
-                padding: 6px 15px;
-            }
-            .info-line {
-                font-size: 0.7rem;
-            }
-            #clickScreen h1 {
-                font-size: 4.5rem;
-            }
+        @media (max-width: 450px) {
+            .top-bar { flex-direction: column; gap: 6px; padding: 10px 15px; }
+            .top-bar .title { font-size: 1rem; }
+            .tabs { justify-content: center; padding: 0 8px; gap: 2px; }
+            .tab-btn { font-size: 0.7rem; padding: 8px 10px; }
+            .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .home-container { height: 280px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    PANTALLA DE CLICK CON SÍMBOLO SATÁNICO
-    ============================================================ -->
-    <div id="clickScreen">
-        <h1>⛧</h1>
-        <div class="sub">≋ T O C A &nbsp; P A R A &nbsp; E N T R A R ≋</div>
+<div class="media-player">
+
+    <!-- ===== BANDA ROJA ===== -->
+    <div class="top-bar">
+        <div class="title"> <span>Welcome</span> to hell</div>
+        <div style="font-size:0.7rem; color:#ff8888; letter-spacing:3px; opacity:0.6;">⛧ INFERNO ⛧</div>
     </div>
 
-    <!-- ============================================================
-    LAYOUT PRINCIPAL
-    ============================================================ -->
-    <div class="main-wrapper" id="mainWrapper">
-        <!-- COLUMNA IZQUIERDA -->
-        <div class="left-column">
-            <h1>Bienvenido<br>al<br>Infierno.</h1>
-            <a href="https://t.me/caquexia" target="_blank" class="link">⛧ t.me/caquexia ⛧</a>
-            <!-- OJO HUMANO -->
-            <div class="eye-container" id="eyeContainer">
-                <div class="eye" id="eye">
-                    <div class="iris" id="iris">
-                        <div class="pupil" id="pupil"></div>
-                        <div class="glint"></div>
-                    </div>
-                    <div class="eye-lid"></div>
+    <!-- ===== PESTAÑAS ===== -->
+    <div class="tabs" id="tabContainer">
+        <button class="tab-btn active" data-tab="home">Home</button>
+        <button class="tab-btn" data-tab="vampyr">Vampyr</button>
+        <button class="tab-btn" data-tab="demian">Demian</button>
+        <button class="tab-btn" data-tab="paradise">Paradise</button>
+    </div>
+
+    <!-- ===== CONTENIDO ===== -->
+    <div class="content-area">
+
+        <!-- ========== HOME ========== -->
+        <div class="panel active" id="panel-home">
+            <div class="home-container" id="homeContainer">
+                <div class="home-scroll" id="homeScroll">
+                    <!-- La info se inyecta con JS -->
+                    <div class="home-footer">⛧ ⛧ ⛧</div>
+                </div>
+                <!-- Botón PLAY -->
+                <div class="play-btn-wrapper">
+                    <button class="play-btn" id="playBtn" title="Pausar / reanudar música">⏸</button>
                 </div>
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA -->
-        <div class="right-column">
-            <div class="scroll-wrapper">
-                <div class="scroll-content" id="scrollContent">
-                    <!-- La información se inyecta aquí con JavaScript -->
-                    <div class="info-footer">⛧ ⛧ ⛧</div>
-                </div>
-            </div>
-            <!-- SECCIÓN DE COMENTARIOS -->
-            <div class="comments-section" id="commentsSection">
-                <div class="title">≋ D E J A &nbsp; T U &nbsp; C O M E N T A R I O ≋</div>
-                <script src="https://utteranc.es/client.js"
-                        repo="d-gq/d-gq.github.io"
-                        issue-term="pathname"
-                        theme="dark-blue"
-                        crossorigin="anonymous"
-                        async>
-                </script>
+        <!-- ========== VAMPYR ========== -->
+        <div class="panel" id="panel-vampyr">
+            <div class="panel-title"> Vampyr </div>
+            <div class="panel-sub">Primer Dios</div>
+            <div class="social-grid" id="social-vampyr">
+                <!-- Generado con JS -->
             </div>
         </div>
-    </div>
 
-    <!-- ============================================================
-    ESTÁTICA
-    ============================================================ -->
-    <div class="static-overlay" id="staticOverlay"></div>
+        <!-- ========== DEMIAN ========== -->
+        <div class="panel" id="panel-demian">
+            <div class="panel-title"> Demian </div>
+            <div class="panel-sub">Segundo dios</div>
+            <div class="social-grid" id="social-demian">
+                <!-- Generado con JS -->
+            </div>
+        </div>
 
-    <!-- ============================================================
-    REPRODUCTOR DE AUDIO OCULTO
-    ============================================================ -->
-    <audio id="audioPlayer" loop></audio>
+        <!-- ========== PARADISE ========== -->
+        <div class="panel" id="panel-paradise">
+            <div class="panel-title"> Paradise </div>
+            <div class="panel-sub">Tercer Dios</div>
+            <div class="social-grid" id="social-paradise">
+                <!-- Generado con JS -->
+            </div>
+        </div>
 
-    <!-- ============================================================
-    JAVASCRIPT
-    ============================================================ -->
-    <script>
-        (function() {
-            "use strict";
+    </div><!-- /.content-area -->
+</div><!-- /.media-player -->
 
-            // ============================================================
-            // 1. ELEMENTOS
-            // ============================================================
-            const clickScreen = document.getElementById('clickScreen');
-            const mainWrapper = document.getElementById('mainWrapper');
-            const staticOverlay = document.getElementById('staticOverlay');
-            const audioPlayer = document.getElementById('audioPlayer');
-            const scrollContent = document.getElementById('scrollContent');
-            const iris = document.getElementById('iris');
-            const eye = document.getElementById('eye');
-            const commentsSection = document.getElementById('commentsSection');
+<!-- ===== AUDIO OCULTO ===== -->
+<audio id="audioPlayer" loop></audio>
 
-            // ============================================================
-            // 2. CANCIÓN
-            // ============================================================
-            const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+    (function() {
+        "use strict";
 
-            // ============================================================
-            // 3. RECOLECTAR INFORMACIÓN
-            // ============================================================
-            function recolectarInfo() {
-                const info = {};
-                info.ip = 'CARGANDO...';
-                info.navegador = navigator.userAgentData ?
-                    navigator.userAgentData.brands.map(b => b.brand).join(', ') :
-                    (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
-                info.user_agent = navigator.userAgent;
-                const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
-                info.so = os ? os[0] : 'Desconocido';
-                info.plataforma = navigator.platform || 'Desconocida';
-                info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
-                info.resolucion = window.screen.width + 'x' + window.screen.height;
-                info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
-                info.color = window.screen.colorDepth + ' bits';
-                info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                info.offset = new Date().getTimezoneOffset() / -60 + 'h';
-                const ahora = new Date();
-                info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
-                info.fecha_utc = ahora.toISOString();
-                if (navigator.connection) {
-                    info.conexion = navigator.connection.effectiveType || 'Desconocido';
-                    info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
-                    info.latencia = navigator.connection.rtt ? navigator.connection.rtt + ' ms' : 'Desconocido';
-                    info.save_data = navigator.connection.saveData ? 'ACTIVADO' : 'DESACTIVADO';
-                } else {
-                    info.conexion = 'Desconocido';
-                    info.velocidad = 'Desconocido';
-                    info.latencia = 'Desconocido';
-                    info.save_data = 'Desconocido';
-                }
-                info.cpu = navigator.hardwareConcurrency || 'Desconocido';
-                info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
-                info.touch_points = navigator.maxTouchPoints || 0;
-                try {
-                    const canvas = document.createElement('canvas');
-                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                    if (gl) {
-                        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                        if (debugInfo) {
-                            info.gpu_vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Desconocido';
-                            info.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Desconocido';
-                        }
-                    }
-                } catch (e) {
-                    info.gpu_vendor = 'No disponible';
-                    info.gpu = 'No disponible';
-                }
-                info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
-                info.dnt = navigator.doNotTrack || 'No especificado';
-                info.referer = document.referrer || 'Directo';
-                info.ventana = window.innerWidth + 'x' + window.innerHeight;
-                info.oscuro = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'SI' : 'NO';
-                info.movimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'SI' : 'NO';
-                info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
-                    'vertical');
-                info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
-                try {
-                    const plugins = [];
-                    for (let i = 0; i < navigator.plugins.length; i++) {
-                        plugins.push(navigator.plugins[i].name);
-                    }
-                    info.plugins = plugins.join(', ') || 'Ninguno';
-                } catch (e) {
-                    info.plugins = 'No accesible';
-                }
-                return info;
-            }
+        // ============================================================
+        // 1. ELEMENTOS
+        // ============================================================
+        const tabs = document.querySelectorAll('.tab-btn');
+        const panels = {
+            home: document.getElementById('panel-home'),
+            vampyr: document.getElementById('panel-vampyr'),
+            demian: document.getElementById('panel-demian'),
+            paradise: document.getElementById('panel-paradise'),
+        };
+        const homeScroll = document.getElementById('homeScroll');
+        const playBtn = document.getElementById('playBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
 
-            // ============================================================
-            // 4. GENERAR HTML DE INFORMACIÓN
-            // ============================================================
-            function generarInfoHTML(info) {
-                const items = [
-                    { label: 'IP', value: info.ip, id: 'ipDisplay' },
-                    { label: 'NAVEGADOR', value: info.navegador },
-                    { label: 'USER AGENT', value: info.user_agent },
-                    { label: 'SISTEMA OPERATIVO', value: info.so },
-                    { label: 'PLATAFORMA', value: info.plataforma },
-                    { label: 'IDIOMA', value: info.idioma },
-                    { label: 'RESOLUCIÓN', value: info.resolucion },
-                    { label: 'RESOLUCIÓN DISPONIBLE', value: info.resolucion_disponible },
-                    { label: 'PROFUNDIDAD COLOR', value: info.color },
-                    { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
-                    { label: 'FECHA/HORA LOCAL', value: info.fecha },
-                    { label: 'FECHA/HORA UTC', value: info.fecha_utc },
-                    { label: 'TIPO CONEXIÓN', value: info.conexion },
-                    { label: 'VELOCIDAD', value: info.velocidad },
-                    { label: 'LATENCIA', value: info.latencia },
-                    { label: 'AHORRO DE DATOS', value: info.save_data },
-                    { label: 'NÚCLEOS CPU', value: info.cpu },
-                    { label: 'MEMORIA RAM', value: info.ram },
-                    { label: 'PUNTOS TÁCTILES', value: info.touch_points },
-                    { label: 'GPU VENDOR', value: info.gpu_vendor },
-                    { label: 'GPU RENDERER', value: info.gpu },
-                    { label: 'MODO OSCURO', value: info.oscuro },
-                    { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
-                    { label: 'COOKIES', value: info.cookies },
-                    { label: 'DO NOT TRACK', value: info.dnt },
-                    { label: 'ORIENTACIÓN', value: info.orientacion },
-                    { label: 'VENTANA', value: info.ventana },
-                    { label: 'PANTALLA COMPLETA', value: info.fullscreen },
-                    { label: 'REFERER', value: info.referer },
-                    { label: 'PLUGINS', value: info.plugins }
-                ];
+        // ============================================================
+        // 2. CANCIÓN (cambia aquí si quieres otra)
+        // ============================================================
+        const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
+        let isPlaying = false;
 
-                let html = '';
-                items.forEach(item => {
-                    const val = String(item.value);
-                    if (val && val !== 'Desconocido' && val !== 'No disponible' && val !== 'No accesible' && val !==
-                        'Ninguno') {
-                        const idAttr = item.id ? ` id="${item.id}"` : '';
-                        html += `<div class="info-line">
-                            <span class="label">▸ ${item.label}</span>
-                            <span class="value"${idAttr}>${val}</span>
-                        </div>`;
-                    }
-                });
-                return html;
-            }
+        // ============================================================
+        // 3. RECOLECTAR INFORMACIÓN + CIUDAD/ISP
+        // ============================================================
+        function recolectarInfoCompleta(callback) {
+            const info = {};
+            info.ip = 'CARGANDO...';
+            info.ciudad = 'CARGANDO...';
+            info.isp = 'CARGANDO...';
+            info.pais = 'CARGANDO...';
 
-            // ============================================================
-            // 5. OBTENER IP REAL
-            // ============================================================
-            function obtenerIP(callback) {
-                fetch('https://api.ipify.org?format=json')
-                    .then(r => r.json())
-                    .then(data => callback(data.ip))
-                    .catch(() => {
-                        fetch('https://api.ip.sb/ip')
-                            .then(r => r.text())
-                            .then(ip => callback(ip))
-                            .catch(() => callback('NO DETECTADA'));
-                    });
-            }
+            // Datos del navegador
+            info.navegador = navigator.userAgentData ?
+                navigator.userAgentData.brands.map(b => b.brand).join(', ') :
+                (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
+            info.user_agent = navigator.userAgent;
+            const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
+            info.so = os ? os[0] : 'Desconocido';
+            info.plataforma = navigator.platform || 'Desconocida';
+            info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
+            info.resolucion = window.screen.width + 'x' + window.screen.height;
+            info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
+            info.color = window.screen.colorDepth + ' bits';
+            info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            info.offset = new Date().getTimezoneOffset() / -60 + 'h';
+            const ahora = new Date();
+            info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
+            info.fecha_utc = ahora.toISOString();
 
-            // ============================================================
-            // 6. MOVIMIENTO DEL OJO HUMANO
-            // ============================================================
-            function moverOjo(e) {
-                const rect = eye.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                const mouseX = e.clientX || (e.touches && e.touches[0].clientX);
-                const mouseY = e.clientY || (e.touches && e.touches[0].clientY);
-                if (mouseX === undefined || mouseY === undefined) return;
-                const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
-                const distance = Math.min(18, Math.hypot(mouseX - centerX, mouseY - centerY) / 25);
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                iris.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-            }
-
-            // ============================================================
-            // 7. ACTIVAR TODO
-            // ============================================================
-            function activarTodo() {
-                clickScreen.style.opacity = '0';
-                setTimeout(() => {
-                    clickScreen.style.display = 'none';
-                }, 800);
-
-                setTimeout(() => {
-                    mainWrapper.classList.add('active');
-                }, 300);
-
-                setTimeout(() => {
-                    staticOverlay.classList.add('active');
-                }, 600);
-
-                setTimeout(() => {
-                    commentsSection.classList.add('active');
-                }, 1000);
-
-                audioPlayer.src = SONG_URL;
-                audioPlayer.volume = 0.7;
-                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
-
-                obtenerIP(function(ip) {
-                    const ipDisplay = document.getElementById('ipDisplay');
-                    if (ipDisplay) ipDisplay.textContent = ip;
-                });
-
-                document.addEventListener('mousemove', moverOjo);
-                document.addEventListener('touchmove', moverOjo, { passive: true });
-            }
-
-            // ============================================================
-            // 8. INICIALIZAR
-            // ============================================================
-            function init() {
-                const info = recolectarInfo();
-                scrollContent.innerHTML = generarInfoHTML(info) + '<div class="info-footer">⛧ ⛧ ⛧</div>';
-                clickScreen.addEventListener('click', activarTodo);
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
+            if (navigator.connection) {
+                info.conexion = navigator.connection.effectiveType || 'Desconocido';
+                info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
+                info.latencia = navigator.connection.rtt ? navigator.connection.rtt + ' ms' : 'Desconocido';
+                info.save_data = navigator.connection.saveData ? 'ACTIVADO' : 'DESACTIVADO';
             } else {
-                init();
+                info.conexion = 'Desconocido';
+                info.velocidad = 'Desconocido';
+                info.latencia = 'Desconocido';
+                info.save_data = 'Desconocido';
             }
 
-        })();
-    </script>
+            info.cpu = navigator.hardwareConcurrency || 'Desconocido';
+            info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
+            info.touch_points = navigator.maxTouchPoints || 0;
+
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        info.gpu_vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Desconocido';
+                        info.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Desconocido';
+                    }
+                }
+            } catch (e) {
+                info.gpu_vendor = 'No disponible';
+                info.gpu = 'No disponible';
+            }
+
+            info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
+            info.dnt = navigator.doNotTrack || 'No especificado';
+            info.referer = document.referrer || 'Directo';
+            info.ventana = window.innerWidth + 'x' + window.innerHeight;
+            info.oscuro = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'SI' : 'NO';
+            info.movimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'SI' : 'NO';
+            info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
+                'vertical');
+            info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
+
+            try {
+                const plugins = [];
+                for (let i = 0; i < navigator.plugins.length; i++) {
+                    plugins.push(navigator.plugins[i].name);
+                }
+                info.plugins = plugins.join(', ') || 'Ninguno';
+            } catch (e) {
+                info.plugins = 'No accesible';
+            }
+
+            // Obtener IP, ciudad e ISP
+            fetch('https://ipapi.co/json/')
+                .then(r => r.json())
+                .then(data => {
+                    info.ip = data.ip || 'NO DETECTADA';
+                    info.ciudad = data.city || 'Desconocida';
+                    info.isp = data.org || 'Desconocido';
+                    info.pais = data.country_name || 'Desconocido';
+                    callback(info);
+                })
+                .catch(() => {
+                    // Fallback a ipify.org si ipapi falla
+                    fetch('https://api.ipify.org?format=json')
+                        .then(r => r.json())
+                        .then(data => {
+                            info.ip = data.ip || 'NO DETECTADA';
+                            // Intentamos geolocalización con ip-api.com
+                            fetch('http://ip-api.com/json/' + info.ip + '?fields=city,isp,country')
+                                .then(r => r.json())
+                                .then(geo => {
+                                    info.ciudad = geo.city || 'Desconocida';
+                                    info.isp = geo.isp || 'Desconocido';
+                                    info.pais = geo.country || 'Desconocido';
+                                    callback(info);
+                                })
+                                .catch(() => {
+                                    callback(info);
+                                });
+                        })
+                        .catch(() => {
+                            callback(info);
+                        });
+                });
+        }
+
+        // ============================================================
+        // 4. GENERAR HTML DE INFO (HOME)
+        // ============================================================
+        function generarInfoHTML(info) {
+            const items = [
+                { label: 'IP', value: info.ip },
+                { label: 'CIUDAD', value: info.ciudad + ' (' + info.pais + ')' },
+                { label: 'PROVEEDOR', value: info.isp },
+                { label: 'NAVEGADOR', value: info.navegador },
+                { label: 'USER AGENT', value: info.user_agent },
+                { label: 'SISTEMA OPERATIVO', value: info.so },
+                { label: 'PLATAFORMA', value: info.plataforma },
+                { label: 'IDIOMA', value: info.idioma },
+                { label: 'RESOLUCIÓN', value: info.resolucion },
+                { label: 'RESOLUCIÓN DISPONIBLE', value: info.resolucion_disponible },
+                { label: 'PROFUNDIDAD COLOR', value: info.color },
+                { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
+                { label: 'FECHA/HORA LOCAL', value: info.fecha },
+                { label: 'FECHA/HORA UTC', value: info.fecha_utc },
+                { label: 'TIPO CONEXIÓN', value: info.conexion },
+                { label: 'VELOCIDAD', value: info.velocidad },
+                { label: 'LATENCIA', value: info.latencia },
+                { label: 'AHORRO DE DATOS', value: info.save_data },
+                { label: 'NÚCLEOS CPU', value: info.cpu },
+                { label: 'MEMORIA RAM', value: info.ram },
+                { label: 'PUNTOS TÁCTILES', value: info.touch_points },
+                { label: 'GPU VENDOR', value: info.gpu_vendor },
+                { label: 'GPU RENDERER', value: info.gpu },
+                { label: 'MODO OSCURO', value: info.oscuro },
+                { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
+                { label: 'COOKIES', value: info.cookies },
+                { label: 'DO NOT TRACK', value: info.dnt },
+                { label: 'ORIENTACIÓN', value: info.orientacion },
+                { label: 'VENTANA', value: info.ventana },
+                { label: 'PANTALLA COMPLETA', value: info.fullscreen },
+                { label: 'REFERER', value: info.referer },
+                { label: 'PLUGINS', value: info.plugins }
+            ];
+
+            let html = '';
+            items.forEach(item => {
+                const val = String(item.value);
+                if (val && val !== 'Desconocido' && val !== 'No disponible' && val !== 'No accesible' && val !==
+                    'Ninguno' && val !== 'CARGANDO...') {
+                    html += `<div class="info-line">
+                        <span class="label">▸ ${item.label}</span>
+                        <span class="value">${val}</span>
+                    </div>`;
+                }
+            });
+            html += '<div class="home-footer">⛧ ⛧ ⛧</div>';
+            return html;
+        }
+
+        // ============================================================
+        // 5. GENERAR BOTONES SOCIALES
+        // ============================================================
+        function generarBotones(perfiles) {
+            let html = '';
+            perfiles.forEach(p => {
+                if (p.tipo === 'discord') {
+                    html += `
+                        <button class="social-btn discord-copy" data-copy="${p.valor}">
+                            <span class="icon">💬</span> Discord
+                        </button>
+                    `;
+                } else if (p.tipo === 'link') {
+                    html += `
+                        <a href="${p.url}" target="_blank" class="social-btn">
+                            <span class="icon">${p.icono || '🔗'}</span> ${p.nombre}
+                        </a>
+                    `;
+                }
+            });
+            return html;
+        }
+
+        // ============================================================
+        // 6. DATOS DE PERFILES POR PESTAÑA
+        // ============================================================
+        const perfiles = {
+            vampyr: [
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile',
+                icono: '' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia', icono: '' },
+                { tipo: 'discord', valor: 'v.y.r' },
+                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia', icono: '' },
+                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq', icono: '' },
+            ],
+            demian: [
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile',
+                icono: '' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio', icono: '' },
+                { tipo: 'discord', valor: '6vjy' },
+            ],
+            paradise: [
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile',
+                icono: '' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado', icono: '' },
+                { tipo: 'discord', valor: '60x4' },
+            ]
+        };
+
+        // ============================================================
+        // 7. FUNCIÓN PARA COPIAR AL PORTAPAPELES
+        // ============================================================
+        function copiarAlPortapapeles(texto) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(texto)
+                    .then(() => {
+                        mostrarNotificacion(' Copiado: ' + texto);
+                    })
+                    .catch(() => {
+                        copiarFallback(texto);
+                    });
+            } else {
+                copiarFallback(texto);
+            }
+        }
+
+        function copiarFallback(texto) {
+            const input = document.createElement('input');
+            input.value = texto;
+            input.style.position = 'fixed';
+            input.style.opacity = '0';
+            input.style.pointerEvents = 'none';
+            document.body.appendChild(input);
+            input.select();
+            try {
+                document.execCommand('copy');
+                mostrarNotificacion(' Copiado: ' + texto);
+            } catch (e) {
+                mostrarNotificacion(' Error al copiar');
+            }
+            document.body.removeChild(input);
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const div = document.createElement('div');
+            div.textContent = mensaje;
+            div.style.cssText = `
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                background: #0a0a0a; color: #ff6644; padding: 12px 28px;
+                border: 2px solid #8b0000; border-radius: 8px;
+                font-family: 'Segoe UI', sans-serif; font-weight: 600;
+                z-index: 9999; box-shadow: 0 0 40px rgba(139,0,0,0.4);
+                letter-spacing: 1px; text-align: center;
+                animation: fadeIn 0.3s ease;
+            `;
+            document.body.appendChild(div);
+            setTimeout(() => {
+                div.style.opacity = '0';
+                div.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => div.remove(), 600);
+            }, 2500);
+        }
+
+        // ============================================================
+        // 8. INICIALIZAR PESTAÑAS
+        // ============================================================
+        function initTabs() {
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabs.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tab = this.dataset.tab;
+                    Object.keys(panels).forEach(key => {
+                        panels[key].classList.toggle('active', key === tab);
+                    });
+                    // Reiniciar animación de scroll en Home si cambiamos a Home
+                    if (tab === 'home') {
+                        const scroll = document.getElementById('homeScroll');
+                        scroll.style.animation = 'none';
+                        setTimeout(() => {
+                            scroll.style.animation = 'scrollUpHome 45s linear infinite';
+                        }, 50);
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        // 9. INICIALIZAR TODO
+        // ============================================================
+        function init() {
+            // Cargar info en Home
+            recolectarInfoCompleta(function(info) {
+                homeScroll.innerHTML = generarInfoHTML(info);
+            });
+
+            // Generar botones sociales en cada panel
+            document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
+            document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
+            document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
+
+            // Evento copiar para botones Discord
+            document.querySelectorAll('.discord-copy').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const texto = this.dataset.copy;
+                    if (texto) copiarAlPortapapeles(texto);
+                });
+            });
+
+            // Pestañas
+            initTabs();
+
+            // ============================================================
+            // 10. REPRODUCTOR DE MÚSICA
+            // ============================================================
+            audioPlayer.src = SONG_URL;
+            audioPlayer.volume = 0.7;
+            audioPlayer.loop = true;
+
+            // Intentar reproducir al cargar (solo si el usuario ha interactuado antes)
+            // Lo dejamos preparado pero no reproducimos hasta que el usuario haga clic en Play
+
+            playBtn.addEventListener('click', function() {
+                if (audioPlayer.paused) {
+                    audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
+                    playBtn.textContent = '⏸';
+                    playBtn.classList.remove('paused');
+                    isPlaying = true;
+                } else {
+                    audioPlayer.pause();
+                    playBtn.textContent = '▶';
+                    playBtn.classList.add('paused');
+                    isPlaying = false;
+                }
+            });
+
+            // Si el audio se bloquea por políticas del navegador, mostramos mensaje
+            audioPlayer.addEventListener('error', function(e) {
+                console.log('Error de audio:', e);
+            });
+
+            // Al terminar la canción (por si no tiene loop), reiniciar
+            audioPlayer.addEventListener('ended', function() {
+                if (isPlaying) {
+                    audioPlayer.currentTime = 0;
+                    audioPlayer.play().catch(() => {});
+                }
+            });
+
+            // Forzar primer clic en la página para desbloquear audio en algunos navegadores
+            document.addEventListener('click', function unlockAudio() {
+                if (audioPlayer.paused && !audioPlayer.src) {
+                    audioPlayer.src = SONG_URL;
+                }
+                // No reproducimos automáticamente, solo preparamos
+            }, { once: true });
+
+            console.log(' Welcome to hell - Cargado correctamente');
+        }
+
+        // Ejecutar cuando DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+    })();
+</script>
 </body>
 </html>
