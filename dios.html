@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRACO // VAMPYR</title>
+    <style>
+        /* ============================================================
+           RESET
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000000;
+            min-height: 100vh;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            color: #ff2200;
+        }
+
+        /* ============================================================
+           PANTALLA DE "CLICK" INICIAL
+           ============================================================ */
+        #clickScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.8s ease;
+        }
+        #clickScreen h1 {
+            font-size: 6rem;
+            color: #ff0000;
+            text-shadow: 0 0 40px #ff0000, 0 0 80px #ff000088;
+            animation: clickPulse 1.5s infinite alternate;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            letter-spacing: 12px;
+        }
+        #clickScreen .sub {
+            color: #662222;
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            margin-top: 20px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            animation: clickPulse 1.5s infinite alternate 0.5s;
+        }
+        @keyframes clickPulse {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* ============================================================
+           LAYOUT PRINCIPAL (dos columnas)
+           ============================================================ */
+        .main-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            position: relative;
+        }
+        .main-wrapper.active {
+            opacity: 1;
+        }
+
+        /* ========== COLUMNA IZQUIERDA (TÍTULO + OJO) ========== */
+        .left-column {
+            flex: 1;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-right: 2px solid #8b0000;
+            position: relative;
+            z-index: 5;
+        }
+        .left-column h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #ff2200;
+            text-shadow: 0 0 30px #ff0000, 0 0 60px #ff000088;
+            letter-spacing: 6px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .left-column .link {
+            margin-top: 30px;
+            font-size: 1.8rem;
+            color: #ff4444;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            border: 2px solid #8b0000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            display: inline-block;
+            text-shadow: 0 0 20px #ff000044;
+        }
+        .left-column .link:hover {
+            background: #8b0000;
+            color: #ffffff;
+            box-shadow: 0 0 40px #ff000066;
+        }
+
+        /* ========== OJO QUE SE MUEVE ========== */
+        .eye-container {
+            margin-top: 25px;
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+        .eye {
+            width: 80px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 40px #ff000044, 0 0 80px #ff000022;
+            border: 3px solid #8b0000;
+        }
+        .pupil {
+            width: 30px;
+            height: 30px;
+            background: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            box-shadow: inset 0 0 10px #ff000066;
+        }
+        .pupil::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #ff0000;
+            border-radius: 50%;
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        .eye-lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+            pointer-events: none;
+            opacity: 0;
+        }
+        @keyframes blink {
+            0%, 96%, 100% { opacity: 0; }
+            97%, 99% { opacity: 1; }
+        }
+
+        /* ========== COLUMNA DERECHA (INFORMACIÓN EN SCROLL RECTA) ========== */
+        .right-column {
+            flex: 1.5;
+            background: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px 50px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Contenedor de scroll SIN INCLINACIÓN */
+        .scroll-wrapper {
+            position: relative;
+            height: 75vh;
+            overflow: hidden;
+        }
+        .scroll-content {
+            animation: scrollUpRecto 45s linear infinite;
+            transform-origin: center bottom;
+            padding: 10px 0;
+        }
+        @keyframes scrollUpRecto {
+            0% { transform: translateY(60vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        .info-line {
+            font-size: 1rem;
+            color: #ffaa55;
+            text-shadow: 0 0 15px #ff6600;
+            padding: 6px 0;
+            border-bottom: 1px solid #8b000033;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .info-line .label {
+            color: #ff8844;
+            font-weight: 400;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+        .info-line .value {
+            color: #ffeecc;
+            font-weight: 700;
+            text-align: right;
+            word-break: break-all;
+            max-width: 60%;
+        }
+        .info-footer {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: #442222;
+            letter-spacing: 6px;
+            text-align: center;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        /* ============================================================
+           ESTÁTICA (efecto de interferencia)
+           ============================================================ */
+        .static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 0, 0, 0.03) 2px,
+                rgba(255, 0, 0, 0.03) 4px
+            );
+            animation: staticFlicker 0.12s infinite alternate;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+        .static-overlay.active {
+            opacity: 1;
+        }
+        @keyframes staticFlicker {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 800px) {
+            .main-wrapper {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+            .left-column {
+                border-right: none;
+                border-bottom: 2px solid #8b0000;
+                padding: 30px 20px;
+            }
+            .left-column h1 {
+                font-size: 2.8rem;
+            }
+            .left-column .link {
+                font-size: 1.2rem;
+                padding: 8px 20px;
+            }
+            .right-column {
+                padding: 20px 25px;
+                min-height: 60vh;
+            }
+            .scroll-wrapper {
+                height: 50vh;
+            }
+            .info-line {
+                font-size: 0.8rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+            .info-line .value {
+                text-align: left;
+                max-width: 100%;
+            }
+            #clickScreen h1 {
+                font-size: 3.5rem;
+            }
+            .eye-container {
+                width: 60px;
+                height: 60px;
+            }
+            .eye {
+                width: 60px;
+                height: 60px;
+            }
+            .pupil {
+                width: 22px;
+                height: 22px;
+            }
+        }
+        @media (max-width: 480px) {
+            .left-column h1 {
+                font-size: 2rem;
+            }
+            .left-column .link {
+                font-size: 1rem;
+                padding: 6px 15px;
+            }
+            .info-line {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    PANTALLA DE "CLICK"
+    ============================================================ -->
+    <div id="clickScreen">
+        <h1>⛧ CLICK ⛧</h1>
+        <div class="sub">≋ T O C A &nbsp; P A R A &nbsp; C O N T I N U A R ≋</div>
+    </div>
+
+    <!-- ============================================================
+    LAYOUT PRINCIPAL (dos columnas)
+    ============================================================ -->
+    <div class="main-wrapper" id="mainWrapper">
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="left-column">
+            <h1>DRACO<br>ES EL<br>NUEVO DIOS</h1>
+            <a href="https://t.me/caquexia" target="_blank" class="link">⛧ t.me/caquexia ⛧</a>
+            <!-- OJO QUE SE MUEVE -->
+            <div class="eye-container" id="eyeContainer">
+                <div class="eye" id="eye">
+                    <div class="pupil" id="pupil"></div>
+                    <div class="eye-lid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA (SOLO INFORMACIÓN, SIN TÍTULO) -->
+        <div class="right-column">
+            <div class="scroll-wrapper">
+                <div class="scroll-content" id="scrollContent">
+                    <!-- La información se inyecta aquí con JavaScript -->
+                    <div class="info-footer">⛧ ⛧ ⛧</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    ESTÁTICA
+    ============================================================ -->
+    <div class="static-overlay" id="staticOverlay"></div>
+
+    <!-- ============================================================
+    REPRODUCTOR DE AUDIO OCULTO
+    ============================================================ -->
+    <audio id="audioPlayer" loop></audio>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        (function() {
+            "use strict";
+
+            // ============================================================
+            // 1. ELEMENTOS
+            // ============================================================
+            const clickScreen = document.getElementById('clickScreen');
+            const mainWrapper = document.getElementById('mainWrapper');
+            const staticOverlay = document.getElementById('staticOverlay');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const scrollContent = document.getElementById('scrollContent');
+            const pupil = document.getElementById('pupil');
+            const eye = document.getElementById('eye');
+
+            // ============================================================
+            // 2. CANCIÓN (CÁMBIALA AQUÍ)
+            // ============================================================
+            const SONG_URL = 'cachalot.mp3';
+
+            // ============================================================
+            // 3. RECOLECTAR TODA LA INFORMACIÓN POSIBLE
+            // ============================================================
+            function recolectarInfo() {
+                const info = {};
+                info.ip = 'CARGANDO...';
+
+                // NAVEGADOR
+                info.navegador = navigator.userAgentData ?
+                    navigator.userAgentData.brands.map(b => b.brand).join(', ') :
+                    (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
+                info.user_agent = navigator.userAgent;
+
+                // SISTEMA OPERATIVO
+                const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
+                info.so = os ? os[0] : 'Desconocido';
+                info.plataforma = navigator.platform || 'Desconocida';
+
+                // IDIOMA
+                info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
+
+                // RESOLUCIÓN
+                info.resolucion = window.screen.width + 'x' + window.screen.height;
+                info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
+                info.color = window.screen.colorDepth + ' bits';
+
+                // ZONA HORARIA
+                info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                info.offset = new Date().getTimezoneOffset() / -60 + 'h';
+
+                // FECHA
+                const ahora = new Date();
+                info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
+                info.fecha_utc = ahora.toISOString();
+
+                // CONEXIÓN
+                if (navigator.connection) {
+                    info.conexion = navigator.connection.effectiveType || 'Desconocido';
+                    info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
+                    info.latencia = navigator.connection.rtt ? navigator.connection.rtt + ' ms' : 'Desconocido';
+                    info.save_data = navigator.connection.saveData ? 'ACTIVADO' : 'DESACTIVADO';
+                } else {
+                    info.conexion = 'Desconocido';
+                    info.velocidad = 'Desconocido';
+                    info.latencia = 'Desconocido';
+                    info.save_data = 'Desconocido';
+                }
+
+                // HARDWARE
+                info.cpu = navigator.hardwareConcurrency || 'Desconocido';
+                info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
+                info.touch_points = navigator.maxTouchPoints || 0;
+
+                // GPU
+                try {
+                    const canvas = document.createElement('canvas');
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (gl) {
+                        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                        if (debugInfo) {
+                            info.gpu_vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Desconocido';
+                            info.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Desconocido';
+                        }
+                    }
+                } catch (e) {
+                    info.gpu_vendor = 'No disponible';
+                    info.gpu = 'No disponible';
+                }
+
+                // PREFERENCIAS
+                info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
+                info.dnt = navigator.doNotTrack || 'No especificado';
+                info.referer = document.referrer || 'Directo';
+                info.ventana = window.innerWidth + 'x' + window.innerHeight;
+                info.oscuro = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'SI' : 'NO';
+                info.movimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'SI' : 'NO';
+                info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
+                    'vertical');
+                info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
+
+                // PLUGINS
+                try {
+                    const plugins = [];
+                    for (let i = 0; i < navigator.plugins.length; i++) {
+                        plugins.push(navigator.plugins[i].name);
+                    }
+                    info.plugins = plugins.join(', ') || 'Ninguno';
+                } catch (e) {
+                    info.plugins = 'No accesible';
+                }
+
+                return info;
+            }
+
+            // ============================================================
+            // 4. GENERAR HTML DE INFORMACIÓN
+            // ============================================================
+            function generarInfoHTML(info) {
+                const items = [
+                    { label: 'IP', value: info.ip, id: 'ipDisplay' },
+                    { label: 'NAVEGADOR', value: info.navegador },
+                    { label: 'USER AGENT', value: info.user_agent },
+                    { label: 'SISTEMA OPERATIVO', value: info.so },
+                    { label: 'PLATAFORMA', value: info.plataforma },
+                    { label: 'IDIOMA', value: info.idioma },
+                    { label: 'RESOLUCIÓN', value: info.resolucion },
+                    { label: 'RESOLUCIÓN DISPONIBLE', value: info.resolucion_disponible },
+                    { label: 'PROFUNDIDAD COLOR', value: info.color },
+                    { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
+                    { label: 'FECHA/HORA LOCAL', value: info.fecha },
+                    { label: 'FECHA/HORA UTC', value: info.fecha_utc },
+                    { label: 'TIPO CONEXIÓN', value: info.conexion },
+                    { label: 'VELOCIDAD', value: info.velocidad },
+                    { label: 'LATENCIA', value: info.latencia },
+                    { label: 'AHORRO DE DATOS', value: info.save_data },
+                    { label: 'NÚCLEOS CPU', value: info.cpu },
+                    { label: 'MEMORIA RAM', value: info.ram },
+                    { label: 'PUNTOS TÁCTILES', value: info.touch_points },
+                    { label: 'GPU VENDOR', value: info.gpu_vendor },
+                    { label: 'GPU RENDERER', value: info.gpu },
+                    { label: 'MODO OSCURO', value: info.oscuro },
+                    { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
+                    { label: 'COOKIES', value: info.cookies },
+                    { label: 'DO NOT TRACK', value: info.dnt },
+                    { label: 'ORIENTACIÓN', value: info.orientacion },
+                    { label: 'VENTANA', value: info.ventana },
+                    { label: 'PANTALLA COMPLETA', value: info.fullscreen },
+                    { label: 'REFERER', value: info.referer },
+                    { label: 'PLUGINS', value: info.plugins }
+                ];
+
+                let html = '';
+                items.forEach(item => {
+                    const val = String(item.value);
+                    if (val && val !== 'Desconocido' && val !== 'No disponible' && val !== 'No accesible' && val !==
+                        'Ninguno') {
+                        const idAttr = item.id ? ` id="${item.id}"` : '';
+                        html += `<div class="info-line">
+                            <span class="label">▸ ${item.label}</span>
+                            <span class="value"${idAttr}>${val}</span>
+                        </div>`;
+                    }
+                });
+                return html;
+            }
+
+            // ============================================================
+            // 5. OBTENER IP REAL
+            // ============================================================
+            function obtenerIP(callback) {
+                fetch('https://api.ipify.org?format=json')
+                    .then(r => r.json())
+                    .then(data => callback(data.ip))
+                    .catch(() => {
+                        fetch('https://api.ip.sb/ip')
+                            .then(r => r.text())
+                            .then(ip => callback(ip))
+                            .catch(() => callback('NO DETECTADA'));
+                    });
+            }
+
+            // ============================================================
+            // 6. MOVIMIENTO DEL OJO
+            // ============================================================
+            function moverOjo(e) {
+                const rect = eye.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const mouseX = e.clientX || e.touches[0].clientX;
+                const mouseY = e.clientY || e.touches[0].clientY;
+                const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+                const distance = Math.min(15, Math.hypot(mouseX - centerX, mouseY - centerY) / 20);
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                pupil.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            }
+
+            // ============================================================
+            // 7. ACTIVAR TODO (al hacer clic)
+            // ============================================================
+            function activarTodo() {
+                // Ocultar pantalla de click
+                clickScreen.style.opacity = '0';
+                setTimeout(() => {
+                    clickScreen.style.display = 'none';
+                }, 800);
+
+                // Mostrar wrapper principal
+                setTimeout(() => {
+                    mainWrapper.classList.add('active');
+                }, 300);
+
+                // Mostrar estática
+                setTimeout(() => {
+                    staticOverlay.classList.add('active');
+                }, 600);
+
+                // Reproducir música
+                audioPlayer.src = SONG_URL;
+                audioPlayer.volume = 0.7;
+                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
+
+                // Obtener IP y actualizar
+                obtenerIP(function(ip) {
+                    const ipDisplay = document.getElementById('ipDisplay');
+                    if (ipDisplay) ipDisplay.textContent = ip;
+                });
+
+                // Activar movimiento del ojo
+                document.addEventListener('mousemove', moverOjo);
+                document.addEventListener('touchmove', moverOjo, { passive: true });
+            }
+
+            // ============================================================
+            // 8. INICIALIZAR
+            // ============================================================
+            function init() {
+                // Recolectar info y generar HTML
+                const info = recolectarInfo();
+                scrollContent.innerHTML = generarInfoHTML(info) + '<div class="info-footer">⛧ ⛧ ⛧</div>';
+
+                // Evento de clic en la pantalla
+                clickScreen.addEventListener('click', activarTodo);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
+</body>
+</html>
