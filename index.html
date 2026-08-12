@@ -20,6 +20,44 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow: hidden;
+        }
+
+        /* ===== PANTALLA DE CLICK ===== */
+        #clickScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.8s ease;
+        }
+        #clickScreen h1 {
+            font-size: 10rem;
+            color: #ff0000;
+            text-shadow: 0 0 60px #ff0000, 0 0 120px #ff000088, 0 0 200px #ff000044;
+            animation: clickPulse 1.5s infinite alternate;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            user-select: none;
+        }
+        #clickScreen .sub {
+            color: #662222;
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            margin-top: 20px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            animation: clickPulse 1.5s infinite alternate 0.5s;
+        }
+        @keyframes clickPulse {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
 
         /* ===== CONTENEDOR PRINCIPAL ===== */
@@ -32,6 +70,11 @@
             overflow: hidden;
             box-shadow: 0 0 60px rgba(180, 0, 0, 0.15);
             position: relative;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+        .media-player.active {
+            opacity: 1;
         }
 
         /* ===== BANDA ROJA SUPERIOR ===== */
@@ -166,46 +209,7 @@
             font-family: 'Georgia', serif;
         }
 
-        /* ===== BOTÓN PLAY (mejorado) ===== */
-        .play-btn-wrapper {
-            position: absolute;
-            bottom: 20px;
-            right: 25px;
-            z-index: 10;
-        }
-        .play-btn {
-            background: #1a0a0a;
-            border: 2px solid #8b0000;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            color: #ff4444;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
-            font-family: 'Georgia', serif;
-            line-height: 1;
-            padding: 0;
-            user-select: none;
-        }
-        .play-btn:hover {
-            background: #8b0000;
-            color: #fff;
-            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
-            transform: scale(1.04);
-        }
-        .play-btn:active {
-            transform: scale(0.95);
-        }
-        .play-btn.paused {
-            color: #ff8888;
-        }
-
-        /* ===== BOTONES DE REDES (sin emojis, borde oculto hasta hover) ===== */
+        /* ===== BOTONES DE REDES ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -239,14 +243,6 @@
             box-shadow: 0 0 30px rgba(139, 0, 0, 0.15);
             transform: scale(1.02);
         }
-        .social-btn.discord-copy {
-            /* Mismo estilo que los demás, solo cambia en hover */
-        }
-        .social-btn.discord-copy:hover {
-            border-color: #8b0000;
-            color: #ff6644;
-            background: rgba(139, 0, 0, 0.12);
-        }
 
         .panel-title {
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -277,8 +273,8 @@
             .home-scroll .info-line .value { text-align: left; max-width: 100%; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.9rem; padding: 10px 6px; }
-            .play-btn { width: 50px; height: 50px; font-size: 1.3rem; bottom: 15px; right: 18px; }
             .panel-title { font-size: 1.5rem; }
+            #clickScreen h1 { font-size: 6rem; }
         }
         @media (max-width: 450px) {
             .top-bar { flex-direction: column; gap: 6px; padding: 10px 15px; }
@@ -288,386 +284,449 @@
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 280px; }
             .social-btn { font-size: 0.8rem; padding: 8px 4px; }
+            #clickScreen h1 { font-size: 4.5rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="media-player">
-
-    <!-- ===== BANDA ROJA ===== -->
-    <div class="top-bar">
-        <div class="title">🔥 <span>Welcome</span> to hell</div>
-        <div style="font-size:0.7rem; color:#ff8888; letter-spacing:3px; opacity:0.6;">⛧ INFERNO ⛧</div>
+    <!-- ===== PANTALLA DE CLICK ===== -->
+    <div id="clickScreen">
+        <h1>⛧</h1>
+        <div class="sub">T O C A &nbsp; P A R A &nbsp; E N T R A R</div>
     </div>
 
-    <!-- ===== PESTAÑAS ===== -->
-    <div class="tabs" id="tabContainer">
-        <button class="tab-btn active" data-tab="home">Home</button>
-        <button class="tab-btn" data-tab="vampyr">Vampyr</button>
-        <button class="tab-btn" data-tab="demian">Demian</button>
-        <button class="tab-btn" data-tab="paradise">Paradise</button>
-    </div>
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <div class="media-player" id="mediaPlayer">
 
-    <!-- ===== CONTENIDO ===== -->
-    <div class="content-area">
+        <!-- ===== BANDA ROJA ===== -->
+        <div class="top-bar">
+            <div class="title">🔥 <span>Welcome</span> to hell</div>
+            <div style="font-size:0.7rem; color:#ff8888; letter-spacing:3px; opacity:0.6;">⛧ INFERNO ⛧</div>
+        </div>
 
-        <!-- ========== HOME ========== -->
-        <div class="panel active" id="panel-home">
-            <div class="home-container" id="homeContainer">
-                <div class="home-scroll" id="homeScroll">
-                    <div class="home-footer">⛧ ⛧ ⛧</div>
-                </div>
-                <div class="play-btn-wrapper">
-                    <button class="play-btn" id="playBtn">⏸</button>
+        <!-- ===== PESTAÑAS ===== -->
+        <div class="tabs" id="tabContainer">
+            <button class="tab-btn active" data-tab="home">Home</button>
+            <button class="tab-btn" data-tab="vampyr">Vampyr</button>
+            <button class="tab-btn" data-tab="demian">Demian</button>
+            <button class="tab-btn" data-tab="paradise">Paradise</button>
+        </div>
+
+        <!-- ===== CONTENIDO ===== -->
+        <div class="content-area">
+
+            <!-- ========== HOME ========== -->
+            <div class="panel active" id="panel-home">
+                <div class="home-container" id="homeContainer">
+                    <div class="home-scroll" id="homeScroll">
+                        <div class="home-footer">⛧ ⛧ ⛧</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ========== VAMPYR ========== -->
-        <div class="panel" id="panel-vampyr">
-            <div class="panel-title">Vampyr</div>
-            <div class="panel-sub">PRIMER DIOS</div>
-            <div class="social-grid" id="social-vampyr"></div>
-        </div>
+            <!-- ========== VAMPYR ========== -->
+            <div class="panel" id="panel-vampyr">
+                <div class="panel-title">Vampyr</div>
+                <div class="panel-sub">PRIMER DIOS</div>
+                <div class="social-grid" id="social-vampyr"></div>
+            </div>
 
-        <!-- ========== DEMIAN ========== -->
-        <div class="panel" id="panel-demian">
-            <div class="panel-title">Demian</div>
-            <div class="panel-sub">EL ELEGIDO</div>
-            <div class="social-grid" id="social-demian"></div>
-        </div>
+            <!-- ========== DEMIAN ========== -->
+            <div class="panel" id="panel-demian">
+                <div class="panel-title">Demian</div>
+                <div class="panel-sub">EL ELEGIDO</div>
+                <div class="social-grid" id="social-demian"></div>
+            </div>
 
-        <!-- ========== PARADISE ========== -->
-        <div class="panel" id="panel-paradise">
-            <div class="panel-title">Paradise</div>
-            <div class="panel-sub">EL PARAISO PERDIDO</div>
-            <div class="social-grid" id="social-paradise"></div>
-        </div>
+            <!-- ========== PARADISE ========== -->
+            <div class="panel" id="panel-paradise">
+                <div class="panel-title">Paradise</div>
+                <div class="panel-sub">EL PARAISO PERDIDO</div>
+                <div class="social-grid" id="social-paradise"></div>
+            </div>
 
+        </div>
     </div>
-</div>
 
-<!-- ===== AUDIO OCULTO ===== -->
-<audio id="audioPlayer" loop></audio>
+    <!-- ===== AUDIO OCULTO ===== -->
+    <audio id="audioPlayer" loop></audio>
 
-<!-- ============================================================ -->
-<!-- JAVASCRIPT -->
-<!-- ============================================================ -->
-<script>
-    (function() {
-        "use strict";
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            "use strict";
 
-        // ============================================================
-        // 1. ELEMENTOS
-        // ============================================================
-        const tabs = document.querySelectorAll('.tab-btn');
-        const panels = {
-            home: document.getElementById('panel-home'),
-            vampyr: document.getElementById('panel-vampyr'),
-            demian: document.getElementById('panel-demian'),
-            paradise: document.getElementById('panel-paradise'),
-        };
-        const homeScroll = document.getElementById('homeScroll');
-        const playBtn = document.getElementById('playBtn');
-        const audioPlayer = document.getElementById('audioPlayer');
+            // ============================================================
+            // 1. ELEMENTOS
+            // ============================================================
+            const clickScreen = document.getElementById('clickScreen');
+            const mediaPlayer = document.getElementById('mediaPlayer');
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = {
+                home: document.getElementById('panel-home'),
+                vampyr: document.getElementById('panel-vampyr'),
+                demian: document.getElementById('panel-demian'),
+                paradise: document.getElementById('panel-paradise'),
+            };
+            const homeScroll = document.getElementById('homeScroll');
+            const audioPlayer = document.getElementById('audioPlayer');
 
-        // ============================================================
-        // 2. CANCIÓN
-        // ============================================================
-        const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
-        let isPlaying = false;
+            // ============================================================
+            // 2. CANCIÓN
+            // ============================================================
+            const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
 
-        // ============================================================
-        // 3. RECOLECTAR INFO + CIUDAD/ISP
-        // ============================================================
-        function recolectarInfoCompleta(callback) {
-            const info = {};
-            info.ip = 'CARGANDO...';
-            info.ciudad = 'CARGANDO...';
-            info.isp = 'CARGANDO...';
-            info.pais = 'CARGANDO...';
+            // ============================================================
+            // 3. RECOLECTAR INFO + CIUDAD/ISP
+            // ============================================================
+            function recolectarInfoCompleta(callback) {
+                const info = {};
+                info.ip = 'CARGANDO...';
+                info.ciudad = 'CARGANDO...';
+                info.isp = 'CARGANDO...';
+                info.pais = 'CARGANDO...';
 
-            info.navegador = navigator.userAgentData ?
-                navigator.userAgentData.brands.map(b => b.brand).join(', ') :
-                (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
-            info.user_agent = navigator.userAgent;
-            const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
-            info.so = os ? os[0] : 'Desconocido';
-            info.plataforma = navigator.platform || 'Desconocida';
-            info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
-            info.resolucion = window.screen.width + 'x' + window.screen.height;
-            info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
-            info.color = window.screen.colorDepth + ' bits';
-            info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            info.offset = new Date().getTimezoneOffset() / -60 + 'h';
-            const ahora = new Date();
-            info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
-            info.fecha_utc = ahora.toISOString();
+                info.navegador = navigator.userAgentData ?
+                    navigator.userAgentData.brands.map(b => b.brand).join(', ') :
+                    (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
+                info.user_agent = navigator.userAgent;
+                const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
+                info.so = os ? os[0] : 'Desconocido';
+                info.plataforma = navigator.platform || 'Desconocida';
+                info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
+                info.resolucion = window.screen.width + 'x' + window.screen.height;
+                info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
+                info.color = window.screen.colorDepth + ' bits';
+                info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                info.offset = new Date().getTimezoneOffset() / -60 + 'h';
+                const ahora = new Date();
+                info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
+                info.fecha_utc = ahora.toISOString();
 
-            if (navigator.connection) {
-                info.conexion = navigator.connection.effectiveType || 'Desconocido';
-                info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
-                info.latencia = navigator.connection.rtt ? navigator.connection.rtt + ' ms' : 'Desconocido';
-                info.save_data = navigator.connection.saveData ? 'ACTIVADO' : 'DESACTIVADO';
-            } else {
-                info.conexion = 'Desconocido';
-                info.velocidad = 'Desconocido';
-                info.latencia = 'Desconocido';
-                info.save_data = 'Desconocido';
-            }
+                if (navigator.connection) {
+                    info.conexion = navigator.connection.effectiveType || 'Desconocido';
+                    info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
+                    info.latencia = navigator.connection.rtt ? navigator.connection.rtt + ' ms' : 'Desconocido';
+                    info.save_data = navigator.connection.saveData ? 'ACTIVADO' : 'DESACTIVADO';
+                } else {
+                    info.conexion = 'Desconocido';
+                    info.velocidad = 'Desconocido';
+                    info.latencia = 'Desconocido';
+                    info.save_data = 'Desconocido';
+                }
 
-            info.cpu = navigator.hardwareConcurrency || 'Desconocido';
-            info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
-            info.touch_points = navigator.maxTouchPoints || 0;
+                info.cpu = navigator.hardwareConcurrency || 'Desconocido';
+                info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
+                info.touch_points = navigator.maxTouchPoints || 0;
 
-            try {
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                if (gl) {
-                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                    if (debugInfo) {
-                        info.gpu_vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Desconocido';
-                        info.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Desconocido';
+                try {
+                    const canvas = document.createElement('canvas');
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (gl) {
+                        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                        if (debugInfo) {
+                            info.gpu_vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Desconocido';
+                            info.gpu = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Desconocido';
+                        }
                     }
+                } catch (e) {
+                    info.gpu_vendor = 'No disponible';
+                    info.gpu = 'No disponible';
                 }
-            } catch (e) {
-                info.gpu_vendor = 'No disponible';
-                info.gpu = 'No disponible';
-            }
 
-            info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
-            info.dnt = navigator.doNotTrack || 'No especificado';
-            info.referer = document.referrer || 'Directo';
-            info.ventana = window.innerWidth + 'x' + window.innerHeight;
-            info.oscuro = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'SI' : 'NO';
-            info.movimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'SI' : 'NO';
-            info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
-                'vertical');
-            info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
+                info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
+                info.dnt = navigator.doNotTrack || 'No especificado';
+                info.referer = document.referrer || 'Directo';
+                info.ventana = window.innerWidth + 'x' + window.innerHeight;
+                info.oscuro = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'SI' : 'NO';
+                info.movimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'SI' : 'NO';
+                info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
+                    'vertical');
+                info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
 
-            try {
-                const plugins = [];
-                for (let i = 0; i < navigator.plugins.length; i++) {
-                    plugins.push(navigator.plugins[i].name);
+                try {
+                    const plugins = [];
+                    for (let i = 0; i < navigator.plugins.length; i++) {
+                        plugins.push(navigator.plugins[i].name);
+                    }
+                    info.plugins = plugins.join(', ') || 'Ninguno';
+                } catch (e) {
+                    info.plugins = 'No accesible';
                 }
-                info.plugins = plugins.join(', ') || 'Ninguno';
-            } catch (e) {
-                info.plugins = 'No accesible';
-            }
 
-            fetch('https://ipapi.co/json/')
-                .then(r => r.json())
-                .then(data => {
-                    info.ip = data.ip || 'NO DETECTADA';
-                    info.ciudad = data.city || 'Desconocida';
-                    info.isp = data.org || 'Desconocido';
-                    info.pais = data.country_name || 'Desconocido';
-                    callback(info);
-                })
-                .catch(() => {
-                    fetch('https://api.ipify.org?format=json')
-                        .then(r => r.json())
-                        .then(data => {
-                            info.ip = data.ip || 'NO DETECTADA';
-                            fetch('http://ip-api.com/json/' + info.ip + '?fields=city,isp,country')
-                                .then(r => r.json())
-                                .then(geo => {
-                                    info.ciudad = geo.city || 'Desconocida';
-                                    info.isp = geo.isp || 'Desconocido';
-                                    info.pais = geo.country || 'Desconocido';
-                                    callback(info);
-                                })
-                                .catch(() => callback(info));
-                        })
-                        .catch(() => callback(info));
-                });
-        }
-
-        // ============================================================
-        // 4. GENERAR HTML DE INFO (HOME)
-        // ============================================================
-        function generarInfoHTML(info) {
-            const items = [
-                { label: 'IP', value: info.ip },
-                { label: 'CIUDAD', value: info.ciudad + ' (' + info.pais + ')' },
-                { label: 'PROVEEDOR', value: info.isp },
-                { label: 'NAVEGADOR', value: info.navegador },
-                { label: 'USER AGENT', value: info.user_agent },
-                { label: 'SISTEMA OPERATIVO', value: info.so },
-                { label: 'PLATAFORMA', value: info.plataforma },
-                { label: 'IDIOMA', value: info.idioma },
-                { label: 'RESOLUCION', value: info.resolucion },
-                { label: 'RESOLUCION DISPONIBLE', value: info.resolucion_disponible },
-                { label: 'PROFUNDIDAD COLOR', value: info.color },
-                { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
-                { label: 'FECHA/HORA LOCAL', value: info.fecha },
-                { label: 'FECHA/HORA UTC', value: info.fecha_utc },
-                { label: 'TIPO CONEXION', value: info.conexion },
-                { label: 'VELOCIDAD', value: info.velocidad },
-                { label: 'LATENCIA', value: info.latencia },
-                { label: 'AHORRO DE DATOS', value: info.save_data },
-                { label: 'NUCLEOS CPU', value: info.cpu },
-                { label: 'MEMORIA RAM', value: info.ram },
-                { label: 'PUNTOS TACTILES', value: info.touch_points },
-                { label: 'GPU VENDOR', value: info.gpu_vendor },
-                { label: 'GPU RENDERER', value: info.gpu },
-                { label: 'MODO OSCURO', value: info.oscuro },
-                { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
-                { label: 'COOKIES', value: info.cookies },
-                { label: 'DO NOT TRACK', value: info.dnt },
-                { label: 'ORIENTACION', value: info.orientacion },
-                { label: 'VENTANA', value: info.ventana },
-                { label: 'PANTALLA COMPLETA', value: info.fullscreen },
-                { label: 'REFERER', value: info.referer },
-                { label: 'PLUGINS', value: info.plugins }
-            ];
-
-            let html = '';
-            items.forEach(item => {
-                const val = String(item.value);
-                if (val && val !== 'Desconocido' && val !== 'No disponible' && val !== 'No accesible' && val !==
-                    'Ninguno' && val !== 'CARGANDO...') {
-                    html += `<div class="info-line">
-                        <span class="label">▸ ${item.label}</span>
-                        <span class="value">${val}</span>
-                    </div>`;
-                }
-            });
-            html += '<div class="home-footer">⛧ ⛧ ⛧</div>';
-            return html;
-        }
-
-        // ============================================================
-        // 5. GENERAR BOTONES SOCIALES (sin emojis)
-        // ============================================================
-        function generarBotones(perfiles) {
-            let html = '';
-            perfiles.forEach(p => {
-                if (p.tipo === 'discord') {
-                    html += `
-                        <button class="social-btn discord-copy" data-copy="${p.valor}">
-                            Discord
-                        </button>
-                    `;
-                } else if (p.tipo === 'link') {
-                    html += `
-                        <a href="${p.url}" target="_blank" class="social-btn">
-                            ${p.nombre}
-                        </a>
-                    `;
-                }
-            });
-            return html;
-        }
-
-        // ============================================================
-        // 6. PERFILES
-        // ============================================================
-        const perfiles = {
-            vampyr: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
-                { tipo: 'discord', valor: 'v.y.r' },
-                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
-                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
-            ],
-            demian: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio' },
-                { tipo: 'discord', valor: '6vjy' },
-            ],
-            paradise: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado' },
-                { tipo: 'discord', valor: '60x4' },
-            ]
-        };
-
-        // ============================================================
-        // 7. COPIAR AL PORTAPAPELES
-        // ============================================================
-        function copiarAlPortapapeles(texto) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(texto)
-                    .then(() => mostrarNotificacion('Copiado: ' + texto))
-                    .catch(() => copiarFallback(texto));
-            } else {
-                copiarFallback(texto);
-            }
-        }
-
-        function copiarFallback(texto) {
-            const input = document.createElement('input');
-            input.value = texto;
-            input.style.position = 'fixed';
-            input.style.opacity = '0';
-            input.style.pointerEvents = 'none';
-            document.body.appendChild(input);
-            input.select();
-            try {
-                document.execCommand('copy');
-                mostrarNotificacion('Copiado: ' + texto);
-            } catch (e) {
-                mostrarNotificacion('Error al copiar');
-            }
-            document.body.removeChild(input);
-        }
-
-        function mostrarNotificacion(mensaje) {
-            const div = document.createElement('div');
-            div.textContent = mensaje;
-            div.style.cssText = `
-                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-                background: #0a0a0a; color: #ff6644; padding: 12px 28px;
-                border: 2px solid #8b0000; border-radius: 8px;
-                font-family: 'Georgia', serif; font-weight: 600;
-                z-index: 9999; box-shadow: 0 0 40px rgba(139,0,0,0.4);
-                letter-spacing: 1px; text-align: center;
-            `;
-            document.body.appendChild(div);
-            setTimeout(() => {
-                div.style.opacity = '0';
-                div.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => div.remove(), 600);
-            }, 2500);
-        }
-
-        // ============================================================
-        // 8. PESTAÑAS
-        // ============================================================
-        function initTabs() {
-            tabs.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    tabs.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const tab = this.dataset.tab;
-                    Object.keys(panels).forEach(key => {
-                        panels[key].classList.toggle('active', key === tab);
+                fetch('https://ipapi.co/json/')
+                    .then(r => r.json())
+                    .then(data => {
+                        info.ip = data.ip || 'NO DETECTADA';
+                        info.ciudad = data.city || 'Desconocida';
+                        info.isp = data.org || 'Desconocido';
+                        info.pais = data.country_name || 'Desconocido';
+                        callback(info);
+                    })
+                    .catch(() => {
+                        fetch('https://api.ipify.org?format=json')
+                            .then(r => r.json())
+                            .then(data => {
+                                info.ip = data.ip || 'NO DETECTADA';
+                                fetch('http://ip-api.com/json/' + info.ip + '?fields=city,isp,country')
+                                    .then(r => r.json())
+                                    .then(geo => {
+                                        info.ciudad = geo.city || 'Desconocida';
+                                        info.isp = geo.isp || 'Desconocido';
+                                        info.pais = geo.country || 'Desconocido';
+                                        callback(info);
+                                    })
+                                    .catch(() => callback(info));
+                            })
+                            .catch(() => callback(info));
                     });
-                    if (tab === 'home') {
-                        const scroll = document.getElementById('homeScroll');
-                        scroll.style.animation = 'none';
-                        setTimeout(() => {
-                            scroll.style.animation = 'scrollUpHome 50s linear infinite';
-                        }, 50);
+            }
+
+            // ============================================================
+            // 4. GENERAR HTML DE INFO (HOME)
+            // ============================================================
+            function generarInfoHTML(info) {
+                const items = [
+                    { label: 'IP', value: info.ip },
+                    { label: 'CIUDAD', value: info.ciudad + ' (' + info.pais + ')' },
+                    { label: 'PROVEEDOR', value: info.isp },
+                    { label: 'NAVEGADOR', value: info.navegador },
+                    { label: 'USER AGENT', value: info.user_agent },
+                    { label: 'SISTEMA OPERATIVO', value: info.so },
+                    { label: 'PLATAFORMA', value: info.plataforma },
+                    { label: 'IDIOMA', value: info.idioma },
+                    { label: 'RESOLUCION', value: info.resolucion },
+                    { label: 'RESOLUCION DISPONIBLE', value: info.resolucion_disponible },
+                    { label: 'PROFUNDIDAD COLOR', value: info.color },
+                    { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
+                    { label: 'FECHA/HORA LOCAL', value: info.fecha },
+                    { label: 'FECHA/HORA UTC', value: info.fecha_utc },
+                    { label: 'TIPO CONEXION', value: info.conexion },
+                    { label: 'VELOCIDAD', value: info.velocidad },
+                    { label: 'LATENCIA', value: info.latencia },
+                    { label: 'AHORRO DE DATOS', value: info.save_data },
+                    { label: 'NUCLEOS CPU', value: info.cpu },
+                    { label: 'MEMORIA RAM', value: info.ram },
+                    { label: 'PUNTOS TACTILES', value: info.touch_points },
+                    { label: 'GPU VENDOR', value: info.gpu_vendor },
+                    { label: 'GPU RENDERER', value: info.gpu },
+                    { label: 'MODO OSCURO', value: info.oscuro },
+                    { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
+                    { label: 'COOKIES', value: info.cookies },
+                    { label: 'DO NOT TRACK', value: info.dnt },
+                    { label: 'ORIENTACION', value: info.orientacion },
+                    { label: 'VENTANA', value: info.ventana },
+                    { label: 'PANTALLA COMPLETA', value: info.fullscreen },
+                    { label: 'REFERER', value: info.referer },
+                    { label: 'PLUGINS', value: info.plugins }
+                ];
+
+                let html = '';
+                items.forEach(item => {
+                    const val = String(item.value);
+                    if (val && val !== 'Desconocido' && val !== 'No disponible' && val !== 'No accesible' && val !==
+                        'Ninguno' && val !== 'CARGANDO...') {
+                        html += `<div class="info-line">
+                            <span class="label">▸ ${item.label}</span>
+                            <span class="value">${val}</span>
+                        </div>`;
                     }
                 });
-            });
-        }
+                html += '<div class="home-footer">⛧ ⛧ ⛧</div>';
+                return html;
+            }
 
-        // ============================================================
-        // 9. INICIAR
-        // ============================================================
-        function init() {
+            // ============================================================
+            // 5. GENERAR BOTONES SOCIALES (sin emojis)
+            // ============================================================
+            function generarBotones(perfiles) {
+                let html = '';
+                perfiles.forEach(p => {
+                    if (p.tipo === 'discord') {
+                        html += `
+                            <button class="social-btn discord-copy" data-copy="${p.valor}">
+                                Discord
+                            </button>
+                        `;
+                    } else if (p.tipo === 'link') {
+                        html += `
+                            <a href="${p.url}" target="_blank" class="social-btn">
+                                ${p.nombre}
+                            </a>
+                        `;
+                    }
+                });
+                return html;
+            }
+
+            // ============================================================
+            // 6. PERFILES
+            // ============================================================
+            const perfiles = {
+                vampyr: [
+                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
+                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
+                    { tipo: 'discord', valor: 'v.y.r' },
+                    { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
+                    { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
+                ],
+                demian: [
+                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile' },
+                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio' },
+                    { tipo: 'discord', valor: '6vjy' },
+                ],
+                paradise: [
+                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile' },
+                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado' },
+                    { tipo: 'discord', valor: '60x4' },
+                ]
+            };
+
+            // ============================================================
+            // 7. COPIAR AL PORTAPAPELES
+            // ============================================================
+            function copiarAlPortapapeles(texto) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(texto)
+                        .then(() => mostrarNotificacion('Copiado: ' + texto))
+                        .catch(() => copiarFallback(texto));
+                } else {
+                    copiarFallback(texto);
+                }
+            }
+
+            function copiarFallback(texto) {
+                const input = document.createElement('input');
+                input.value = texto;
+                input.style.position = 'fixed';
+                input.style.opacity = '0';
+                input.style.pointerEvents = 'none';
+                document.body.appendChild(input);
+                input.select();
+                try {
+                    document.execCommand('copy');
+                    mostrarNotificacion('Copiado: ' + texto);
+                } catch (e) {
+                    mostrarNotificacion('Error al copiar');
+                }
+                document.body.removeChild(input);
+            }
+
+            function mostrarNotificacion(mensaje) {
+                const div = document.createElement('div');
+                div.textContent = mensaje;
+                div.style.cssText = `
+                    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                    background: #0a0a0a; color: #ff6644; padding: 12px 28px;
+                    border: 2px solid #8b0000; border-radius: 8px;
+                    font-family: 'Georgia', serif; font-weight: 600;
+                    z-index: 9999; box-shadow: 0 0 40px rgba(139,0,0,0.4);
+                    letter-spacing: 1px; text-align: center;
+                `;
+                document.body.appendChild(div);
+                setTimeout(() => {
+                    div.style.opacity = '0';
+                    div.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => div.remove(), 600);
+                }, 2500);
+            }
+
+            // ============================================================
+            // 8. PESTAÑAS
+            // ============================================================
+            function initTabs() {
+                tabs.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        tabs.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const tab = this.dataset.tab;
+                        Object.keys(panels).forEach(key => {
+                            panels[key].classList.toggle('active', key === tab);
+                        });
+                        if (tab === 'home') {
+                            const scroll = document.getElementById('homeScroll');
+                            scroll.style.animation = 'none';
+                            setTimeout(() => {
+                                scroll.style.animation = 'scrollUpHome 50s linear infinite';
+                            }, 50);
+                        }
+                    });
+                });
+            }
+
+            // ============================================================
+            // 9. ACTIVAR TODO AL HACER CLICK
+            // ============================================================
+            function activarTodo() {
+                // Ocultar pantalla de click
+                clickScreen.style.opacity = '0';
+                setTimeout(() => {
+                    clickScreen.style.display = 'none';
+                }, 800);
+
+                // Mostrar reproductor
+                setTimeout(() => {
+                    mediaPlayer.classList.add('active');
+                }, 300);
+
+                // Reproducir música automáticamente
+                audioPlayer.src = SONG_URL;
+                audioPlayer.volume = 0.7;
+                audioPlayer.loop = true;
+                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
+
+                // Cargar info en Home (si no está ya cargada)
+                recolectarInfoCompleta(function(info) {
+                    homeScroll.innerHTML = generarInfoHTML(info);
+                });
+
+                // Generar botones sociales
+                document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
+                document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
+                document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
+
+                // Evento copiar para botones Discord
+                document.querySelectorAll('.discord-copy').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const texto = this.dataset.copy;
+                        if (texto) copiarAlPortapapeles(texto);
+                    });
+                });
+
+                // Inicializar pestañas
+                initTabs();
+
+                console.log('Welcome to hell - Activado');
+            }
+
+            // ============================================================
+            // 10. INICIALIZAR
+            // ============================================================
+            // La página carga con la pantalla de click visible.
+            // Al hacer clic, se activa todo.
+
+            clickScreen.addEventListener('click', activarTodo);
+
+            // Precargar la info en segundo plano mientras el usuario ve la pantalla de click
+            // (así cuando entre ya esté lista)
             recolectarInfoCompleta(function(info) {
-                homeScroll.innerHTML = generarInfoHTML(info);
+                // Guardamos la info en una variable global para usarla después
+                window._infoPrecargada = info;
+                // Si ya se ha activado, la mostramos; si no, la guardamos.
+                if (document.getElementById('mediaPlayer').classList.contains('active')) {
+                    homeScroll.innerHTML = generarInfoHTML(info);
+                }
             });
 
+            // También precargamos los botones sociales
             document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
             document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
             document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
 
+            // Evento copiar para botones Discord (ya cargados)
             document.querySelectorAll('.discord-copy').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const texto = this.dataset.copy;
@@ -675,44 +734,10 @@
                 });
             });
 
+            // Inicializar pestañas (aunque estén ocultas, para que funcionen cuando se muestren)
             initTabs();
 
-            // ===== MÚSICA =====
-            audioPlayer.src = SONG_URL;
-            audioPlayer.volume = 0.7;
-            audioPlayer.loop = true;
-
-            playBtn.addEventListener('click', function() {
-                if (audioPlayer.paused) {
-                    audioPlayer.play().catch(e => console.log('Error:', e));
-                    playBtn.textContent = '⏸';
-                    playBtn.classList.remove('paused');
-                    isPlaying = true;
-                } else {
-                    audioPlayer.pause();
-                    playBtn.textContent = '▶';
-                    playBtn.classList.add('paused');
-                    isPlaying = false;
-                }
-            });
-
-            audioPlayer.addEventListener('ended', function() {
-                if (isPlaying) {
-                    audioPlayer.currentTime = 0;
-                    audioPlayer.play().catch(() => {});
-                }
-            });
-
-            console.log('Welcome to hell - Cargado');
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
-
-    })();
-</script>
+        })();
+    </script>
 </body>
 </html>
