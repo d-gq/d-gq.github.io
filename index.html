@@ -22,7 +22,7 @@
         }
 
         /* ============================================================
-           PANTALLA DE "CLICK" INICIAL
+           PANTALLA DE CLICK CON SÍMBOLO SATÁNICO
            ============================================================ */
         #clickScreen {
             position: fixed;
@@ -40,12 +40,12 @@
             transition: opacity 0.8s ease;
         }
         #clickScreen h1 {
-            font-size: 6rem;
+            font-size: 10rem;
             color: #ff0000;
-            text-shadow: 0 0 40px #ff0000, 0 0 80px #ff000088;
+            text-shadow: 0 0 60px #ff0000, 0 0 120px #ff000088, 0 0 200px #ff000044;
             animation: clickPulse 1.5s infinite alternate;
             font-family: 'Georgia', 'Times New Roman', serif;
-            letter-spacing: 12px;
+            user-select: none;
         }
         #clickScreen .sub {
             color: #662222;
@@ -75,7 +75,7 @@
             opacity: 1;
         }
 
-        /* ========== COLUMNA IZQUIERDA (TÍTULO + OJO) ========== */
+        /* ========== COLUMNA IZQUIERDA ========== */
         .left-column {
             flex: 1;
             background: #000000;
@@ -119,44 +119,55 @@
             box-shadow: 0 0 40px #ff000066;
         }
 
-        /* ========== OJO QUE SE MUEVE ========== */
+        /* ========== OJO HUMANO ========== */
         .eye-container {
             margin-top: 25px;
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             position: relative;
         }
         .eye {
-            width: 80px;
-            height: 80px;
-            background: #ffffff;
+            width: 100px;
+            height: 100px;
+            background: #f5f5f5;
             border-radius: 50%;
             position: relative;
-            box-shadow: 0 0 40px #ff000044, 0 0 80px #ff000022;
+            box-shadow: 0 0 40px #ff000044, 0 0 80px #ff000022, inset 0 0 20px #ff000033;
             border: 3px solid #8b0000;
+            overflow: hidden;
         }
-        .pupil {
-            width: 30px;
-            height: 30px;
-            background: #000000;
+        .iris {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #8b1a1a, #4a0000);
             border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             transition: all 0.1s ease;
-            box-shadow: inset 0 0 10px #ff000066;
         }
-        .pupil::after {
-            content: '';
+        .pupil {
+            width: 18px;
+            height: 18px;
+            background: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: inset 0 0 8px #00000088;
+        }
+        .glint {
             width: 10px;
             height: 10px;
-            background: #ff0000;
+            background: #ffffff;
             border-radius: 50%;
             position: absolute;
             top: 20%;
-            left: 20%;
-            box-shadow: 0 0 20px #ff0000;
+            left: 30%;
+            opacity: 0.8;
+            filter: blur(1px);
         }
         .eye-lid {
             position: absolute;
@@ -175,7 +186,7 @@
             97%, 99% { opacity: 1; }
         }
 
-        /* ========== COLUMNA DERECHA (INFORMACIÓN EN SCROLL RECTA) ========== */
+        /* ========== COLUMNA DERECHA ========== */
         .right-column {
             flex: 1.5;
             background: #000000;
@@ -187,7 +198,6 @@
             position: relative;
         }
 
-        /* Contenedor de scroll SIN INCLINACIÓN */
         .scroll-wrapper {
             position: relative;
             height: 75vh;
@@ -238,8 +248,27 @@
             font-family: 'Georgia', 'Times New Roman', serif;
         }
 
+        /* ========== SECCIÓN DE COMENTARIOS ========== */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #8b000044;
+            display: none;
+        }
+        .comments-section.active {
+            display: block;
+        }
+        .comments-section .title {
+            color: #ff8844;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
         /* ============================================================
-           ESTÁTICA (efecto de interferencia)
+           ESTÁTICA
            ============================================================ */
         .static-overlay {
             position: fixed;
@@ -307,19 +336,27 @@
                 max-width: 100%;
             }
             #clickScreen h1 {
-                font-size: 3.5rem;
+                font-size: 6rem;
             }
             .eye-container {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
             }
             .eye {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
+            }
+            .iris {
+                width: 35px;
+                height: 35px;
             }
             .pupil {
-                width: 22px;
-                height: 22px;
+                width: 14px;
+                height: 14px;
+            }
+            .glint {
+                width: 7px;
+                height: 7px;
             }
         }
         @media (max-width: 480px) {
@@ -333,43 +370,60 @@
             .info-line {
                 font-size: 0.7rem;
             }
+            #clickScreen h1 {
+                font-size: 4.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    PANTALLA DE "CLICK"
+    PANTALLA DE CLICK CON SÍMBOLO SATÁNICO
     ============================================================ -->
     <div id="clickScreen">
-        <h1>⛧ CLICK ⛧</h1>
-        <div class="sub">≋ T O C A &nbsp; P A R A &nbsp; C O N T I N U A R ≋</div>
+        <h1>⛧</h1>
+        <div class="sub">≋ T O C A &nbsp; P A R A &nbsp; E N T R A R ≋</div>
     </div>
 
     <!-- ============================================================
-    LAYOUT PRINCIPAL (dos columnas)
+    LAYOUT PRINCIPAL
     ============================================================ -->
     <div class="main-wrapper" id="mainWrapper">
         <!-- COLUMNA IZQUIERDA -->
         <div class="left-column">
-            <h1>DRACO<br>ES EL<br>NUEVO DIOS</h1>
+            <h1>Bienvenido<br>al<br>Infierno.</h1>
             <a href="https://t.me/caquexia" target="_blank" class="link">⛧ t.me/caquexia ⛧</a>
-            <!-- OJO QUE SE MUEVE -->
+            <!-- OJO HUMANO -->
             <div class="eye-container" id="eyeContainer">
                 <div class="eye" id="eye">
-                    <div class="pupil" id="pupil"></div>
+                    <div class="iris" id="iris">
+                        <div class="pupil" id="pupil"></div>
+                        <div class="glint"></div>
+                    </div>
                     <div class="eye-lid"></div>
                 </div>
             </div>
         </div>
 
-        <!-- COLUMNA DERECHA (SOLO INFORMACIÓN, SIN TÍTULO) -->
+        <!-- COLUMNA DERECHA -->
         <div class="right-column">
             <div class="scroll-wrapper">
                 <div class="scroll-content" id="scrollContent">
                     <!-- La información se inyecta aquí con JavaScript -->
                     <div class="info-footer">⛧ ⛧ ⛧</div>
                 </div>
+            </div>
+            <!-- SECCIÓN DE COMENTARIOS -->
+            <div class="comments-section" id="commentsSection">
+                <div class="title">≋ D E J A &nbsp; T U &nbsp; C O M E N T A R I O ≋</div>
+                <script src="https://utteranc.es/client.js"
+                        repo="d-gq/d-gq.github.io"
+                        issue-term="pathname"
+                        theme="dark-blue"
+                        crossorigin="anonymous"
+                        async>
+                </script>
             </div>
         </div>
     </div>
@@ -399,50 +453,37 @@
             const staticOverlay = document.getElementById('staticOverlay');
             const audioPlayer = document.getElementById('audioPlayer');
             const scrollContent = document.getElementById('scrollContent');
-            const pupil = document.getElementById('pupil');
+            const iris = document.getElementById('iris');
             const eye = document.getElementById('eye');
+            const commentsSection = document.getElementById('commentsSection');
 
             // ============================================================
-            // 2. CANCIÓN (CÁMBIALA AQUÍ)
+            // 2. CANCIÓN
             // ============================================================
             const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
 
             // ============================================================
-            // 3. RECOLECTAR TODA LA INFORMACIÓN POSIBLE
+            // 3. RECOLECTAR INFORMACIÓN
             // ============================================================
             function recolectarInfo() {
                 const info = {};
                 info.ip = 'CARGANDO...';
-
-                // NAVEGADOR
                 info.navegador = navigator.userAgentData ?
                     navigator.userAgentData.brands.map(b => b.brand).join(', ') :
                     (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
                 info.user_agent = navigator.userAgent;
-
-                // SISTEMA OPERATIVO
                 const os = navigator.userAgent.match(/(Windows NT|Mac OS X|Linux|Android|iOS|CrOS)/);
                 info.so = os ? os[0] : 'Desconocido';
                 info.plataforma = navigator.platform || 'Desconocida';
-
-                // IDIOMA
                 info.idioma = navigator.language || (navigator.languages ? navigator.languages[0] : 'Desconocido');
-
-                // RESOLUCIÓN
                 info.resolucion = window.screen.width + 'x' + window.screen.height;
                 info.resolucion_disponible = window.screen.availWidth + 'x' + window.screen.availHeight;
                 info.color = window.screen.colorDepth + ' bits';
-
-                // ZONA HORARIA
                 info.zona = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 info.offset = new Date().getTimezoneOffset() / -60 + 'h';
-
-                // FECHA
                 const ahora = new Date();
                 info.fecha = ahora.toLocaleString('es-ES', { timeZone: info.zona });
                 info.fecha_utc = ahora.toISOString();
-
-                // CONEXIÓN
                 if (navigator.connection) {
                     info.conexion = navigator.connection.effectiveType || 'Desconocido';
                     info.velocidad = navigator.connection.downlink ? navigator.connection.downlink + ' Mbps' : 'Desconocido';
@@ -454,13 +495,9 @@
                     info.latencia = 'Desconocido';
                     info.save_data = 'Desconocido';
                 }
-
-                // HARDWARE
                 info.cpu = navigator.hardwareConcurrency || 'Desconocido';
                 info.ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Desconocida';
                 info.touch_points = navigator.maxTouchPoints || 0;
-
-                // GPU
                 try {
                     const canvas = document.createElement('canvas');
                     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
@@ -475,8 +512,6 @@
                     info.gpu_vendor = 'No disponible';
                     info.gpu = 'No disponible';
                 }
-
-                // PREFERENCIAS
                 info.cookies = navigator.cookieEnabled ? 'SI' : 'NO';
                 info.dnt = navigator.doNotTrack || 'No especificado';
                 info.referer = document.referrer || 'Directo';
@@ -486,8 +521,6 @@
                 info.orientacion = screen.orientation ? screen.orientation.type : (window.innerWidth > window.innerHeight ? 'horizontal' :
                     'vertical');
                 info.fullscreen = document.fullscreenEnabled ? 'SI' : 'NO';
-
-                // PLUGINS
                 try {
                     const plugins = [];
                     for (let i = 0; i < navigator.plugins.length; i++) {
@@ -497,7 +530,6 @@
                 } catch (e) {
                     info.plugins = 'No accesible';
                 }
-
                 return info;
             }
 
@@ -569,53 +601,52 @@
             }
 
             // ============================================================
-            // 6. MOVIMIENTO DEL OJO
+            // 6. MOVIMIENTO DEL OJO HUMANO
             // ============================================================
             function moverOjo(e) {
                 const rect = eye.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
-                const mouseX = e.clientX || e.touches[0].clientX;
-                const mouseY = e.clientY || e.touches[0].clientY;
+                const mouseX = e.clientX || (e.touches && e.touches[0].clientX);
+                const mouseY = e.clientY || (e.touches && e.touches[0].clientY);
+                if (mouseX === undefined || mouseY === undefined) return;
                 const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
-                const distance = Math.min(15, Math.hypot(mouseX - centerX, mouseY - centerY) / 20);
+                const distance = Math.min(18, Math.hypot(mouseX - centerX, mouseY - centerY) / 25);
                 const x = Math.cos(angle) * distance;
                 const y = Math.sin(angle) * distance;
-                pupil.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+                iris.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
             }
 
             // ============================================================
-            // 7. ACTIVAR TODO (al hacer clic)
+            // 7. ACTIVAR TODO
             // ============================================================
             function activarTodo() {
-                // Ocultar pantalla de click
                 clickScreen.style.opacity = '0';
                 setTimeout(() => {
                     clickScreen.style.display = 'none';
                 }, 800);
 
-                // Mostrar wrapper principal
                 setTimeout(() => {
                     mainWrapper.classList.add('active');
                 }, 300);
 
-                // Mostrar estática
                 setTimeout(() => {
                     staticOverlay.classList.add('active');
                 }, 600);
 
-                // Reproducir música
+                setTimeout(() => {
+                    commentsSection.classList.add('active');
+                }, 1000);
+
                 audioPlayer.src = SONG_URL;
                 audioPlayer.volume = 0.7;
                 audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
 
-                // Obtener IP y actualizar
                 obtenerIP(function(ip) {
                     const ipDisplay = document.getElementById('ipDisplay');
                     if (ipDisplay) ipDisplay.textContent = ip;
                 });
 
-                // Activar movimiento del ojo
                 document.addEventListener('mousemove', moverOjo);
                 document.addEventListener('touchmove', moverOjo, { passive: true });
             }
@@ -624,11 +655,8 @@
             // 8. INICIALIZAR
             // ============================================================
             function init() {
-                // Recolectar info y generar HTML
                 const info = recolectarInfo();
                 scrollContent.innerHTML = generarInfoHTML(info) + '<div class="info-footer">⛧ ⛧ ⛧</div>';
-
-                // Evento de clic en la pantalla
                 clickScreen.addEventListener('click', activarTodo);
             }
 
