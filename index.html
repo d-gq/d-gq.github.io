@@ -68,7 +68,7 @@
             background: transparent;
             border: none;
             color: #888;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
+            font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 0.95rem;
             font-weight: 600;
             padding: 12px 22px;
@@ -123,13 +123,13 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            animation: scrollUpHome 45s linear infinite;
+            animation: scrollUpHome 50s linear infinite;
             padding: 10px 0;
         }
         @keyframes scrollUpHome {
             0% { transform: translateY(0); opacity: 0; }
-            8% { opacity: 1; }
-            92% { opacity: 1; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
             100% { transform: translateY(-100%); opacity: 0; }
         }
         .home-scroll .info-line {
@@ -166,7 +166,7 @@
             font-family: 'Georgia', serif;
         }
 
-        /* ===== BOTÓN PLAY (solo en Home) ===== */
+        /* ===== BOTÓN PLAY (mejorado) ===== */
         .play-btn-wrapper {
             position: absolute;
             bottom: 20px;
@@ -174,77 +174,78 @@
             z-index: 10;
         }
         .play-btn {
-            background: rgba(20, 0, 0, 0.85);
+            background: #1a0a0a;
             border: 2px solid #8b0000;
             border-radius: 50%;
-            width: 58px;
-            height: 58px;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #ff4444;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+            font-family: 'Georgia', serif;
+            line-height: 1;
+            padding: 0;
+            user-select: none;
         }
         .play-btn:hover {
             background: #8b0000;
             color: #fff;
-            box-shadow: 0 0 50px rgba(139, 0, 0, 0.6);
-            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+            transform: scale(1.04);
+        }
+        .play-btn:active {
+            transform: scale(0.95);
         }
         .play-btn.paused {
             color: #ff8888;
         }
 
-        /* ===== BOTONES DE REDES (Vampyr, Demian, Paradise) ===== */
+        /* ===== BOTONES DE REDES (sin emojis, borde oculto hasta hover) ===== */
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 18px;
-            margin-top: 15px;
-            max-width: 700px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
         }
         .social-btn {
-            background: #0f0f0f;
-            border: 2px solid #8b0000;
-            border-radius: 10px;
-            padding: 16px 10px;
+            background: transparent;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 14px 12px;
             text-align: center;
-            color: #ff6644;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
+            color: #884444;
+            font-family: 'Georgia', 'Times New Roman', serif;
             font-weight: 700;
             font-size: 1.1rem;
             letter-spacing: 1px;
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            box-shadow: none;
+            display: block;
         }
         .social-btn:hover {
-            background: #8b0000;
-            color: #fff;
-            box-shadow: 0 0 35px rgba(139, 0, 0, 0.5);
-            transform: scale(1.03);
-            border-color: #ff3333;
-        }
-        .social-btn .icon {
-            font-size: 1.3rem;
+            border-color: #8b0000;
+            color: #ff6644;
+            background: rgba(139, 0, 0, 0.12);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.15);
+            transform: scale(1.02);
         }
         .social-btn.discord-copy {
-            background: #0a0a2a;
-            border-color: #4444aa;
+            /* Mismo estilo que los demás, solo cambia en hover */
         }
         .social-btn.discord-copy:hover {
-            background: #4444aa;
-            border-color: #8888ff;
+            border-color: #8b0000;
+            color: #ff6644;
+            background: rgba(139, 0, 0, 0.12);
         }
 
         .panel-title {
@@ -253,7 +254,7 @@
             color: #ff2222;
             text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 4px;
             letter-spacing: 4px;
         }
         .panel-sub {
@@ -261,8 +262,9 @@
             color: #662222;
             font-size: 0.8rem;
             letter-spacing: 6px;
-            margin-top: -10px;
+            margin-top: 0;
             margin-bottom: 20px;
+            font-family: 'Georgia', serif;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -273,9 +275,9 @@
             .home-container { height: 320px; }
             .home-scroll .info-line { font-size: 0.75rem; flex-direction: column; align-items: flex-start; gap: 2px; }
             .home-scroll .info-line .value { text-align: left; max-width: 100%; }
-            .social-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
-            .social-btn { font-size: 0.9rem; padding: 12px 8px; }
-            .play-btn { width: 48px; height: 48px; font-size: 1.4rem; bottom: 15px; right: 18px; }
+            .social-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+            .social-btn { font-size: 0.9rem; padding: 10px 6px; }
+            .play-btn { width: 50px; height: 50px; font-size: 1.3rem; bottom: 15px; right: 18px; }
             .panel-title { font-size: 1.5rem; }
         }
         @media (max-width: 450px) {
@@ -285,6 +287,7 @@
             .tab-btn { font-size: 0.7rem; padding: 8px 10px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 280px; }
+            .social-btn { font-size: 0.8rem; padding: 8px 4px; }
         }
     </style>
 </head>
@@ -294,7 +297,7 @@
 
     <!-- ===== BANDA ROJA ===== -->
     <div class="top-bar">
-        <div class="title"> <span>Welcome</span> to hell</div>
+        <div class="title">🔥 <span>Welcome</span> to hell</div>
         <div style="font-size:0.7rem; color:#ff8888; letter-spacing:3px; opacity:0.6;">⛧ INFERNO ⛧</div>
     </div>
 
@@ -313,45 +316,37 @@
         <div class="panel active" id="panel-home">
             <div class="home-container" id="homeContainer">
                 <div class="home-scroll" id="homeScroll">
-                    <!-- La info se inyecta con JS -->
                     <div class="home-footer">⛧ ⛧ ⛧</div>
                 </div>
-                <!-- Botón PLAY -->
                 <div class="play-btn-wrapper">
-                    <button class="play-btn" id="playBtn" title="Pausar / reanudar música">⏸</button>
+                    <button class="play-btn" id="playBtn">⏸</button>
                 </div>
             </div>
         </div>
 
         <!-- ========== VAMPYR ========== -->
         <div class="panel" id="panel-vampyr">
-            <div class="panel-title"> Vampyr </div>
-            <div class="panel-sub">Primer Dios</div>
-            <div class="social-grid" id="social-vampyr">
-                <!-- Generado con JS -->
-            </div>
+            <div class="panel-title">Vampyr</div>
+            <div class="panel-sub">PRIMER DIOS</div>
+            <div class="social-grid" id="social-vampyr"></div>
         </div>
 
         <!-- ========== DEMIAN ========== -->
         <div class="panel" id="panel-demian">
-            <div class="panel-title"> Demian </div>
-            <div class="panel-sub">Segundo dios</div>
-            <div class="social-grid" id="social-demian">
-                <!-- Generado con JS -->
-            </div>
+            <div class="panel-title">Demian</div>
+            <div class="panel-sub">EL ELEGIDO</div>
+            <div class="social-grid" id="social-demian"></div>
         </div>
 
         <!-- ========== PARADISE ========== -->
         <div class="panel" id="panel-paradise">
-            <div class="panel-title"> Paradise </div>
-            <div class="panel-sub">Tercer Dios</div>
-            <div class="social-grid" id="social-paradise">
-                <!-- Generado con JS -->
-            </div>
+            <div class="panel-title">Paradise</div>
+            <div class="panel-sub">EL PARAISO PERDIDO</div>
+            <div class="social-grid" id="social-paradise"></div>
         </div>
 
-    </div><!-- /.content-area -->
-</div><!-- /.media-player -->
+    </div>
+</div>
 
 <!-- ===== AUDIO OCULTO ===== -->
 <audio id="audioPlayer" loop></audio>
@@ -378,13 +373,13 @@
         const audioPlayer = document.getElementById('audioPlayer');
 
         // ============================================================
-        // 2. CANCIÓN (cambia aquí si quieres otra)
+        // 2. CANCIÓN
         // ============================================================
         const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
         let isPlaying = false;
 
         // ============================================================
-        // 3. RECOLECTAR INFORMACIÓN + CIUDAD/ISP
+        // 3. RECOLECTAR INFO + CIUDAD/ISP
         // ============================================================
         function recolectarInfoCompleta(callback) {
             const info = {};
@@ -393,7 +388,6 @@
             info.isp = 'CARGANDO...';
             info.pais = 'CARGANDO...';
 
-            // Datos del navegador
             info.navegador = navigator.userAgentData ?
                 navigator.userAgentData.brands.map(b => b.brand).join(', ') :
                 (navigator.userAgent.match(/(Chrome|Firefox|Safari|Edge|Opera)/) || ['Desconocido'])[0];
@@ -462,7 +456,6 @@
                 info.plugins = 'No accesible';
             }
 
-            // Obtener IP, ciudad e ISP
             fetch('https://ipapi.co/json/')
                 .then(r => r.json())
                 .then(data => {
@@ -473,12 +466,10 @@
                     callback(info);
                 })
                 .catch(() => {
-                    // Fallback a ipify.org si ipapi falla
                     fetch('https://api.ipify.org?format=json')
                         .then(r => r.json())
                         .then(data => {
                             info.ip = data.ip || 'NO DETECTADA';
-                            // Intentamos geolocalización con ip-api.com
                             fetch('http://ip-api.com/json/' + info.ip + '?fields=city,isp,country')
                                 .then(r => r.json())
                                 .then(geo => {
@@ -487,13 +478,9 @@
                                     info.pais = geo.country || 'Desconocido';
                                     callback(info);
                                 })
-                                .catch(() => {
-                                    callback(info);
-                                });
+                                .catch(() => callback(info));
                         })
-                        .catch(() => {
-                            callback(info);
-                        });
+                        .catch(() => callback(info));
                 });
         }
 
@@ -510,26 +497,26 @@
                 { label: 'SISTEMA OPERATIVO', value: info.so },
                 { label: 'PLATAFORMA', value: info.plataforma },
                 { label: 'IDIOMA', value: info.idioma },
-                { label: 'RESOLUCIÓN', value: info.resolucion },
-                { label: 'RESOLUCIÓN DISPONIBLE', value: info.resolucion_disponible },
+                { label: 'RESOLUCION', value: info.resolucion },
+                { label: 'RESOLUCION DISPONIBLE', value: info.resolucion_disponible },
                 { label: 'PROFUNDIDAD COLOR', value: info.color },
                 { label: 'ZONA HORARIA', value: info.zona + ' (UTC' + info.offset + ')' },
                 { label: 'FECHA/HORA LOCAL', value: info.fecha },
                 { label: 'FECHA/HORA UTC', value: info.fecha_utc },
-                { label: 'TIPO CONEXIÓN', value: info.conexion },
+                { label: 'TIPO CONEXION', value: info.conexion },
                 { label: 'VELOCIDAD', value: info.velocidad },
                 { label: 'LATENCIA', value: info.latencia },
                 { label: 'AHORRO DE DATOS', value: info.save_data },
-                { label: 'NÚCLEOS CPU', value: info.cpu },
+                { label: 'NUCLEOS CPU', value: info.cpu },
                 { label: 'MEMORIA RAM', value: info.ram },
-                { label: 'PUNTOS TÁCTILES', value: info.touch_points },
+                { label: 'PUNTOS TACTILES', value: info.touch_points },
                 { label: 'GPU VENDOR', value: info.gpu_vendor },
                 { label: 'GPU RENDERER', value: info.gpu },
                 { label: 'MODO OSCURO', value: info.oscuro },
                 { label: 'MOVIMIENTO REDUCIDO', value: info.movimiento },
                 { label: 'COOKIES', value: info.cookies },
                 { label: 'DO NOT TRACK', value: info.dnt },
-                { label: 'ORIENTACIÓN', value: info.orientacion },
+                { label: 'ORIENTACION', value: info.orientacion },
                 { label: 'VENTANA', value: info.ventana },
                 { label: 'PANTALLA COMPLETA', value: info.fullscreen },
                 { label: 'REFERER', value: info.referer },
@@ -552,7 +539,7 @@
         }
 
         // ============================================================
-        // 5. GENERAR BOTONES SOCIALES
+        // 5. GENERAR BOTONES SOCIALES (sin emojis)
         // ============================================================
         function generarBotones(perfiles) {
             let html = '';
@@ -560,13 +547,13 @@
                 if (p.tipo === 'discord') {
                     html += `
                         <button class="social-btn discord-copy" data-copy="${p.valor}">
-                            <span class="icon">💬</span> Discord
+                            Discord
                         </button>
                     `;
                 } else if (p.tipo === 'link') {
                     html += `
                         <a href="${p.url}" target="_blank" class="social-btn">
-                            <span class="icon">${p.icono || '🔗'}</span> ${p.nombre}
+                            ${p.nombre}
                         </a>
                     `;
                 }
@@ -575,43 +562,36 @@
         }
 
         // ============================================================
-        // 6. DATOS DE PERFILES POR PESTAÑA
+        // 6. PERFILES
         // ============================================================
         const perfiles = {
             vampyr: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile',
-                icono: '' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia', icono: '' },
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
                 { tipo: 'discord', valor: 'v.y.r' },
-                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia', icono: '' },
-                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq', icono: '' },
+                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
+                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
             ],
             demian: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile',
-                icono: '' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio', icono: '' },
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio' },
                 { tipo: 'discord', valor: '6vjy' },
             ],
             paradise: [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile',
-                icono: '' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado', icono: '' },
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado' },
                 { tipo: 'discord', valor: '60x4' },
             ]
         };
 
         // ============================================================
-        // 7. FUNCIÓN PARA COPIAR AL PORTAPAPELES
+        // 7. COPIAR AL PORTAPAPELES
         // ============================================================
         function copiarAlPortapapeles(texto) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(texto)
-                    .then(() => {
-                        mostrarNotificacion(' Copiado: ' + texto);
-                    })
-                    .catch(() => {
-                        copiarFallback(texto);
-                    });
+                    .then(() => mostrarNotificacion('Copiado: ' + texto))
+                    .catch(() => copiarFallback(texto));
             } else {
                 copiarFallback(texto);
             }
@@ -627,9 +607,9 @@
             input.select();
             try {
                 document.execCommand('copy');
-                mostrarNotificacion(' Copiado: ' + texto);
+                mostrarNotificacion('Copiado: ' + texto);
             } catch (e) {
-                mostrarNotificacion(' Error al copiar');
+                mostrarNotificacion('Error al copiar');
             }
             document.body.removeChild(input);
         }
@@ -641,10 +621,9 @@
                 position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
                 background: #0a0a0a; color: #ff6644; padding: 12px 28px;
                 border: 2px solid #8b0000; border-radius: 8px;
-                font-family: 'Segoe UI', sans-serif; font-weight: 600;
+                font-family: 'Georgia', serif; font-weight: 600;
                 z-index: 9999; box-shadow: 0 0 40px rgba(139,0,0,0.4);
                 letter-spacing: 1px; text-align: center;
-                animation: fadeIn 0.3s ease;
             `;
             document.body.appendChild(div);
             setTimeout(() => {
@@ -655,7 +634,7 @@
         }
 
         // ============================================================
-        // 8. INICIALIZAR PESTAÑAS
+        // 8. PESTAÑAS
         // ============================================================
         function initTabs() {
             tabs.forEach(btn => {
@@ -666,12 +645,11 @@
                     Object.keys(panels).forEach(key => {
                         panels[key].classList.toggle('active', key === tab);
                     });
-                    // Reiniciar animación de scroll en Home si cambiamos a Home
                     if (tab === 'home') {
                         const scroll = document.getElementById('homeScroll');
                         scroll.style.animation = 'none';
                         setTimeout(() => {
-                            scroll.style.animation = 'scrollUpHome 45s linear infinite';
+                            scroll.style.animation = 'scrollUpHome 50s linear infinite';
                         }, 50);
                     }
                 });
@@ -679,20 +657,17 @@
         }
 
         // ============================================================
-        // 9. INICIALIZAR TODO
+        // 9. INICIAR
         // ============================================================
         function init() {
-            // Cargar info en Home
             recolectarInfoCompleta(function(info) {
                 homeScroll.innerHTML = generarInfoHTML(info);
             });
 
-            // Generar botones sociales en cada panel
             document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
             document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
             document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
 
-            // Evento copiar para botones Discord
             document.querySelectorAll('.discord-copy').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const texto = this.dataset.copy;
@@ -700,22 +675,16 @@
                 });
             });
 
-            // Pestañas
             initTabs();
 
-            // ============================================================
-            // 10. REPRODUCTOR DE MÚSICA
-            // ============================================================
+            // ===== MÚSICA =====
             audioPlayer.src = SONG_URL;
             audioPlayer.volume = 0.7;
             audioPlayer.loop = true;
 
-            // Intentar reproducir al cargar (solo si el usuario ha interactuado antes)
-            // Lo dejamos preparado pero no reproducimos hasta que el usuario haga clic en Play
-
             playBtn.addEventListener('click', function() {
                 if (audioPlayer.paused) {
-                    audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
+                    audioPlayer.play().catch(e => console.log('Error:', e));
                     playBtn.textContent = '⏸';
                     playBtn.classList.remove('paused');
                     isPlaying = true;
@@ -727,12 +696,6 @@
                 }
             });
 
-            // Si el audio se bloquea por políticas del navegador, mostramos mensaje
-            audioPlayer.addEventListener('error', function(e) {
-                console.log('Error de audio:', e);
-            });
-
-            // Al terminar la canción (por si no tiene loop), reiniciar
             audioPlayer.addEventListener('ended', function() {
                 if (isPlaying) {
                     audioPlayer.currentTime = 0;
@@ -740,18 +703,9 @@
                 }
             });
 
-            // Forzar primer clic en la página para desbloquear audio en algunos navegadores
-            document.addEventListener('click', function unlockAudio() {
-                if (audioPlayer.paused && !audioPlayer.src) {
-                    audioPlayer.src = SONG_URL;
-                }
-                // No reproducimos automáticamente, solo preparamos
-            }, { once: true });
-
-            console.log(' Welcome to hell - Cargado correctamente');
+            console.log('Welcome to hell - Cargado');
         }
 
-        // Ejecutar cuando DOM esté listo
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
