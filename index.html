@@ -148,6 +148,41 @@
         body.dark-mode .wall-post .content { color: #aaa; }
 
         /* ============================================================
+           ROLES
+           ============================================================ */
+        .role-icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 4px;
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: help;
+        }
+        .role-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .role-owner .role-icon {
+            box-shadow: 0 0 15px #ffd700, 0 0 30px #ffd70066;
+            animation: glowCrown 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowCrown {
+            0% { box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd70044; }
+            100% { box-shadow: 0 0 25px #ffd700, 0 0 50px #ffd70088, 0 0 75px #ffd70044; }
+        }
+
+        .wall-post .author {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* ============================================================
            WALL (MURO)
            ============================================================ */
         .wall-container {
@@ -214,13 +249,10 @@
             transition: all 0.2s ease;
             position: relative;
         }
-        .wall-post .author {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
         .wall-post .date {
             font-size: 0.7rem;
             margin-left: 10px;
+            color: #999;
         }
         .wall-post .content {
             font-size: 0.95rem;
@@ -256,7 +288,6 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* ===== LOGOUT BUTTON (estilo consistente con los badges) ===== */
         #logoutBtn {
             background: transparent;
             border: 1px solid #ddd;
@@ -918,7 +949,29 @@
     let currentUser = null;
 
     // ============================================================
-    // 4. PLAYLIST
+    // 4. ROLES
+    // ============================================================
+    const userRoles = {
+        'iBD9gQPpAJNU0v7SxRaVrn7MZaG2': 'owner',  // TÚ
+    };
+
+    function getUserRole(uid) {
+        return userRoles[uid] || 'user';
+    }
+
+    function getRoleIcon(uid) {
+        const role = getUserRole(uid);
+        if (role === 'owner') {
+            return {
+                icon: '<img src="owner.png" class="role-icon" title="Owner" alt="👑" />',
+                className: 'role-owner'
+            };
+        }
+        return { icon: '', className: '' };
+    }
+
+    // ============================================================
+    // 5. PLAYLIST
     // ============================================================
     const playlist = [{
         id: 0,
@@ -1032,7 +1085,7 @@
     }];
 
     // ============================================================
-    // 5. AUTH FUNCTIONS
+    // 6. AUTH FUNCTIONS
     // ============================================================
     function showError(msg) {
         loginError.textContent = msg;
@@ -1087,7 +1140,7 @@
     }
 
     // ============================================================
-    // 6. WALL (MURO) FUNCTIONS
+    // 7. WALL (MURO) FUNCTIONS
     // ============================================================
     function loadPosts() {
         const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
@@ -1110,9 +1163,13 @@
                 const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
                 
                 const authorName = data.author || 'Anonymous';
+                const roleData = getRoleIcon(data.uid);
                 
                 postDiv.innerHTML = `
-                    <span class="author">${authorName}</span>
+                    <span class="author ${roleData.className}">
+                        ${roleData.icon}
+                        ${authorName}
+                    </span>
                     <span class="date">${dateStr}</span>
                     ${isAuthor ? `<button class="delete-btn" data-id="${postId}">✕</button>` : ''}
                     <div class="content">${data.text || ''}</div>
@@ -1159,7 +1216,7 @@
     }
 
     // ============================================================
-    // 7. AUTH OBSERVER
+    // 8. AUTH OBSERVER
     // ============================================================
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
@@ -1203,7 +1260,7 @@
     });
 
     // ============================================================
-    // 8. EVENT LISTENERS (Auth)
+    // 9. EVENT LISTENERS (Auth)
     // ============================================================
     switchBtn.addEventListener('click', () => {
         isLoginMode = !isLoginMode;
@@ -1247,7 +1304,7 @@
     nameInput.style.display = 'none';
 
     // ============================================================
-    // 9. THEME
+    // 10. THEME
     // ============================================================
     const savedTheme = localStorage.getItem('draco_theme') || 'light';
     document.body.classList.add(savedTheme + '-mode');
@@ -1268,7 +1325,7 @@
     });
 
     // ============================================================
-    // 10. CLOCK
+    // 11. CLOCK
     // ============================================================
     function updateClock() {
         const now = new Date();
@@ -1280,7 +1337,7 @@
     setInterval(updateClock, 1000);
 
     // ============================================================
-    // 11. VISIT COUNTERS
+    // 12. VISIT COUNTERS
     // ============================================================
     let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
     visits += 1;
@@ -1301,7 +1358,7 @@
     }
 
     // ============================================================
-    // 12. IP
+    // 13. IP
     // ============================================================
     function getIP() {
         fetch('https://api.ipify.org?format=json')
@@ -1311,7 +1368,7 @@
     }
 
     // ============================================================
-    // 13. PARTICLES
+    // 14. PARTICLES
     // ============================================================
     function initParticles() {
         const canvas = document.getElementById('particles-canvas');
@@ -1367,7 +1424,7 @@
     }
 
     // ============================================================
-    // 14. MUSIC PLAYER
+    // 15. MUSIC PLAYER
     // ============================================================
     function loadSong(index) {
         const song = playlist[index];
@@ -1469,7 +1526,7 @@
     }
 
     // ============================================================
-    // 15. SOCIAL BUTTONS
+    // 16. SOCIAL BUTTONS
     // ============================================================
     function generateSocialButtons(profiles) {
         let html = '';
@@ -1500,7 +1557,7 @@
     ];
 
     // ============================================================
-    // 16. COPY TO CLIPBOARD
+    // 17. COPY TO CLIPBOARD
     // ============================================================
     function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1548,7 +1605,7 @@
     }
 
     // ============================================================
-    // 17. TABS
+    // 18. TABS
     // ============================================================
     function initTabs() {
         tabs.forEach(btn => {
@@ -1564,7 +1621,7 @@
     }
 
     // ============================================================
-    // 18. MUSIC EVENTS
+    // 19. MUSIC EVENTS
     // ============================================================
     playBtn.addEventListener('click', togglePlay);
     prevBtn.addEventListener('click', prevSong);
@@ -1596,7 +1653,7 @@
     });
 
     // ============================================================
-    // 19. INIT SOCIAL
+    // 20. INIT SOCIAL
     // ============================================================
     document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
     document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1607,11 +1664,11 @@
     });
 
     // ============================================================
-    // 20. INIT TABS
+    // 21. INIT TABS
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded with Firebase Auth + Firestore');
+    console.log('Paradise - Loaded with Firebase Auth + Firestore + Roles');
     </script>
 </body>
 </html>
