@@ -24,7 +24,8 @@
             overflow: hidden;
         }
 
-        #clickScreen {
+        /* ===== PANTALLA DE LOGIN ===== */
+        #loginScreen {
             position: fixed;
             top: 0;
             left: 0;
@@ -36,25 +37,66 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
             transition: opacity 0.8s ease;
         }
-        #clickScreen .icon {
-            font-size: 4rem;
-            color: #333;
-            transition: transform 0.3s ease;
+        #loginScreen .title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 30px;
         }
-        #clickScreen .icon:hover {
-            transform: scale(1.1);
-        }
-        #clickScreen .sub {
-            color: #999;
-            font-size: 0.9rem;
-            letter-spacing: 4px;
-            margin-top: 20px;
+        #loginScreen .title span {
+            color: #888;
             font-weight: 300;
         }
+        #loginScreen .login-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            width: 300px;
+            max-width: 90%;
+        }
+        #loginScreen .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+            background: #fafafa;
+        }
+        #loginScreen .login-box input:focus {
+            border-color: #1a1a1a;
+            background: #ffffff;
+        }
+        #loginScreen .login-box button {
+            width: 100%;
+            padding: 14px 18px;
+            background: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        #loginScreen .login-box button:hover {
+            background: #333;
+        }
+        #loginScreen .login-box .error {
+            color: #cc3333;
+            font-size: 0.85rem;
+            font-weight: 400;
+            height: 20px;
+        }
 
+        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             width: 900px;
             max-width: 100%;
@@ -185,200 +227,79 @@
             display: block;
         }
 
-        /* ===== PANEL GAMES CON SCROLL ===== */
-        #panel-games {
-            overflow-y: auto;
-            padding-right: 5px;
-            max-height: 100%;
-        }
-        #panel-games::-webkit-scrollbar {
-            width: 4px;
-        }
-        #panel-games::-webkit-scrollbar-track {
-            background: #f0f0f0;
-            border-radius: 4px;
-        }
-        #panel-games::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== HOME (lyrics) ===== */
+        /* ===== HOME ===== */
         .home-container {
-            position: relative;
-            height: 380px;
-            overflow: hidden;
-            border-radius: 10px;
-            background: #fafafa;
-            border: 1px solid #eee;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-        .lyrics-wrapper {
-            width: 100%;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            position: relative;
-        }
-        .lyrics-container {
-            position: relative;
-            width: 100%;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .lyrics-line {
-            font-size: 1.5rem;
-            color: #ccc;
-            padding: 8px 0;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.3px;
-            line-height: 1.6;
             text-align: center;
-            width: 100%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(0.85);
-            opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease, color 0.8s ease;
+            height: 380px;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            padding: 30px;
         }
-        .lyrics-line.active {
-            color: #1a1a1a;
-            font-size: 2rem;
+        .home-greeting {
+            font-size: 2.5rem;
             font-weight: 600;
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
         }
-        .lyrics-line.before {
-            opacity: 0;
-            transform: translate(-50%, calc(-50% - 40px)) scale(0.8);
+        .home-greeting span {
+            color: #888;
+            font-weight: 300;
         }
-        .lyrics-line.after {
-            opacity: 0;
-            transform: translate(-50%, calc(-50% + 40px)) scale(0.8);
-        }
-        .lyrics-line.fade-out {
-            opacity: 0 !important;
-            transform: translate(-50%, -50%) scale(0.7) !important;
+        .home-sub {
+            font-size: 1rem;
+            color: #888;
+            font-weight: 400;
         }
         .home-footer {
-            margin-top: 10px;
+            margin-top: 25px;
             font-size: 0.6rem;
             color: #ccc;
             letter-spacing: 4px;
-            text-align: center;
         }
 
-        /* ===== GAMES ===== */
-        .games-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 380px;
-            padding-bottom: 20px;
-        }
-        .sub-tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .sub-tab-btn {
-            background: transparent;
-            border: none;
-            color: #888;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 500;
-            padding: 8px 18px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .sub-tab-btn:hover {
-            color: #333;
-        }
-        .sub-tab-btn.active {
-            color: #1a1a1a;
-            border-bottom-color: #1a1a1a;
-        }
-
-        .game-panel {
-            display: none;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            animation: fadeIn 0.3s ease;
-            flex-shrink: 0;
-        }
-        .game-panel.active {
-            display: block;
-        }
-
-        .game-panel canvas {
+        /* ===== LYRICS ===== */
+        .lyrics-container {
+            height: 380px;
+            overflow-y: auto;
             background: #fafafa;
-            border: 1px solid #eee;
             border-radius: 10px;
-            margin: 0 auto;
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .game-score {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-        }
-        .game-controls {
-            margin-top: 15px;
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .game-controls button {
-            background: #f5f5f5;
-            border: 1px solid #e8e8e8;
-            border-radius: 8px;
-            padding: 8px 20px;
+            border: 1px solid #eee;
+            padding: 25px 30px;
             font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #333;
-            cursor: pointer;
+            line-height: 1.8;
+            font-size: 1rem;
+            color: #444;
+        }
+        .lyrics-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .lyrics-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .lyrics-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        .lyrics-container .line {
+            padding: 3px 0;
             transition: all 0.2s ease;
         }
-        .game-controls button:hover {
-            background: #eee;
-            border-color: #ccc;
-        }
-
-        .game-over {
-            font-size: 1.1rem;
-            color: #cc3333;
+        .lyrics-container .line.active {
+            color: #1a1a1a;
             font-weight: 600;
-            margin-top: 10px;
+            font-size: 1.1rem;
         }
 
         /* ===== SOCIAL ===== */
@@ -440,51 +361,49 @@
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
-            .home-container { height: 320px; }
-            .lyrics-line { font-size: 1.2rem; }
-            .lyrics-line.active { font-size: 1.5rem; }
-            .lyrics-container { height: 220px; }
-            .game-panel canvas { max-width: 100%; height: auto; }
+            .home-container { height: 320px; padding: 20px; }
+            .home-greeting { font-size: 1.8rem; }
+            .lyrics-container { height: 320px; padding: 20px; font-size: 0.9rem; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
-            #panel-games {
-                max-height: 400px;
-                overflow-y: auto;
-            }
+            #loginScreen .title { font-size: 1.8rem; }
+            #loginScreen .login-box { width: 260px; }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
-            .sub-tab-btn { font-size: 0.7rem; padding: 6px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .home-container { height: 280px; }
-            .lyrics-line { font-size: 0.95rem; padding: 4px 0; }
-            .lyrics-line.active { font-size: 1.2rem; }
-            .lyrics-container { height: 200px; }
+            .home-container { height: 260px; }
+            .home-greeting { font-size: 1.4rem; }
+            .lyrics-container { height: 260px; padding: 15px; font-size: 0.8rem; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
-            .game-controls { flex-wrap: wrap; gap: 8px; }
-            .game-controls button { padding: 6px 14px; font-size: 0.75rem; }
-            #panel-games {
-                max-height: 350px;
-                overflow-y: auto;
-            }
+            #loginScreen .title { font-size: 1.4rem; }
+            #loginScreen .login-box { width: 220px; }
+            #loginScreen .login-box input { padding: 10px 14px; font-size: 0.9rem; }
+            #loginScreen .login-box button { padding: 10px 14px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="clickScreen">
-        <div class="icon">▶</div>
-        <div class="sub">C L I C K &nbsp; T O &nbsp; E N T E R</div>
+    <!-- ===== PANTALLA DE LOGIN ===== -->
+    <div id="loginScreen">
+        <div class="title">✦ <span>Welcome</span></div>
+        <div class="login-box">
+            <input type="text" id="nameInput" placeholder="Escribe tu nombre" autofocus />
+            <button id="loginBtn">Entrar</button>
+            <div class="error" id="loginError"></div>
+        </div>
     </div>
 
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
     <div class="container" id="mainContainer">
         <canvas id="particles-canvas"></canvas>
 
         <div class="top-bar">
-            <div class="title">✦ <span>Welcome</span></div>
+            <div class="title">✦ <span id="greetingDisplay">Welcome</span></div>
             <div class="right">
                 <span class="badge" id="ipBadge">
                     <span class="icon">👁</span>
@@ -504,7 +423,7 @@
 
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
-            <button class="tab-btn" data-tab="games">Games</button>
+            <button class="tab-btn" data-tab="lyrics">Lyrics</button>
             <button class="tab-btn" data-tab="about">Socialmedia</button>
         </div>
 
@@ -513,67 +432,18 @@
             <!-- ========== HOME ========== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container">
-                    <div class="lyrics-wrapper">
-                        <div class="lyrics-container" id="lyricsContainer"></div>
-                    </div>
+                    <div class="home-greeting">Hola, <span id="userNameDisplay">invitado</span></div>
+                    <div class="home-sub">Bienvenido a tu espacio</div>
                     <div class="home-footer">✦ ✦ ✦</div>
                 </div>
             </div>
 
-            <!-- ========== GAMES ========== -->
-            <div class="panel" id="panel-games">
-                <div class="panel-title">Games</div>
-                <div class="panel-sub">ELIGE TU JUEGO</div>
-                <div class="games-container">
-                    <div class="sub-tabs" id="subTabContainer">
-                        <button class="sub-tab-btn active" data-game="snake">Snake</button>
-                        <button class="sub-tab-btn" data-game="mines">Buscaminas</button>
-                        <button class="sub-tab-btn" data-game="twenty48">2048</button>
-                        <button class="sub-tab-btn" data-game="hangman">Ahorcado</button>
-                    </div>
-
-                    <!-- SNAKE -->
-                    <div class="game-panel active" id="game-snake">
-                        <div class="game-score">🐍 Puntuación: <span id="snakeScore">0</span></div>
-                        <canvas id="snakeCanvas" width="400" height="400"></canvas>
-                        <div class="game-controls">
-                            <button id="snakeRestart">Reiniciar</button>
-                            <button id="snakePause">Pausa</button>
-                        </div>
-                        <div id="snakeGameOver" class="game-over"></div>
-                    </div>
-
-                    <!-- BUSCAMINAS -->
-                    <div class="game-panel" id="game-mines">
-                        <div class="game-score">💣 Minas: <span id="mineCount">0</span></div>
-                        <canvas id="minesCanvas" width="400" height="400"></canvas>
-                        <div class="game-controls">
-                            <button id="minesRestart">Reiniciar</button>
-                        </div>
-                        <div id="minesGameOver" class="game-over"></div>
-                    </div>
-
-                    <!-- 2048 -->
-                    <div class="game-panel" id="game-twenty48">
-                        <div class="game-score">🎯 Puntuación: <span id="score2048">0</span></div>
-                        <canvas id="canvas2048" width="400" height="400"></canvas>
-                        <div class="game-controls">
-                            <button id="restart2048">Reiniciar</button>
-                        </div>
-                        <div id="gameOver2048" class="game-over"></div>
-                    </div>
-
-                    <!-- AHORCADO -->
-                    <div class="game-panel" id="game-hangman">
-                        <div class="game-score">🔤 Intentos: <span id="hangmanAttempts">6</span></div>
-                        <div style="font-size: 2rem; letter-spacing: 12px; font-weight: 600; margin: 10px 0;" id="hangmanWord">_ _ _ _ _</div>
-                        <div style="font-size: 1.2rem; color: #666; margin-bottom: 10px;" id="hangmanHint"></div>
-                        <div id="hangmanKeyboard" style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 450px; margin: 0 auto;"></div>
-                        <div class="game-controls">
-                            <button id="hangmanRestart">Reiniciar</button>
-                        </div>
-                        <div id="hangmanGameOver" class="game-over"></div>
-                    </div>
+            <!-- ========== LYRICS ========== -->
+            <div class="panel" id="panel-lyrics">
+                <div class="panel-title">Lyrics</div>
+                <div class="panel-sub">R O S E &nbsp;·&nbsp; J A Y D E S</div>
+                <div class="lyrics-container" id="lyricsContainer">
+                    <!-- Se genera con JavaScript -->
                 </div>
             </div>
 
@@ -587,6 +457,7 @@
         </div>
     </div>
 
+    <!-- ===== AUDIO OCULTO ===== -->
     <audio id="audioPlayer" loop></audio>
 
     <script>
@@ -596,12 +467,17 @@
             // ============================================================
             // 1. ELEMENTOS
             // ============================================================
-            const clickScreen = document.getElementById('clickScreen');
+            const loginScreen = document.getElementById('loginScreen');
+            const nameInput = document.getElementById('nameInput');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginError = document.getElementById('loginError');
             const mainContainer = document.getElementById('mainContainer');
+            const userNameDisplay = document.getElementById('userNameDisplay');
+            const greetingDisplay = document.getElementById('greetingDisplay');
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
-                games: document.getElementById('panel-games'),
+                lyrics: document.getElementById('panel-lyrics'),
                 about: document.getElementById('panel-about'),
             };
             const audioPlayer = document.getElementById('audioPlayer');
@@ -616,22 +492,21 @@
             const SONG_URL = 'https://d-gq.github.io/rose.mp3';
 
             // ============================================================
-            // 3. LETRA CON TIEMPOS RETRASADOS Y LÍNEA AJUSTADA
+            // 3. LETRA COMPLETA
             // ============================================================
             const lyrics = [
-                { time: 2.29, text: "Knew from the start it would end this way" },
-                { time: 14.00, text: "Tell me how it feels to fade away, away from me" },
-                { time: 26.50, text: "Why won't you run away from this world to escape" },
-                { time: 34.58, text: "(Run away from this world to escape)" },
-                { time: 40.66, text: "I can't believe a word you said to me" },
-                { time: 47.15, text: "Don't say it to me" },
-                { time: 50.41, text: "Knew from the start it would end this way" },
-                { time: 62.70, text: "Tell me how it feels to fade away, away from me" },
-                { time: 76.03, text: "Why won't you run away from this world to escape" },
-                { time: 84.79, text: "(Run away from this world to escape)" },
-                { time: 90.66, text: "I can't believe a word you said to me" },
-                { time: 97.42, text: "Don't say it to me" },
-                { time: 101.00, text: "" },
+                "Knew from the start it would end this way",
+                "Tell me how it feels to fade away, away from me",
+                "Why won't you run away from this world to escape",
+                "(Run away from this world to escape)",
+                "I can't believe a word you said to me",
+                "Don't say it to me",
+                "Knew from the start it would end this way",
+                "Tell me how it feels to fade away, away from me",
+                "Why won't you run away from this world to escape",
+                "(Run away from this world to escape)",
+                "I can't believe a word you said to me",
+                "Don't say it to me",
             ];
 
             // ============================================================
@@ -730,51 +605,67 @@
             // ============================================================
             function generarLyrics() {
                 let html = '';
-                lyrics.forEach((line, index) => {
-                    html += `<div class="lyrics-line" data-index="${index}" data-time="${line.time}">${line.text}</div>`;
+                lyrics.forEach(line => {
+                    html += `<div class="line">${line}</div>`;
                 });
                 return html;
             }
 
             // ============================================================
-            // 9. ACTUALIZAR LYRICS
+            // 9. LOGIN
             // ============================================================
-            let currentLineIndex = -1;
-            let lyricsLines = [];
-
-            function actualizarLyrics() {
-                const currentTime = audioPlayer.currentTime;
-                let activeIndex = -1;
-
-                for (let i = lyrics.length - 1; i >= 0; i--) {
-                    if (currentTime >= lyrics[i].time - 0.1) {
-                        activeIndex = i;
-                        break;
-                    }
+            function handleLogin() {
+                const name = nameInput.value.trim();
+                if (name === '') {
+                    loginError.textContent = 'Por favor, escribe tu nombre.';
+                    return;
+                }
+                if (name.length < 2) {
+                    loginError.textContent = 'El nombre debe tener al menos 2 letras.';
+                    return;
                 }
 
-                if (activeIndex !== currentLineIndex) {
-                    currentLineIndex = activeIndex;
-                    lyricsLines.forEach((el, i) => {
-                        el.classList.remove('active', 'before', 'after', 'fade-out');
-                        if (i === activeIndex && lyrics[i].text !== '') {
-                            el.classList.add('active');
-                        } else if (i === activeIndex - 1) {
-                            el.classList.add('before');
-                        } else if (i === activeIndex + 1) {
-                            el.classList.add('after');
-                        } else if (i === lyrics.length - 1 && activeIndex === lyrics.length - 1) {
-                            el.classList.add('fade-out');
-                        }
+                // Guardar nombre en localStorage
+                localStorage.setItem('draco_user', name);
+
+                // Ocultar login
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                }, 800);
+
+                // Mostrar contenido principal
+                setTimeout(() => {
+                    mainContainer.classList.add('active');
+                    initParticles();
+                }, 300);
+
+                // Actualizar nombre en Home y top bar
+                userNameDisplay.textContent = name;
+                greetingDisplay.textContent = 'Welcome, ' + name;
+
+                // Generar lyrics
+                lyricsContainer.innerHTML = generarLyrics();
+
+                // Reproducir música
+                audioPlayer.src = SONG_URL;
+                audioPlayer.volume = 0.7;
+                audioPlayer.loop = false;
+                audioPlayer.play().catch(e => console.log('Error:', e));
+
+                obtenerIP();
+                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
+
+                document.querySelectorAll('.discord-copy').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const texto = this.dataset.copy;
+                        if (texto) copiarAlPortapapeles(texto);
                     });
-                }
+                });
 
-                if (currentTime > 98 && currentTime < 99) {
-                    lyricsLines.forEach(el => {
-                        el.classList.remove('active');
-                        el.classList.add('fade-out');
-                    });
-                }
+                initTabs();
+
+                console.log('Draco home - Activado como:', name);
             }
 
             // ============================================================
@@ -858,7 +749,7 @@
             }
 
             // ============================================================
-            // 12. PESTAÑAS PRINCIPALES
+            // 12. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -869,689 +760,30 @@
                         Object.keys(panels).forEach(key => {
                             panels[key].classList.toggle('active', key === tab);
                         });
-                        // Resetear scroll de Games al cambiar
-                        if (tab === 'games') {
-                            const panel = document.getElementById('panel-games');
-                            if (panel) panel.scrollTop = 0;
-                        }
                     });
                 });
             }
 
             // ============================================================
-            // 13. SUBPESTAÑAS (Games)
+            // 13. INICIAR
             // ============================================================
-            const subTabs = document.querySelectorAll('.sub-tab-btn');
-            const gamePanels = {
-                snake: document.getElementById('game-snake'),
-                mines: document.getElementById('game-mines'),
-                twenty48: document.getElementById('game-twenty48'),
-                hangman: document.getElementById('game-hangman'),
-            };
-
-            function initSubTabs() {
-                subTabs.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        subTabs.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        const game = this.dataset.game;
-                        Object.keys(gamePanels).forEach(key => {
-                            gamePanels[key].classList.toggle('active', key === game);
-                        });
-                        // Scroll al inicio del juego
-                        const panel = document.getElementById('panel-games');
-                        if (panel) panel.scrollTop = 0;
-                    });
-                });
+            // Comprobar si ya hay un nombre guardado
+            const savedName = localStorage.getItem('draco_user');
+            if (savedName) {
+                // Si ya hay nombre, hacer login automático
+                nameInput.value = savedName;
+                setTimeout(handleLogin, 100);
             }
 
-            // ============================================================
-            // 14. SNAKE
-            // ============================================================
-            function initSnake() {
-                const canvas = document.getElementById('snakeCanvas');
-                const ctx = canvas.getContext('2d');
-                const scoreSpan = document.getElementById('snakeScore');
-                const gameOverDiv = document.getElementById('snakeGameOver');
-                const restartBtn = document.getElementById('snakeRestart');
-                const pauseBtn = document.getElementById('snakePause');
-
-                const gridSize = 20;
-                const tileCount = 20;
-                let snake = [{ x: 10, y: 10 }];
-                let direction = { x: 0, y: 0 };
-                let food = { x: 15, y: 15 };
-                let score = 0;
-                let gameOver = false;
-                let paused = false;
-                let interval = null;
-
-                function draw() {
-                    ctx.fillStyle = '#fafafa';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    ctx.fillStyle = '#cc3333';
-                    ctx.beginPath();
-                    ctx.arc(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize / 2 - 2, 0, Math.PI *
-                    2);
-                    ctx.fill();
-
-                    snake.forEach((seg, i) => {
-                        ctx.fillStyle = i === 0 ? '#1a1a1a' : '#555';
-                        ctx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
-                    });
+            // Eventos login
+            loginBtn.addEventListener('click', handleLogin);
+            nameInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
                 }
+            });
 
-                function update() {
-                    if (paused || gameOver) return;
-
-                    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
-
-                    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-                        endGame();
-                        return;
-                    }
-
-                    if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
-                        endGame();
-                        return;
-                    }
-
-                    snake.unshift(head);
-
-                    if (head.x === food.x && head.y === food.y) {
-                        score++;
-                        scoreSpan.textContent = score;
-                        food = {
-                            x: Math.floor(Math.random() * tileCount),
-                            y: Math.floor(Math.random() * tileCount)
-                        };
-                    } else {
-                        snake.pop();
-                    }
-
-                    draw();
-                }
-
-                function endGame() {
-                    gameOver = true;
-                    gameOverDiv.textContent = '💀 Game Over';
-                    clearInterval(interval);
-                }
-
-                function restart() {
-                    snake = [{ x: 10, y: 10 }];
-                    direction = { x: 0, y: 0 };
-                    food = { x: 15, y: 15 };
-                    score = 0;
-                    scoreSpan.textContent = '0';
-                    gameOver = false;
-                    gameOverDiv.textContent = '';
-                    paused = false;
-                    pauseBtn.textContent = 'Pausa';
-                    clearInterval(interval);
-                    draw();
-                    interval = setInterval(update, 120);
-                }
-
-                function togglePause() {
-                    if (gameOver) return;
-                    paused = !paused;
-                    pauseBtn.textContent = paused ? 'Reanudar' : 'Pausa';
-                }
-
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowUp' && direction.y === 0) direction = { x: 0, y: -1 };
-                    else if (e.key === 'ArrowDown' && direction.y === 0) direction = { x: 0, y: 1 };
-                    else if (e.key === 'ArrowLeft' && direction.x === 0) direction = { x: -1, y: 0 };
-                    else if (e.key === 'ArrowRight' && direction.x === 0) direction = { x: 1, y: 0 };
-                });
-
-                restartBtn.addEventListener('click', restart);
-                pauseBtn.addEventListener('click', togglePause);
-
-                restart();
-            }
-
-            // ============================================================
-            // 15. BUSCAMINAS
-            // ============================================================
-            function initMines() {
-                const canvas = document.getElementById('minesCanvas');
-                const ctx = canvas.getContext('2d');
-                const mineCountSpan = document.getElementById('mineCount');
-                const gameOverDiv = document.getElementById('minesGameOver');
-                const restartBtn = document.getElementById('minesRestart');
-
-                const size = 10;
-                const totalMines = 10;
-                let board = [];
-                let revealed = [];
-                let flagged = [];
-                let gameOver = false;
-                let firstClick = true;
-
-                function initBoard() {
-                    board = [];
-                    for (let y = 0; y < size; y++) {
-                        board[y] = [];
-                        revealed[y] = [];
-                        flagged[y] = [];
-                        for (let x = 0; x < size; x++) {
-                            board[y][x] = 0;
-                            revealed[y][x] = false;
-                            flagged[y][x] = false;
-                        }
-                    }
-                }
-
-                function placeMines(excludeX, excludeY) {
-                    let placed = 0;
-                    while (placed < totalMines) {
-                        const x = Math.floor(Math.random() * size);
-                        const y = Math.floor(Math.random() * size);
-                        if (board[y][x] === 0 && !(x === excludeX && y === excludeY)) {
-                            board[y][x] = -1;
-                            placed++;
-                        }
-                    }
-                    for (let y = 0; y < size; y++) {
-                        for (let x = 0; x < size; x++) {
-                            if (board[y][x] === -1) continue;
-                            let count = 0;
-                            for (let dy = -1; dy <= 1; dy++) {
-                                for (let dx = -1; dx <= 1; dx++) {
-                                    const ny = y + dy,
-                                        nx = x + dx;
-                                    if (ny >= 0 && ny < size && nx >= 0 && nx < size && board[ny][nx] === -1) count++;
-                                }
-                            }
-                            board[y][x] = count;
-                        }
-                    }
-                }
-
-                function draw() {
-                    const cellSize = canvas.width / size;
-                    ctx.fillStyle = '#fafafa';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    for (let y = 0; y < size; y++) {
-                        for (let x = 0; x < size; x++) {
-                            const isRevealed = revealed[y][x];
-                            const isFlagged = flagged[y][x];
-                            const value = board[y][x];
-
-                            if (isRevealed) {
-                                ctx.fillStyle = '#e8e8e8';
-                                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                                ctx.strokeStyle = '#ccc';
-                                ctx.lineWidth = 0.5;
-                                ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-
-                                if (value === -1) {
-                                    ctx.fillStyle = '#cc0000';
-                                    ctx.font = 'bold 24px sans-serif';
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'middle';
-                                    ctx.fillText('💣', x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
-                                } else if (value > 0) {
-                                    ctx.fillStyle = '#1a1a1a';
-                                    ctx.font = 'bold 20px sans-serif';
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'middle';
-                                    ctx.fillText(value, x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
-                                }
-                            } else {
-                                ctx.fillStyle = '#d0d0d0';
-                                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                                ctx.strokeStyle = '#bbb';
-                                ctx.lineWidth = 1;
-                                ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
-                                if (isFlagged) {
-                                    ctx.fillStyle = '#cc3333';
-                                    ctx.font = 'bold 24px sans-serif';
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'middle';
-                                    ctx.fillText('🚩', x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                function reveal(x, y) {
-                    if (x < 0 || x >= size || y < 0 || y >= size) return;
-                    if (revealed[y][x] || flagged[y][x]) return;
-
-                    revealed[y][x] = true;
-
-                    if (board[y][x] === -1) {
-                        gameOver = true;
-                        gameOverDiv.textContent = '💀 ¡Has perdido!';
-                        for (let py = 0; py < size; py++) {
-                            for (let px = 0; px < size; px++) {
-                                if (board[py][px] === -1) revealed[py][px] = true;
-                            }
-                        }
-                        draw();
-                        return;
-                    }
-
-                    if (board[y][x] === 0) {
-                        for (let dy = -1; dy <= 1; dy++) {
-                            for (let dx = -1; dx <= 1; dx++) {
-                                reveal(x + dx, y + dy);
-                            }
-                        }
-                    }
-
-                    let allRevealed = true;
-                    for (let py = 0; py < size; py++) {
-                        for (let px = 0; px < size; px++) {
-                            if (board[py][px] !== -1 && !revealed[py][px]) allRevealed = false;
-                        }
-                    }
-                    if (allRevealed) {
-                        gameOver = true;
-                        gameOverDiv.textContent = '🎉 ¡Has ganado!';
-                    }
-
-                    draw();
-                }
-
-                function handleClick(e) {
-                    if (gameOver) return;
-                    const rect = canvas.getBoundingClientRect();
-                    const scaleX = canvas.width / rect.width;
-                    const scaleY = canvas.height / rect.height;
-                    const x = Math.floor((e.clientX - rect.left) * scaleX / (canvas.width / size));
-                    const y = Math.floor((e.clientY - rect.top) * scaleY / (canvas.height / size));
-
-                    if (x < 0 || x >= size || y < 0 || y >= size) return;
-
-                    if (firstClick) {
-                        placeMines(x, y);
-                        firstClick = false;
-                    }
-
-                    if (e.button === 2) {
-                        if (!revealed[y][x]) {
-                            flagged[y][x] = !flagged[y][x];
-                            draw();
-                        }
-                        return;
-                    }
-
-                    reveal(x, y);
-                }
-
-                function restartMines() {
-                    initBoard();
-                    firstClick = true;
-                    gameOver = false;
-                    gameOverDiv.textContent = '';
-                    draw();
-                }
-
-                canvas.addEventListener('mousedown', handleClick);
-                canvas.addEventListener('contextmenu', e => e.preventDefault());
-                restartBtn.addEventListener('click', restartMines);
-
-                initBoard();
-                draw();
-            }
-
-            // ============================================================
-            // 16. 2048
-            // ============================================================
-            function init2048() {
-                const canvas = document.getElementById('canvas2048');
-                const ctx = canvas.getContext('2d');
-                const scoreSpan = document.getElementById('score2048');
-                const gameOverDiv = document.getElementById('gameOver2048');
-                const restartBtn = document.getElementById('restart2048');
-
-                const size = 4;
-                let grid = [];
-                let score = 0;
-                let gameOver = false;
-                let hasMoved = false;
-
-                function initGrid() {
-                    grid = Array.from({ length: size }, () => Array(size).fill(0));
-                    score = 0;
-                    gameOver = false;
-                    gameOverDiv.textContent = '';
-                    scoreSpan.textContent = '0';
-                    addRandomTile();
-                    addRandomTile();
-                    draw();
-                }
-
-                function addRandomTile() {
-                    const empty = [];
-                    for (let y = 0; y < size; y++) {
-                        for (let x = 0; x < size; x++) {
-                            if (grid[y][x] === 0) empty.push({ x, y });
-                        }
-                    }
-                    if (empty.length === 0) return;
-                    const pos = empty[Math.floor(Math.random() * empty.length)];
-                    grid[pos.y][pos.x] = Math.random() < 0.9 ? 2 : 4;
-                }
-
-                function draw() {
-                    const cellSize = canvas.width / size;
-                    ctx.fillStyle = '#fafafa';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    const colors = {
-                        0: '#cdc1b4',
-                        2: '#eee4da',
-                        4: '#ede0c8',
-                        8: '#f2b179',
-                        16: '#f59563',
-                        32: '#f67c5f',
-                        64: '#f65e3b',
-                        128: '#edcf72',
-                        256: '#edcc61',
-                        512: '#edc850',
-                        1024: '#edc53f',
-                        2048: '#edc22e'
-                    };
-                    const textColors = {
-                        2: '#776e65',
-                        4: '#776e65',
-                        8: '#f9f6f2',
-                        16: '#f9f6f2',
-                        32: '#f9f6f2',
-                        64: '#f9f6f2',
-                        128: '#f9f6f2',
-                        256: '#f9f6f2',
-                        512: '#f9f6f2',
-                        1024: '#f9f6f2',
-                        2048: '#f9f6f2'
-                    };
-
-                    for (let y = 0; y < size; y++) {
-                        for (let x = 0; x < size; x++) {
-                            const val = grid[y][x];
-                            ctx.fillStyle = colors[val] || '#cdc1b4';
-                            ctx.fillRect(x * cellSize + 4, y * cellSize + 4, cellSize - 8, cellSize - 8);
-                            if (val !== 0) {
-                                ctx.fillStyle = textColors[val] || '#f9f6f2';
-                                ctx.font = `bold ${val > 100 ? 24 : 32}px Inter, sans-serif`;
-                                ctx.textAlign = 'center';
-                                ctx.textBaseline = 'middle';
-                                ctx.fillText(val, x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
-                            }
-                        }
-                    }
-                }
-
-                function slide(row) {
-                    let arr = row.filter(v => v !== 0);
-                    let newArr = [];
-                    let merged = false;
-                    for (let i = 0; i < arr.length; i++) {
-                        if (i + 1 < arr.length && arr[i] === arr[i + 1]) {
-                            newArr.push(arr[i] * 2);
-                            score += arr[i] * 2;
-                            i++;
-                            merged = true;
-                        } else {
-                            newArr.push(arr[i]);
-                        }
-                    }
-                    while (newArr.length < size) newArr.push(0);
-                    return { row: newArr, merged };
-                }
-
-                function move(direction) {
-                    if (gameOver) return;
-                    let moved = false;
-                    const oldGrid = grid.map(row => [...row]);
-
-                    if (direction === 'left') {
-                        for (let y = 0; y < size; y++) {
-                            const result = slide(grid[y]);
-                            grid[y] = result.row;
-                            if (result.merged) moved = true;
-                        }
-                    } else if (direction === 'right') {
-                        for (let y = 0; y < size; y++) {
-                            const reversed = [...grid[y]].reverse();
-                            const result = slide(reversed);
-                            grid[y] = result.row.reverse();
-                            if (result.merged) moved = true;
-                        }
-                    } else if (direction === 'up') {
-                        for (let x = 0; x < size; x++) {
-                            const col = [];
-                            for (let y = 0; y < size; y++) col.push(grid[y][x]);
-                            const result = slide(col);
-                            for (let y = 0; y < size; y++) grid[y][x] = result.row[y];
-                            if (result.merged) moved = true;
-                        }
-                    } else if (direction === 'down') {
-                        for (let x = 0; x < size; x++) {
-                            const col = [];
-                            for (let y = size - 1; y >= 0; y--) col.push(grid[y][x]);
-                            const result = slide(col);
-                            for (let y = size - 1; y >= 0; y--) grid[y][x] = result.row[size - 1 - y];
-                            if (result.merged) moved = true;
-                        }
-                    }
-
-                    if (moved) {
-                        addRandomTile();
-                        scoreSpan.textContent = score;
-                        draw();
-                        if (!canMove()) {
-                            gameOver = true;
-                            gameOverDiv.textContent = '💀 Game Over';
-                        }
-                    }
-                }
-
-                function canMove() {
-                    for (let y = 0; y < size; y++) {
-                        for (let x = 0; x < size; x++) {
-                            if (grid[y][x] === 0) return true;
-                            if (x + 1 < size && grid[y][x] === grid[y][x + 1]) return true;
-                            if (y + 1 < size && grid[y][x] === grid[y + 1][x]) return true;
-                        }
-                    }
-                    return false;
-                }
-
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowLeft') move('left');
-                    else if (e.key === 'ArrowRight') move('right');
-                    else if (e.key === 'ArrowUp') move('up');
-                    else if (e.key === 'ArrowDown') move('down');
-                });
-
-                restartBtn.addEventListener('click', initGrid);
-                initGrid();
-            }
-
-            // ============================================================
-            // 17. AHORCADO
-            // ============================================================
-            function initHangman() {
-                const wordDisplay = document.getElementById('hangmanWord');
-                const hintDisplay = document.getElementById('hangmanHint');
-                const attemptsSpan = document.getElementById('hangmanAttempts');
-                const keyboardDiv = document.getElementById('hangmanKeyboard');
-                const gameOverDiv = document.getElementById('hangmanGameOver');
-                const restartBtn = document.getElementById('hangmanRestart');
-
-                const words = [
-                    { word: 'DRACO', hint: 'El nombre de esta página' },
-                    { word: 'VAMPYR', hint: 'Criatura de la noche' },
-                    { word: 'ROSE', hint: 'Una flor muy bonita' },
-                    { word: 'INFERNO', hint: 'El lugar al que vas si te portas mal' },
-                    { word: 'SNAKE', hint: 'Un reptil sin patas' },
-                    { word: 'GITHUB', hint: 'Donde guardas tu código' },
-                    { word: 'PYTHON', hint: 'Un lenguaje de programación' },
-                    { word: 'JAYDES', hint: 'Un artista musical' },
-                    { word: 'CACHALOT', hint: 'Una ballena muy grande' },
-                ];
-
-                let currentWord = '';
-                let guessed = [];
-                let attempts = 6;
-                let gameOver = false;
-
-                function pickWord() {
-                    const w = words[Math.floor(Math.random() * words.length)];
-                    currentWord = w.word;
-                    hintDisplay.textContent = '💡 Pista: ' + w.hint;
-                }
-
-                function updateDisplay() {
-                    let display = '';
-                    let allGuessed = true;
-                    for (const letter of currentWord) {
-                        if (guessed.includes(letter)) {
-                            display += letter + ' ';
-                        } else {
-                            display += '_ ';
-                            allGuessed = false;
-                        }
-                    }
-                    wordDisplay.textContent = display.trim();
-
-                    if (allGuessed && !gameOver) {
-                        gameOver = true;
-                        gameOverDiv.textContent = '🎉 ¡Has ganado!';
-                    }
-
-                    attemptsSpan.textContent = attempts;
-                }
-
-                function guessLetter(letter) {
-                    if (gameOver) return;
-                    if (guessed.includes(letter)) return;
-
-                    guessed.push(letter);
-
-                    if (!currentWord.includes(letter)) {
-                        attempts--;
-                        if (attempts === 0) {
-                            gameOver = true;
-                            gameOverDiv.textContent = '💀 Has perdido. La palabra era: ' + currentWord;
-                        }
-                    }
-
-                    updateDisplay();
-                }
-
-                function buildKeyboard() {
-                    keyboardDiv.innerHTML = '';
-                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    for (const letter of letters) {
-                        const btn = document.createElement('button');
-                        btn.textContent = letter;
-                        btn.style.cssText = `
-                            width: 40px; height: 40px;
-                            border: 1px solid #ddd;
-                            background: #f5f5f5;
-                            border-radius: 6px;
-                            font-family: 'Inter', sans-serif;
-                            font-weight: 500;
-                            font-size: 0.9rem;
-                            cursor: pointer;
-                            transition: all 0.2s ease;
-                            color: #333;
-                        `;
-                        btn.addEventListener('click', () => {
-                            guessLetter(letter);
-                            btn.disabled = true;
-                            btn.style.opacity = '0.4';
-                            btn.style.cursor = 'default';
-                        });
-                        keyboardDiv.appendChild(btn);
-                    }
-                }
-
-                function restartHangman() {
-                    guessed = [];
-                    attempts = 6;
-                    gameOver = false;
-                    gameOverDiv.textContent = '';
-                    pickWord();
-                    buildKeyboard();
-                    updateDisplay();
-                }
-
-                restartBtn.addEventListener('click', restartHangman);
-                restartHangman();
-            }
-
-            // ============================================================
-            // 18. ACTIVAR TODO
-            // ============================================================
-            function activarTodo() {
-                clickScreen.style.opacity = '0';
-                setTimeout(() => {
-                    clickScreen.style.display = 'none';
-                }, 800);
-
-                setTimeout(() => {
-                    mainContainer.classList.add('active');
-                    initParticles();
-                }, 300);
-
-                audioPlayer.src = SONG_URL;
-                audioPlayer.volume = 0.7;
-                audioPlayer.loop = false;
-                audioPlayer.play().catch(e => console.log('Error:', e));
-
-                obtenerIP();
-                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
-
-                document.querySelectorAll('.discord-copy').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const texto = this.dataset.copy;
-                        if (texto) copiarAlPortapapeles(texto);
-                    });
-                });
-
-                initTabs();
-                initSubTabs();
-
-                setTimeout(() => {
-                    lyricsContainer.innerHTML = generarLyrics();
-                    lyricsLines = document.querySelectorAll('.lyrics-line');
-
-                    const interval = setInterval(() => {
-                        if (!audioPlayer.paused) {
-                            actualizarLyrics();
-                        }
-                    }, 50);
-
-                    audioPlayer.addEventListener('pause', () => clearInterval(interval));
-                    audioPlayer.addEventListener('ended', () => clearInterval(interval));
-                }, 300);
-
-                setTimeout(() => {
-                    initSnake();
-                    initMines();
-                    init2048();
-                    initHangman();
-                }, 400);
-
-                console.log('Draco home - Activado');
-            }
-
-            // ============================================================
-            // 19. INICIAR
-            // ============================================================
-            clickScreen.addEventListener('click', activarTodo);
-
+            // Precargar botones sociales
             document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
             document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1560,9 +792,6 @@
                     if (texto) copiarAlPortapapeles(texto);
                 });
             });
-
-            initTabs();
-            initSubTabs();
 
         })();
     </script>
