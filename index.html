@@ -535,7 +535,7 @@
             }
 
             // ============================================================
-            // 6. LIENZO DE DIBUJO
+            // 6. LIENZO DE DIBUJO (ARREGLADO)
             // ============================================================
             function initCanvas() {
                 const canvas = document.getElementById('drawCanvas');
@@ -616,7 +616,7 @@
                 canvas.addEventListener('touchend', stopDraw, { passive: false });
 
                 window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
+                setTimeout(resizeCanvas, 100);
             }
 
             // ============================================================
@@ -634,10 +634,11 @@
             }
 
             // ============================================================
-            // 8. FRASE
+            // 8. FRASE (ARREGLADO)
             // ============================================================
             function cargarFrase() {
-                fetch('frase.txt')
+                const timestamp = new Date().getTime();
+                fetch('frase.txt?t=' + timestamp)
                     .then(r => r.text())
                     .then(texto => {
                         if (fraseDisplay) {
@@ -778,7 +779,7 @@
                 });
 
                 initTabs();
-                setTimeout(initCanvas, 400);
+                setTimeout(initCanvas, 500);
 
                 console.log('Draco home - Activado');
             }
