@@ -65,6 +65,9 @@
             opacity: 0;
             transition: opacity 0.8s ease;
             position: relative;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
         }
         .container.active {
             opacity: 1;
@@ -90,6 +93,7 @@
             align-items: center;
             position: relative;
             z-index: 1;
+            flex-shrink: 0;
         }
         .top-bar .title {
             font-size: 1.4rem;
@@ -136,6 +140,8 @@
             gap: 4px;
             position: relative;
             z-index: 1;
+            flex-shrink: 0;
+            overflow-x: auto;
         }
         .tab-btn {
             background: transparent;
@@ -148,6 +154,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border-bottom: 2px solid transparent;
+            white-space: nowrap;
         }
         .tab-btn:hover {
             color: #333;
@@ -165,15 +172,37 @@
             background: #ffffff;
             position: relative;
             z-index: 1;
+            flex: 1;
+            overflow: hidden;
         }
 
         .panel {
             display: none;
             animation: fadeIn 0.3s ease;
+            height: 100%;
         }
         .panel.active {
             display: block;
         }
+
+        /* ===== PANEL GAMES CON SCROLL ===== */
+        #panel-games {
+            overflow-y: auto;
+            padding-right: 5px;
+            max-height: 100%;
+        }
+        #panel-games::-webkit-scrollbar {
+            width: 4px;
+        }
+        #panel-games::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        #panel-games::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
@@ -262,6 +291,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 380px;
+            padding-bottom: 20px;
         }
         .sub-tabs {
             display: flex;
@@ -269,6 +299,7 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
+            flex-shrink: 0;
         }
         .sub-tab-btn {
             background: transparent;
@@ -297,6 +328,7 @@
             margin: 0 auto;
             text-align: center;
             animation: fadeIn 0.3s ease;
+            flex-shrink: 0;
         }
         .game-panel.active {
             display: block;
@@ -308,6 +340,8 @@
             border-radius: 10px;
             margin: 0 auto;
             display: block;
+            max-width: 100%;
+            height: auto;
         }
 
         .game-score {
@@ -321,6 +355,7 @@
             display: flex;
             gap: 12px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .game-controls button {
             background: #f5f5f5;
@@ -397,6 +432,7 @@
             font-weight: 300;
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
             .top-bar .title { font-size: 1.1rem; }
@@ -412,6 +448,10 @@
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
+            #panel-games {
+                max-height: 400px;
+                overflow-y: auto;
+            }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
@@ -426,6 +466,10 @@
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
             .game-controls { flex-wrap: wrap; gap: 8px; }
             .game-controls button { padding: 6px 14px; font-size: 0.75rem; }
+            #panel-games {
+                max-height: 350px;
+                overflow-y: auto;
+            }
         }
     </style>
 </head>
@@ -825,6 +869,11 @@
                         Object.keys(panels).forEach(key => {
                             panels[key].classList.toggle('active', key === tab);
                         });
+                        // Resetear scroll de Games al cambiar
+                        if (tab === 'games') {
+                            const panel = document.getElementById('panel-games');
+                            if (panel) panel.scrollTop = 0;
+                        }
                     });
                 });
             }
@@ -849,6 +898,9 @@
                         Object.keys(gamePanels).forEach(key => {
                             gamePanels[key].classList.toggle('active', key === game);
                         });
+                        // Scroll al inicio del juego
+                        const panel = document.getElementById('panel-games');
+                        if (panel) panel.scrollTop = 0;
                     });
                 });
             }
@@ -878,14 +930,12 @@
                     ctx.fillStyle = '#fafafa';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                    // Dibujar comida
                     ctx.fillStyle = '#cc3333';
                     ctx.beginPath();
                     ctx.arc(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize / 2 - 2, 0, Math.PI *
                     2);
                     ctx.fill();
 
-                    // Dibujar serpiente
                     snake.forEach((seg, i) => {
                         ctx.fillStyle = i === 0 ? '#1a1a1a' : '#555';
                         ctx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
@@ -897,13 +947,11 @@
 
                     const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-                    // Colisión con paredes
                     if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
                         endGame();
                         return;
                     }
 
-                    // Colisión con sí misma
                     if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
                         endGame();
                         return;
@@ -952,7 +1000,6 @@
                     pauseBtn.textContent = paused ? 'Reanudar' : 'Pausa';
                 }
 
-                // Controles teclado
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowUp' && direction.y === 0) direction = { x: 0, y: -1 };
                     else if (e.key === 'ArrowDown' && direction.y === 0) direction = { x: 0, y: 1 };
@@ -1008,7 +1055,6 @@
                             placed++;
                         }
                     }
-                    // Calcular números
                     for (let y = 0; y < size; y++) {
                         for (let x = 0; x < size; x++) {
                             if (board[y][x] === -1) continue;
@@ -1083,7 +1129,6 @@
                     if (board[y][x] === -1) {
                         gameOver = true;
                         gameOverDiv.textContent = '💀 ¡Has perdido!';
-                        // Revelar todas las minas
                         for (let py = 0; py < size; py++) {
                             for (let px = 0; px < size; px++) {
                                 if (board[py][px] === -1) revealed[py][px] = true;
@@ -1101,7 +1146,6 @@
                         }
                     }
 
-                    // Comprobar victoria
                     let allRevealed = true;
                     for (let py = 0; py < size; py++) {
                         for (let px = 0; px < size; px++) {
@@ -1132,7 +1176,6 @@
                     }
 
                     if (e.button === 2) {
-                        // Clic derecho = bandera
                         if (!revealed[y][x]) {
                             flagged[y][x] = !flagged[y][x];
                             draw();
@@ -1305,7 +1348,6 @@
                         addRandomTile();
                         scoreSpan.textContent = score;
                         draw();
-                        // Check game over
                         if (!canMove()) {
                             gameOver = true;
                             gameOverDiv.textContent = '💀 Game Over';
@@ -1495,7 +1537,6 @@
                     audioPlayer.addEventListener('ended', () => clearInterval(interval));
                 }, 300);
 
-                // Inicializar juegos
                 setTimeout(() => {
                     initSnake();
                     initMines();
