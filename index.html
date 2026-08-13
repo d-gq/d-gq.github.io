@@ -271,6 +271,57 @@
             letter-spacing: 4px;
         }
 
+        /* ===== SOCIAL ===== */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .social-btn {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: block;
+            letter-spacing: 0.3px;
+        }
+        .social-btn:hover {
+            background: #eee;
+            border-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+        }
+        .panel-sub {
+            text-align: center;
+            color: #999;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
         /* ===== MUSIC ===== */
         .music-container {
             display: flex;
@@ -425,57 +476,6 @@
             height: 12px;
         }
 
-        /* ===== SOCIAL ===== */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 14px;
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .social-btn {
-            background: #f5f5f5;
-            border: 1px solid #e8e8e8;
-            border-radius: 10px;
-            padding: 14px 12px;
-            text-align: center;
-            color: #333;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            display: block;
-            letter-spacing: 0.3px;
-        }
-        .social-btn:hover {
-            background: #eee;
-            border-color: #ccc;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .panel-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            text-align: center;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-        }
-        .panel-sub {
-            text-align: center;
-            color: #999;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 300;
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
@@ -553,9 +553,9 @@
 
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
+            <button class="tab-btn" data-tab="about">Social</button>
             <button class="tab-btn" data-tab="music">Music</button>
             <button class="tab-btn" data-tab="lyrics">Lyrics</button>
-            <button class="tab-btn" data-tab="about">Social</button>
         </div>
 
         <div class="content-area">
@@ -564,9 +564,16 @@
             <div class="panel active" id="panel-home">
                 <div class="home-container">
                     <div class="home-greeting">Hola, <span id="userNameDisplay">invitado</span></div>
-                    <div class="home-sub">Bienvenido a tu espacio</div>
+                    <div class="home-sub">Bienvenido al espacio de Draco</div>
                     <div class="home-footer">✦ ✦ ✦</div>
                 </div>
+            </div>
+
+            <!-- ===== SOCIAL ===== -->
+            <div class="panel" id="panel-about">
+                <div class="panel-title">Social</div>
+                <div class="panel-sub">(-_-")</div>
+                <div class="social-grid" id="social-about"></div>
             </div>
 
             <!-- ===== MUSIC ===== -->
@@ -601,13 +608,6 @@
                 <div class="lyrics-container" id="lyricsContainer"></div>
             </div>
 
-            <!-- ===== SOCIAL ===== -->
-            <div class="panel" id="panel-about">
-                <div class="panel-title">Social</div>
-                <div class="panel-sub">(-_-")</div>
-                <div class="social-grid" id="social-about"></div>
-            </div>
-
         </div>
     </div>
 
@@ -631,9 +631,9 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
+                about: document.getElementById('panel-about'),
                 music: document.getElementById('panel-music'),
                 lyrics: document.getElementById('panel-lyrics'),
-                about: document.getElementById('panel-about'),
             };
             const audioPlayer = document.getElementById('audioPlayer');
             const clockDisplay = document.getElementById('clockDisplay');
@@ -970,87 +970,7 @@
             }
 
             // ============================================================
-            // 10. LOGIN
-            // ============================================================
-            function handleLogin() {
-                const name = nameInput.value.trim();
-                if (name === '') {
-                    loginError.textContent = 'Por favor, escribe tu nombre.';
-                    return;
-                }
-                if (name.length < 2) {
-                    loginError.textContent = 'El nombre debe tener al menos 2 letras.';
-                    return;
-                }
-
-                localStorage.setItem('draco_user', name);
-
-                loginScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loginScreen.style.display = 'none';
-                }, 800);
-
-                setTimeout(() => {
-                    mainContainer.classList.add('active');
-                    initParticles();
-                }, 300);
-
-                userNameDisplay.textContent = name;
-                greetingDisplay.textContent = 'Welcome, ' + name;
-
-                // ===== ARREGLO: Cargar música y playlist con retraso =====
-                setTimeout(() => {
-                    loadSong(0);
-                    generarPlaylist();
-
-                    audioPlayer.addEventListener('timeupdate', updateProgress);
-                    audioPlayer.addEventListener('ended', nextSong);
-
-                    // Eventos del reproductor
-                    playBtn.addEventListener('click', togglePlay);
-                    prevBtn.addEventListener('click', prevSong);
-                    nextBtn.addEventListener('click', nextSong);
-
-                    progressBar.addEventListener('mousedown', function(e) {
-                        isDragging = true;
-                        const rect = this.getBoundingClientRect();
-                        const percent = (e.clientX - rect.left) / rect.width;
-                        audioPlayer.currentTime = percent * audioPlayer.duration;
-                        progressFill.style.width = percent * 100 + '%';
-                    });
-
-                    document.addEventListener('mousemove', function(e) {
-                        if (isDragging) {
-                            const rect = progressBar.getBoundingClientRect();
-                            let percent = (e.clientX - rect.left) / rect.width;
-                            percent = Math.max(0, Math.min(1, percent));
-                            audioPlayer.currentTime = percent * audioPlayer.duration;
-                            progressFill.style.width = percent * 100 + '%';
-                        }
-                    });
-
-                    document.addEventListener('mouseup', function() {
-                        isDragging = false;
-                    });
-                }, 200);
-
-                obtenerIP();
-                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
-
-                document.querySelectorAll('.discord-copy').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const texto = this.dataset.copy;
-                        if (texto) copiarAlPortapapeles(texto);
-                    });
-                });
-
-                initTabs();
-
-                console.log('Draco home - Activado como:', name);
-            }
-
-            // ============================================================
-            // 11. BOTONES SOCIAL
+            // 10. BOTONES SOCIAL
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -1081,7 +1001,7 @@
             ];
 
             // ============================================================
-            // 12. COPIAR
+            // 11. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1130,7 +1050,7 @@
             }
 
             // ============================================================
-            // 13. PESTAÑAS
+            // 12. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -1146,14 +1066,87 @@
             }
 
             // ============================================================
-            // 14. INICIAR
+            // 13. LOGIN
             // ============================================================
-            const savedName = localStorage.getItem('draco_user');
-            if (savedName) {
-                nameInput.value = savedName;
-                setTimeout(handleLogin, 350);
+            function handleLogin() {
+                const name = nameInput.value.trim();
+                if (name === '') {
+                    loginError.textContent = 'Por favor, escribe tu nombre.';
+                    return;
+                }
+                if (name.length < 2) {
+                    loginError.textContent = 'El nombre debe tener al menos 2 letras.';
+                    return;
+                }
+
+                localStorage.setItem('draco_user', name);
+
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                }, 800);
+
+                setTimeout(() => {
+                    mainContainer.classList.add('active');
+                    initParticles();
+                }, 300);
+
+                userNameDisplay.textContent = name;
+                greetingDisplay.textContent = 'Welcome, ' + name;
+
+                // Cargar música y playlist
+                setTimeout(() => {
+                    loadSong(0);
+                    generarPlaylist();
+
+                    audioPlayer.addEventListener('timeupdate', updateProgress);
+                    audioPlayer.addEventListener('ended', nextSong);
+
+                    playBtn.addEventListener('click', togglePlay);
+                    prevBtn.addEventListener('click', prevSong);
+                    nextBtn.addEventListener('click', nextSong);
+
+                    progressBar.addEventListener('mousedown', function(e) {
+                        isDragging = true;
+                        const rect = this.getBoundingClientRect();
+                        const percent = (e.clientX - rect.left) / rect.width;
+                        audioPlayer.currentTime = percent * audioPlayer.duration;
+                        progressFill.style.width = percent * 100 + '%';
+                    });
+
+                    document.addEventListener('mousemove', function(e) {
+                        if (isDragging) {
+                            const rect = progressBar.getBoundingClientRect();
+                            let percent = (e.clientX - rect.left) / rect.width;
+                            percent = Math.max(0, Math.min(1, percent));
+                            audioPlayer.currentTime = percent * audioPlayer.duration;
+                            progressFill.style.width = percent * 100 + '%';
+                        }
+                    });
+
+                    document.addEventListener('mouseup', function() {
+                        isDragging = false;
+                    });
+                }, 200);
+
+                // Social
+                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
+                document.querySelectorAll('.discord-copy').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const texto = this.dataset.copy;
+                        if (texto) copiarAlPortapapeles(texto);
+                    });
+                });
+
+                obtenerIP();
+                initTabs();
+
+                console.log('Draco home - Activado como:', name);
             }
 
+            // ============================================================
+            // 14. INICIAR
+            // ============================================================
             loginBtn.addEventListener('click', handleLogin);
             nameInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
@@ -1161,8 +1154,8 @@
                 }
             });
 
+            // Precargar social
             document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
-
             document.querySelectorAll('.discord-copy').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const texto = this.dataset.copy;
