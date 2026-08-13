@@ -19,7 +19,9 @@
     </script>
 
     <style>
-        /* ===== RESET ===== */
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -1232,23 +1234,17 @@
     }];
 
     // ============================================================
-    // 6. AUTH FUNCTIONS (CORREGIDAS)
+    // 6. AUTH FUNCTIONS
     // ============================================================
     function showError(msg) {
         loginError.textContent = msg;
         loginSuccess.textContent = '';
-        // Ocultar mensaje después de 5 segundos
-        setTimeout(() => {
-            if (loginError.textContent === msg) {
-                loginError.textContent = '';
-            }
-        }, 5000);
+        // Los mensajes de verificación NO se borran solos
     }
 
     function showSuccess(msg) {
         loginSuccess.textContent = msg;
         loginError.textContent = '';
-        // Ocultar mensaje después de 5 segundos
         setTimeout(() => {
             if (loginSuccess.textContent === msg) {
                 loginSuccess.textContent = '';
@@ -1262,17 +1258,16 @@
                 const user = userCredential.user;
                 console.log('Usuario creado, UID:', user.uid);
                 
-                // Actualizar el nombre
                 return updateProfile(user, { displayName: displayName })
                     .then(() => {
                         console.log('Nombre actualizado:', displayName);
-                        // Enviar correo de verificación
                         return sendEmailVerification(user);
                     })
                     .then(() => {
                         console.log('Correo de verificación enviado a:', email);
                         showSuccess('✅ Account created! Check your email to verify.');
-                        // Cerrar sesión para forzar la verificación
+                        // Mostrar mensaje permanente de verificación
+                        loginError.textContent = '📧 Please verify your email before logging in. Check your inbox.';
                         return signOut(auth);
                     });
             })
@@ -1291,7 +1286,7 @@
             .then((userCredential) => {
                 const user = userCredential.user;
                 if (!user.emailVerified) {
-                    showError('📧 Please verify your email before logging in. Check your inbox.');
+                    loginError.textContent = '📧 Please verify your email before logging in. Check your inbox.';
                     signOut(auth);
                     return;
                 }
@@ -1414,18 +1409,17 @@
     });
 
     // ============================================================
-    // 9. AUTH OBSERVER (CON VERIFICACIÓN)
+    // 9. AUTH OBSERVER (CON VERIFICACIÓN PERMANENTE)
     // ============================================================
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         
         if (user) {
-            // 🔥 COMPROBAR SI EL EMAIL ESTÁ VERIFICADO
+            // 🔥 SI NO ESTÁ VERIFICADO, EL MENSAJE SE QUEDA
             if (!user.emailVerified) {
                 loginError.textContent = '📧 Please verify your email before accessing the page. Check your inbox.';
                 mainContainer.classList.remove('active');
                 loginScreen.style.display = 'flex';
-                // Deslogear automáticamente
                 signOut(auth);
                 return;
             }
@@ -1455,8 +1449,8 @@
         } else {
             loginScreen.style.display = 'flex';
             mainContainer.classList.remove('active');
-            loginError.textContent = '';
-            loginSuccess.textContent = '';
+            // No borramos el mensaje de verificación si está ahí
+            // (se mantiene hasta que el usuario verifique)
             isLoginMode = true;
             loginBtn.textContent = 'Sign in';
             switchBtn.textContent = 'Create account';
@@ -1473,8 +1467,7 @@
         loginBtn.textContent = isLoginMode ? 'Sign in' : 'Register';
         switchBtn.textContent = isLoginMode ? 'Create account' : 'Back to sign in';
         nameInput.style.display = isLoginMode ? 'none' : 'block';
-        loginError.textContent = '';
-        loginSuccess.textContent = '';
+        // No borramos el mensaje de verificación
     });
 
     loginBtn.addEventListener('click', () => {
