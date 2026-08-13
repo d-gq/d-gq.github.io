@@ -80,7 +80,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.25;
+            opacity: 0.2;
             border-radius: 16px;
         }
 
@@ -184,43 +184,48 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== HOME (lyrics) ===== */
+        /* ===== HOME (lyrics clean) ===== */
         .home-container {
             position: relative;
-            height: 360px;
+            height: 380px;
             overflow: hidden;
             border-radius: 10px;
             background: #fafafa;
             border: 1px solid #eee;
-            padding: 20px 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        .lyrics-scroll {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .lyrics-wrapper {
             width: 100%;
-            padding: 10px 20px;
-            transition: transform 0.3s ease;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
         }
         .lyrics-line {
-            font-size: 1.2rem;
-            color: #888;
-            padding: 6px 0;
+            font-size: 1.3rem;
+            color: #aaa;
+            padding: 8px 0;
             font-family: 'Georgia', 'Times New Roman', serif;
-            text-align: center;
-            transition: all 0.3s ease;
-            letter-spacing: 0.3px;
+            transition: all 0.4s ease;
+            letter-spacing: 0.5px;
             line-height: 1.6;
+            opacity: 0.5;
+            transform: scale(0.95);
         }
         .lyrics-line.active {
             color: #1a1a1a;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 600;
+            opacity: 1;
+            transform: scale(1);
         }
         .home-footer {
-            margin-top: 15px;
-            font-size: 0.65rem;
-            color: #bbb;
+            margin-top: 20px;
+            font-size: 0.6rem;
+            color: #ccc;
             letter-spacing: 4px;
             text-align: center;
         }
@@ -284,9 +289,9 @@
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
-            .home-container { height: 280px; }
+            .home-container { height: 320px; padding: 20px; }
             .lyrics-line { font-size: 1rem; }
-            .lyrics-line.active { font-size: 1.3rem; }
+            .lyrics-line.active { font-size: 1.4rem; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
@@ -295,9 +300,9 @@
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .home-container { height: 220px; }
-            .lyrics-line { font-size: 0.85rem; }
-            .lyrics-line.active { font-size: 1.1rem; }
+            .home-container { height: 260px; padding: 15px; }
+            .lyrics-line { font-size: 0.85rem; padding: 4px 0; }
+            .lyrics-line.active { font-size: 1.2rem; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
         }
@@ -348,7 +353,9 @@
             <!-- ========== HOME (Lyrics) ========== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container" id="homeContainer">
-                    <div class="lyrics-scroll" id="lyricsScroll"></div>
+                    <div class="lyrics-wrapper" id="lyricsWrapper">
+                        <!-- Las líneas se generan con JavaScript -->
+                    </div>
                     <div class="home-footer">✦ ✦ ✦</div>
                 </div>
             </div>
@@ -387,7 +394,7 @@
             const clockDisplay = document.getElementById('clockDisplay');
             const visitasDisplay = document.getElementById('visitasDisplay');
             const ipDisplay = document.getElementById('ipDisplay');
-            const lyricsScroll = document.getElementById('lyricsScroll');
+            const lyricsWrapper = document.getElementById('lyricsWrapper');
 
             // ============================================================
             // 2. CANCIÓN
@@ -395,7 +402,7 @@
             const SONG_URL = 'https://d-gq.github.io/jaydes.mp3';
 
             // ============================================================
-            // 3. LETRA SINCRONIZADA
+            // 3. LETRA COMPLETA (sin cortes)
             // ============================================================
             const lyrics = [
                 { time: 0, text: "Cuts on my hands, I can't hold yours" },
@@ -508,18 +515,18 @@
             }
 
             // ============================================================
-            // 8. GENERAR LYRICS HTML
+            // 8. GENERAR LYRICS (limpio y centrado)
             // ============================================================
             function generarLyrics() {
                 let html = '';
-                lyrics.forEach((line, index) => {
-                    html += `<div class="lyrics-line" data-index="${index}" data-time="${line.time}">${line.text}</div>`;
+                lyrics.forEach((line) => {
+                    html += `<div class="lyrics-line" data-time="${line.time}">${line.text}</div>`;
                 });
                 return html;
             }
 
             // ============================================================
-            // 9. ACTUALIZAR LYRICS SEGÚN EL TIEMPO DEL AUDIO
+            // 9. ACTUALIZAR LYRICS
             // ============================================================
             let currentLineIndex = -1;
             let lyricsLines = [];
@@ -540,14 +547,6 @@
                     lyricsLines.forEach((el, i) => {
                         el.classList.toggle('active', i === activeIndex);
                     });
-
-                    // Scroll automático
-                    if (activeIndex >= 0 && lyricsLines[activeIndex]) {
-                        const container = document.getElementById('homeContainer');
-                        const activeEl = lyricsLines[activeIndex];
-                        const scrollTop = activeEl.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2;
-                        lyricsScroll.style.transform = `translateY(-${scrollTop}px)`;
-                    }
                 }
             }
 
@@ -678,19 +677,18 @@
 
                 initTabs();
 
-                // Inicializar lyrics después de que el panel esté visible
+                // Inicializar lyrics
                 setTimeout(() => {
-                    lyricsScroll.innerHTML = generarLyrics();
+                    lyricsWrapper.innerHTML = generarLyrics();
                     lyricsLines = document.querySelectorAll('.lyrics-line');
 
-                    // Actualizar cada 100ms durante la reproducción
+                    // Actualizar cada 100ms
                     const interval = setInterval(() => {
                         if (!audioPlayer.paused) {
                             actualizarLyrics();
                         }
                     }, 100);
 
-                    // Limpiar intervalo cuando se pausa o termina
                     audioPlayer.addEventListener('pause', () => clearInterval(interval));
                     audioPlayer.addEventListener('ended', () => clearInterval(interval));
                 }, 300);
