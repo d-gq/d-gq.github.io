@@ -256,6 +256,35 @@
             font-family: 'Inter', sans-serif;
         }
 
+        /* ===== LOGOUT BUTTON (estilo consistente con los badges) ===== */
+        #logoutBtn {
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            color: #888;
+            background: #f5f5f5;
+        }
+        #logoutBtn:hover {
+            background: #eee;
+            border-color: #ccc;
+            color: #333;
+        }
+        body.dark-mode #logoutBtn {
+            border-color: #444;
+            color: #aaa;
+            background: #2a2a2a;
+        }
+        body.dark-mode #logoutBtn:hover {
+            background: #333;
+            border-color: #555;
+            color: #eee;
+        }
+
         .switch-btn {
             background: transparent;
             border: 1px solid #ddd;
@@ -649,6 +678,7 @@
             .wall-container { height: 320px; }
             .wall-input-area input { font-size: 0.85rem; }
             .wall-input-area button { font-size: 0.85rem; padding: 8px 16px; }
+            #logoutBtn { font-size: 0.7rem; padding: 3px 10px; }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
@@ -675,6 +705,7 @@
             .wall-post { padding: 10px 12px; }
             .wall-post .author { font-size: 0.85rem; }
             .wall-post .content { font-size: 0.85rem; }
+            #logoutBtn { font-size: 0.6rem; padding: 2px 8px; }
         }
     </style>
 </head>
@@ -721,7 +752,7 @@
                 <span class="separator">|</span>
                 <button id="themeToggle" title="Toggle theme">◈</button>
                 <span class="separator">|</span>
-                <button id="logoutBtn" style="background:none; border:1px solid #ddd; border-radius:20px; padding:4px 12px; font-size:0.85rem; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.2s ease;">Logout</button>
+                <button id="logoutBtn">Logout</button>
             </div>
         </div>
 
@@ -1016,12 +1047,11 @@
     function registerUser(email, password, displayName) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                // Guardar el nombre en el perfil de Firebase
-                return updateProfile(userCredential.user, { displayName: displayName });
-            })
-            .then(() => {
-                showSuccess('Account created! Welcome.');
-                console.log('User registered:', email);
+                return updateProfile(userCredential.user, { displayName: displayName })
+                    .then(() => {
+                        console.log('Nombre guardado correctamente:', displayName);
+                        showSuccess('Account created! Welcome, ' + displayName + '!');
+                    });
             })
             .catch((error) => {
                 let msg = 'Registration error.';
@@ -1036,7 +1066,9 @@
     function loginUser(email, password) {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
-                showSuccess('Logged in! Welcome back.');
+                const user = auth.currentUser;
+                const displayName = user?.displayName || user?.email?.split('@')[0] || 'user';
+                showSuccess('Logged in! Welcome back, ' + displayName);
                 console.log('User logged in:', email);
             })
             .catch((error) => {
@@ -1077,14 +1109,15 @@
                 const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
                 const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
                 
+                const authorName = data.author || 'Anonymous';
+                
                 postDiv.innerHTML = `
-                    <span class="author">${data.author || 'Anonymous'}</span>
+                    <span class="author">${authorName}</span>
                     <span class="date">${dateStr}</span>
                     ${isAuthor ? `<button class="delete-btn" data-id="${postId}">✕</button>` : ''}
                     <div class="content">${data.text || ''}</div>
                 `;
                 
-                // Delete functionality
                 const deleteBtn = postDiv.querySelector('.delete-btn');
                 if (deleteBtn) {
                     deleteBtn.addEventListener('click', async () => {
@@ -1100,7 +1133,6 @@
                 
                 wallPosts.appendChild(postDiv);
             });
-            // Scroll to top to see newest posts
             wallPosts.scrollTop = 0;
         }, (error) => {
             console.error('Error loading posts:', error);
@@ -1140,21 +1172,19 @@
             userNameDisplay.textContent = displayName;
             greetingDisplay.textContent = 'Welcome, ' + displayName;
             
-            // Load music after login
+            console.log('Usuario logueado con nombre:', displayName);
+            
             loadSong(0);
             generatePlaylist();
             audioPlayer.play().catch(e => console.log('Play error:', e));
             
-            // Init particles
             initParticles();
             getIP();
             updateGlobalCounter();
             initTabs();
             
-            // Load wall posts
             loadPosts();
             
-            // Post button
             postBtn.addEventListener('click', publishPost);
             postInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') publishPost();
@@ -1168,8 +1198,6 @@
             loginBtn.textContent = 'Sign in';
             switchBtn.textContent = 'Create account';
             nameInput.style.display = 'none';
-            
-            // Clean up wall listeners
             wallPosts.innerHTML = '';
         }
     });
@@ -1216,7 +1244,6 @@
     nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
     logoutBtn.addEventListener('click', logoutUser);
 
-    // Hide name input initially (login mode)
     nameInput.style.display = 'none';
 
     // ============================================================
