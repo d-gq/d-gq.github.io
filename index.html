@@ -24,7 +24,6 @@
             overflow: hidden;
         }
 
-        /* ===== PANTALLA DE ENTRADA ===== */
         #clickScreen {
             position: fixed;
             top: 0;
@@ -56,7 +55,6 @@
             font-weight: 300;
         }
 
-        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             width: 900px;
             max-width: 100%;
@@ -72,7 +70,6 @@
             opacity: 1;
         }
 
-        /* ===== PARTICULAS ===== */
         #particles-canvas {
             position: absolute;
             top: 0;
@@ -85,7 +82,6 @@
             border-radius: 16px;
         }
 
-        /* ===== BARRA SUPERIOR ===== */
         .top-bar {
             padding: 20px 30px;
             border-bottom: 1px solid #eee;
@@ -132,7 +128,6 @@
             color: #ddd;
         }
 
-        /* ===== PESTAÑAS ===== */
         .tabs {
             display: flex;
             background: #fafafa;
@@ -164,7 +159,6 @@
             background: transparent;
         }
 
-        /* ===== CONTENIDO ===== */
         .content-area {
             padding: 30px 35px;
             min-height: 380px;
@@ -226,14 +220,14 @@
             font-weight: 400;
             letter-spacing: 0.3px;
             line-height: 1.6;
-            opacity: 0.2;
             text-align: center;
             width: 100%;
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%) scale(0.85);
-            transition: all 0.4s ease;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease, color 0.8s ease;
         }
         .lyrics-line.active {
             color: #1a1a1a;
@@ -243,12 +237,16 @@
             transform: translate(-50%, -50%) scale(1);
         }
         .lyrics-line.before {
-            opacity: 0.15;
-            transform: translate(-50%, calc(-50% - 50px)) scale(0.75);
+            opacity: 0;
+            transform: translate(-50%, calc(-50% - 40px)) scale(0.8);
         }
         .lyrics-line.after {
-            opacity: 0.1;
-            transform: translate(-50%, calc(-50% + 50px)) scale(0.75);
+            opacity: 0;
+            transform: translate(-50%, calc(-50% + 40px)) scale(0.8);
+        }
+        .lyrics-line.fade-out {
+            opacity: 0 !important;
+            transform: translate(-50%, -50%) scale(0.7) !important;
         }
         .home-footer {
             margin-top: 10px;
@@ -258,7 +256,6 @@
             text-align: center;
         }
 
-        /* ===== BOTONES SOCIAL ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -309,7 +306,6 @@
             font-weight: 300;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
             .top-bar .title { font-size: 1.1rem; }
@@ -340,18 +336,14 @@
 </head>
 <body>
 
-    <!-- ===== PANTALLA DE ENTRADA ===== -->
     <div id="clickScreen">
         <div class="icon">▶</div>
         <div class="sub">C L I C K &nbsp; T O &nbsp; E N T E R</div>
     </div>
 
-    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
     <div class="container" id="mainContainer">
-
         <canvas id="particles-canvas"></canvas>
 
-        <!-- ===== BARRA SUPERIOR ===== -->
         <div class="top-bar">
             <div class="title">✦ <span>Welcome</span></div>
             <div class="right">
@@ -371,28 +363,22 @@
             </div>
         </div>
 
-        <!-- ===== PESTAÑAS ===== -->
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
             <button class="tab-btn" data-tab="about">Socialmedia</button>
         </div>
 
-        <!-- ===== CONTENIDO ===== -->
         <div class="content-area">
 
-            <!-- ========== HOME (Lyrics) ========== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container" id="homeContainer">
-                    <div class="lyrics-wrapper" id="lyricsWrapper">
-                        <div class="lyrics-container" id="lyricsContainer">
-                            <!-- Las líneas se generan con JavaScript -->
-                        </div>
+                    <div class="lyrics-wrapper">
+                        <div class="lyrics-container" id="lyricsContainer"></div>
                     </div>
                     <div class="home-footer">✦ ✦ ✦</div>
                 </div>
             </div>
 
-            <!-- ========== SOCIALMEDIA ========== -->
             <div class="panel" id="panel-about">
                 <div class="panel-title">Socialmedia</div>
                 <div class="panel-sub">(-_-")</div>
@@ -402,12 +388,8 @@
         </div>
     </div>
 
-    <!-- ===== AUDIO OCULTO ===== -->
     <audio id="audioPlayer" loop></audio>
 
-    <!-- ============================================================ -->
-    <!-- JAVASCRIPT -->
-    <!-- ============================================================ -->
     <script>
         (function() {
             "use strict";
@@ -434,21 +416,22 @@
             const SONG_URL = 'https://d-gq.github.io/rose.mp3';
 
             // ============================================================
-            // 3. LETRA COMPLETA CON TIMESTAMPS
+            // 3. LETRA CON TIEMPOS AJUSTADOS (-0.5s)
             // ============================================================
             const lyrics = [
-                { time: 1.79, text: "Knew from the start it would end this way" },
-                { time: 12.43, text: "Tell me how it feels to fade away, away from me" },
-                { time: 25.84, text: "Why won't you run away from this world to escape" },
-                { time: 34.08, text: "(Run away from this world to escape)" },
-                { time: 40.16, text: "I can't believe a word you said to me" },
-                { time: 46.65, text: "Don't say it to me" },
-                { time: 49.91, text: "Knew from the start it would end this way" },
-                { time: 62.20, text: "Tell me how it feels to fade away, away from me" },
-                { time: 75.53, text: "Why won't you run away from this world to escape" },
-                { time: 84.29, text: "(Run away from this world to escape)" },
-                { time: 90.16, text: "I can't believe a word you said to me" },
-                { time: 96.92, text: "Don't say it to me" },
+                { time: 1.29, text: "Knew from the start it would end this way" },
+                { time: 11.93, text: "Tell me how it feels to fade away, away from me" },
+                { time: 25.34, text: "Why won't you run away from this world to escape" },
+                { time: 33.58, text: "(Run away from this world to escape)" },
+                { time: 39.66, text: "I can't believe a word you said to me" },
+                { time: 46.15, text: "Don't say it to me" },
+                { time: 49.41, text: "Knew from the start it would end this way" },
+                { time: 61.70, text: "Tell me how it feels to fade away, away from me" },
+                { time: 75.03, text: "Why won't you run away from this world to escape" },
+                { time: 83.79, text: "(Run away from this world to escape)" },
+                { time: 89.66, text: "I can't believe a word you said to me" },
+                { time: 96.42, text: "Don't say it to me" },
+                { time: 99.50, text: "" }, // línea vacía para fade out final
             ];
 
             // ============================================================
@@ -554,11 +537,11 @@
             }
 
             // ============================================================
-            // 9. ACTUALIZAR LYRICS
+            // 9. ACTUALIZAR LYRICS (con fade in/out)
             // ============================================================
             let currentLineIndex = -1;
             let lyricsLines = [];
-            let updateTimeout = null;
+            let isFadingOut = false;
 
             function actualizarLyrics() {
                 const currentTime = audioPlayer.currentTime;
@@ -574,14 +557,24 @@
                 if (activeIndex !== currentLineIndex) {
                     currentLineIndex = activeIndex;
                     lyricsLines.forEach((el, i) => {
-                        el.classList.remove('active', 'before', 'after');
-                        if (i === activeIndex) {
+                        el.classList.remove('active', 'before', 'after', 'fade-out');
+                        if (i === activeIndex && lyrics[i].text !== '') {
                             el.classList.add('active');
                         } else if (i === activeIndex - 1) {
                             el.classList.add('before');
                         } else if (i === activeIndex + 1) {
                             el.classList.add('after');
+                        } else if (i === lyrics.length - 1 && activeIndex === lyrics.length - 1) {
+                            el.classList.add('fade-out');
                         }
+                    });
+                }
+
+                // Fade out general cuando hay silencio
+                if (currentTime > 97 && currentTime < 98) {
+                    lyricsLines.forEach(el => {
+                        el.classList.remove('active');
+                        el.classList.add('fade-out');
                     });
                 }
             }
