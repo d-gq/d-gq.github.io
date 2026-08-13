@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> (#_0) </title>
+    <title>(#_0)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===== RESET ===== */
@@ -1094,40 +1094,39 @@
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                // Cargar música y playlist
-                setTimeout(() => {
-                    loadSong(0);
-                    generarPlaylist();
+                // ===== ARREGLO: Cargar música y playlist DIRECTAMENTE =====
+                // Sin setTimeout, directamente después de mostrar la página
+                loadSong(0);
+                generarPlaylist();
 
-                    audioPlayer.addEventListener('timeupdate', updateProgress);
-                    audioPlayer.addEventListener('ended', nextSong);
+                audioPlayer.addEventListener('timeupdate', updateProgress);
+                audioPlayer.addEventListener('ended', nextSong);
 
-                    playBtn.addEventListener('click', togglePlay);
-                    prevBtn.addEventListener('click', prevSong);
-                    nextBtn.addEventListener('click', nextSong);
+                playBtn.addEventListener('click', togglePlay);
+                prevBtn.addEventListener('click', prevSong);
+                nextBtn.addEventListener('click', nextSong);
 
-                    progressBar.addEventListener('mousedown', function(e) {
-                        isDragging = true;
-                        const rect = this.getBoundingClientRect();
-                        const percent = (e.clientX - rect.left) / rect.width;
+                progressBar.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    const rect = this.getBoundingClientRect();
+                    const percent = (e.clientX - rect.left) / rect.width;
+                    audioPlayer.currentTime = percent * audioPlayer.duration;
+                    progressFill.style.width = percent * 100 + '%';
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (isDragging) {
+                        const rect = progressBar.getBoundingClientRect();
+                        let percent = (e.clientX - rect.left) / rect.width;
+                        percent = Math.max(0, Math.min(1, percent));
                         audioPlayer.currentTime = percent * audioPlayer.duration;
                         progressFill.style.width = percent * 100 + '%';
-                    });
+                    }
+                });
 
-                    document.addEventListener('mousemove', function(e) {
-                        if (isDragging) {
-                            const rect = progressBar.getBoundingClientRect();
-                            let percent = (e.clientX - rect.left) / rect.width;
-                            percent = Math.max(0, Math.min(1, percent));
-                            audioPlayer.currentTime = percent * audioPlayer.duration;
-                            progressFill.style.width = percent * 100 + '%';
-                        }
-                    });
-
-                    document.addEventListener('mouseup', function() {
-                        isDragging = false;
-                    });
-                }, 200);
+                document.addEventListener('mouseup', function() {
+                    isDragging = false;
+                });
 
                 // Social
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
