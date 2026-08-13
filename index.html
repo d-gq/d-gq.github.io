@@ -112,13 +112,23 @@
             color: #888;
             font-weight: 400;
         }
-        .top-bar .right .clock {
-            font-variant-numeric: tabular-nums;
-            letter-spacing: 0.5px;
+        .top-bar .right .badge {
             background: #f5f5f5;
             padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid #eee;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-bar .right .badge .icon {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        .top-bar .right .separator {
+            color: #ddd;
         }
 
         /* ===== PESTAÑAS ===== */
@@ -283,9 +293,10 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
-            .top-bar { padding: 16px 20px; flex-direction: column; gap: 6px; }
+            .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
             .top-bar .title { font-size: 1.1rem; }
             .top-bar .right { font-size: 0.7rem; gap: 10px; flex-wrap: wrap; justify-content: center; }
+            .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
             .home-container { height: 280px; }
@@ -302,6 +313,7 @@
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 240px; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
+            .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
         }
     </style>
 </head>
@@ -323,9 +335,19 @@
         <div class="top-bar">
             <div class="title">✦ <span>Welcome</span></div>
             <div class="right">
-                <span class="clock" id="clockDisplay">--:--:--</span>
-                <span style="color:#ddd;">|</span>
-                <span id="visitasDisplay">👁️ 0</span>
+                <span class="badge" id="ipBadge">
+                    <span class="icon">👁</span>
+                    <span id="ipDisplay">0.0.0.0</span>
+                </span>
+                <span class="separator">|</span>
+                <span class="badge" id="clockBadge">
+                    <span id="clockDisplay">--:--:--</span>
+                </span>
+                <span class="separator">|</span>
+                <span class="badge" id="visitasBadge">
+                    <span class="icon">👁</span>
+                    <span id="visitasDisplay">0</span>
+                </span>
             </div>
         </div>
 
@@ -381,6 +403,7 @@
             const audioPlayer = document.getElementById('audioPlayer');
             const clockDisplay = document.getElementById('clockDisplay');
             const visitasDisplay = document.getElementById('visitasDisplay');
+            const ipDisplay = document.getElementById('ipDisplay');
 
             // ============================================================
             // 2. CANCIÓN
@@ -393,7 +416,7 @@
             let visitas = parseInt(localStorage.getItem('draco_visitas')) || 0;
             visitas += 1;
             localStorage.setItem('draco_visitas', visitas);
-            visitasDisplay.textContent = '👁 ' + visitas;
+            visitasDisplay.textContent = visitas;
 
             // ============================================================
             // 4. RELOJ EN TIEMPO REAL
@@ -409,7 +432,7 @@
             setInterval(actualizarReloj, 1000);
 
             // ============================================================
-            // 5. PARTÍCULAS (solo en Home)
+            // 5. PARTÍCULAS
             // ============================================================
             function initParticles() {
                 const canvas = document.getElementById('particles-canvas');
@@ -446,7 +469,6 @@
                         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                         ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
                         ctx.fill();
-                        // mover
                         p.x += p.vx;
                         p.y += p.vy;
                         if (p.x < 0 || p.x > width) p.vx *= -1;
@@ -466,7 +488,7 @@
             }
 
             // ============================================================
-            // 6. RECOLECTAR INFO
+            // 6. RECOLECTAR INFO (sin IP en el scroll)
             // ============================================================
             function recolectarInfoCompleta(callback) {
                 const info = {};
@@ -550,6 +572,8 @@
                         info.ciudad = data.city || 'Desconocida';
                         info.isp = data.org || 'Desconocido';
                         info.pais = data.country_name || 'Desconocido';
+                        // Actualizar IP en la barra superior
+                        ipDisplay.textContent = info.ip;
                         callback(info);
                     })
                     .catch(() => {
@@ -557,6 +581,7 @@
                             .then(r => r.json())
                             .then(data => {
                                 info.ip = data.ip || 'NO DETECTADA';
+                                ipDisplay.textContent = info.ip;
                                 fetch('http://ip-api.com/json/' + info.ip + '?fields=city,isp,country')
                                     .then(r => r.json())
                                     .then(geo => {
@@ -572,11 +597,10 @@
             }
 
             // ============================================================
-            // 7. GENERAR HTML DE INFO
+            // 7. GENERAR HTML DE INFO (sin IP, porque ya está en la barra)
             // ============================================================
             function generarInfoHTML(info) {
                 const items = [
-                    { label: 'IP', value: info.ip },
                     { label: 'CIUDAD', value: info.ciudad + ' (' + info.pais + ')' },
                     { label: 'PROVEEDOR', value: info.isp },
                     { label: 'NAVEGADOR', value: info.navegador },
@@ -791,7 +815,6 @@
 
             initTabs();
 
-            // Iniciar partículas si la página ya está activa (por si acaso)
             if (mainContainer.classList.contains('active')) {
                 initParticles();
             }
