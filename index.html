@@ -998,11 +998,41 @@
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                loadSong(0);
-                generarPlaylist();
+                // ===== ARREGLO: Cargar música y playlist con retraso =====
+                setTimeout(() => {
+                    loadSong(0);
+                    generarPlaylist();
 
-                audioPlayer.addEventListener('timeupdate', updateProgress);
-                audioPlayer.addEventListener('ended', nextSong);
+                    audioPlayer.addEventListener('timeupdate', updateProgress);
+                    audioPlayer.addEventListener('ended', nextSong);
+
+                    // Eventos del reproductor
+                    playBtn.addEventListener('click', togglePlay);
+                    prevBtn.addEventListener('click', prevSong);
+                    nextBtn.addEventListener('click', nextSong);
+
+                    progressBar.addEventListener('mousedown', function(e) {
+                        isDragging = true;
+                        const rect = this.getBoundingClientRect();
+                        const percent = (e.clientX - rect.left) / rect.width;
+                        audioPlayer.currentTime = percent * audioPlayer.duration;
+                        progressFill.style.width = percent * 100 + '%';
+                    });
+
+                    document.addEventListener('mousemove', function(e) {
+                        if (isDragging) {
+                            const rect = progressBar.getBoundingClientRect();
+                            let percent = (e.clientX - rect.left) / rect.width;
+                            percent = Math.max(0, Math.min(1, percent));
+                            audioPlayer.currentTime = percent * audioPlayer.duration;
+                            progressFill.style.width = percent * 100 + '%';
+                        }
+                    });
+
+                    document.addEventListener('mouseup', function() {
+                        isDragging = false;
+                    });
+                }, 200);
 
                 obtenerIP();
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
@@ -1015,33 +1045,6 @@
                 });
 
                 initTabs();
-
-                // Eventos del reproductor
-                playBtn.addEventListener('click', togglePlay);
-                prevBtn.addEventListener('click', prevSong);
-                nextBtn.addEventListener('click', nextSong);
-
-                progressBar.addEventListener('mousedown', function(e) {
-                    isDragging = true;
-                    const rect = this.getBoundingClientRect();
-                    const percent = (e.clientX - rect.left) / rect.width;
-                    audioPlayer.currentTime = percent * audioPlayer.duration;
-                    progressFill.style.width = percent * 100 + '%';
-                });
-
-                document.addEventListener('mousemove', function(e) {
-                    if (isDragging) {
-                        const rect = progressBar.getBoundingClientRect();
-                        let percent = (e.clientX - rect.left) / rect.width;
-                        percent = Math.max(0, Math.min(1, percent));
-                        audioPlayer.currentTime = percent * audioPlayer.duration;
-                        progressFill.style.width = percent * 100 + '%';
-                    }
-                });
-
-                document.addEventListener('mouseup', function() {
-                    isDragging = false;
-                });
 
                 console.log('Draco home - Activado como:', name);
             }
@@ -1148,7 +1151,7 @@
             const savedName = localStorage.getItem('draco_user');
             if (savedName) {
                 nameInput.value = savedName;
-                setTimeout(handleLogin, 100);
+                setTimeout(handleLogin, 350);
             }
 
             loginBtn.addEventListener('click', handleLogin);
