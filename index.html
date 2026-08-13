@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paradise</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="IMG_5340.ico"> 
+    
+    <!-- Firebase SDK -->
+    <script type="importmap">
+    {
+      "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"
+      }
+    }
+    </script>
+
     <style>
-        /* ===== RESET ===== */
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -27,325 +40,108 @@
         }
 
         /* ============================================================
-           TEMAS (MODO CLARO / OSCURO)
+           THEMES (LIGHT / DARK)
            ============================================================ */
         
-        /* ----- MODO CLARO (por defecto) ----- */
+        /* LIGHT MODE */
         body.light-mode {
             background: #f5f5f5;
             color: #1a1a1a;
         }
-        body.light-mode .container {
-            background: #ffffff;
-        }
-        /* Barra superior */
-        body.light-mode .top-bar {
-            background: #ffffff;
-            border-bottom-color: #eee;
-        }
-        body.light-mode .top-bar .title {
-            color: #1a1a1a;
-        }
-        body.light-mode .top-bar .badge {
-            background: #f5f5f5;
-            border-color: #eee;
-            color: #888;
-        }
-        body.light-mode .top-bar .separator {
-            color: #ddd;
-        }
-        /* Tabs */
-        body.light-mode .tabs {
-            background: #fafafa;
-            border-bottom-color: #eee;
-        }
-        body.light-mode .tab-btn {
-            color: #888;
-        }
-        body.light-mode .tab-btn.active {
-            color: #1a1a1a;
-            border-bottom-color: #1a1a1a;
-        }
-        body.light-mode .tab-btn:hover {
-            color: #333;
-            background: rgba(0, 0, 0, 0.03);
-        }
-        /* Home */
-        body.light-mode .home-container {
-            background: #fafafa;
-            border-color: #eee;
-        }
-        body.light-mode .home-greeting {
-            color: #1a1a1a;
-        }
-        body.light-mode .home-greeting span {
-            color: #888;
-        }
-        body.light-mode .home-sub {
-            color: #888;
-        }
-        body.light-mode .home-footer {
-            color: #ccc;
-        }
-        /* Music */
-        body.light-mode .music-player {
-            background: #fafafa;
-            border-color: #eee;
-        }
-        body.light-mode .music-player .song-title {
-            color: #1a1a1a;
-        }
-        body.light-mode .music-player .song-artist {
-            color: #888;
-        }
-        body.light-mode .music-player .controls button {
-            color: #555;
-        }
-        body.light-mode .music-player .controls button:hover {
-            color: #1a1a1a;
-            background: #eee;
-        }
-        body.light-mode .music-player .controls .play-btn {
-            color: #1a1a1a;
-        }
-        body.light-mode .progress-bar {
-            background: #e0e0e0;
-        }
-        body.light-mode .progress-bar .progress-fill {
-            background: #1a1a1a;
-        }
-        body.light-mode .time-info {
-            color: #999;
-        }
-        /* Lyrics */
-        body.light-mode .lyrics-container {
-            background: #fafafa;
-            border-color: #eee;
-            color: #444;
-        }
-        /* Social */
-        body.light-mode .social-btn {
-            background: #f5f5f5;
-            border-color: #e8e8e8;
-            color: #333;
-        }
-        body.light-mode .social-btn:hover {
-            background: #eee;
-            border-color: #ccc;
-        }
-        /* Playlist */
-        body.light-mode .playlist-item {
-            border-bottom-color: #f0f0f0;
-            color: #333;
-        }
-        body.light-mode .playlist-item:hover {
-            background: #f5f5f5;
-        }
-        body.light-mode .playlist-item.active {
-            background: #f0f0f0;
-        }
-        /* Login */
-        body.light-mode #loginScreen {
-            background: #ffffff;
-        }
-        body.light-mode #loginScreen .title {
-            color: #1a1a1a;
-        }
-        body.light-mode #loginScreen .login-box input {
-            background: #fafafa;
-            border-color: #ddd;
-            color: #1a1a1a;
-        }
-        body.light-mode #loginScreen .login-box input:focus {
-            border-color: #1a1a1a;
-            background: #ffffff;
-        }
-        body.light-mode #loginScreen .login-box button {
-            background: #1a1a1a;
-            color: #ffffff;
-        }
-        body.light-mode #loginScreen .login-box button:hover {
-            background: #333;
-        }
-        /* Panel titles */
-        body.light-mode .panel-title {
-            color: #1a1a1a;
-        }
-        body.light-mode .panel-sub {
-            color: #999;
-        }
-        /* Tema toggle */
-        body.light-mode #themeToggle {
-            border-color: #ddd;
-            color: #333;
-        }
-        body.light-mode #themeToggle:hover {
-            background: #eee;
-        }
+        body.light-mode .container { background: #ffffff; }
+        body.light-mode .top-bar { background: #ffffff; border-bottom-color: #eee; }
+        body.light-mode .top-bar .title { color: #1a1a1a; }
+        body.light-mode .top-bar .badge { background: #f5f5f5; border-color: #eee; color: #888; }
+        body.light-mode .top-bar .separator { color: #ddd; }
+        body.light-mode .tabs { background: #fafafa; border-bottom-color: #eee; }
+        body.light-mode .tab-btn { color: #888; }
+        body.light-mode .tab-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+        body.light-mode .tab-btn:hover { color: #333; background: rgba(0,0,0,0.03); }
+        body.light-mode .home-container { background: #fafafa; border-color: #eee; }
+        body.light-mode .home-greeting { color: #1a1a1a; }
+        body.light-mode .home-greeting span { color: #888; }
+        body.light-mode .home-sub { color: #888; }
+        body.light-mode .home-footer { color: #ccc; }
+        body.light-mode .music-player { background: #fafafa; border-color: #eee; }
+        body.light-mode .music-player .song-title { color: #1a1a1a; }
+        body.light-mode .music-player .song-artist { color: #888; }
+        body.light-mode .music-player .controls button { color: #555; }
+        body.light-mode .music-player .controls button:hover { color: #1a1a1a; background: #eee; }
+        body.light-mode .music-player .controls .play-btn { color: #1a1a1a; }
+        body.light-mode .progress-bar { background: #e0e0e0; }
+        body.light-mode .progress-bar .progress-fill { background: #1a1a1a; }
+        body.light-mode .time-info { color: #999; }
+        body.light-mode .lyrics-container { background: #fafafa; border-color: #eee; color: #444; }
+        body.light-mode .social-btn { background: #f5f5f5; border-color: #e8e8e8; color: #333; }
+        body.light-mode .social-btn:hover { background: #eee; border-color: #ccc; }
+        body.light-mode .playlist-item { border-bottom-color: #f0f0f0; color: #333; }
+        body.light-mode .playlist-item:hover { background: #f5f5f5; }
+        body.light-mode .playlist-item.active { background: #f0f0f0; }
+        body.light-mode #loginScreen { background: #ffffff; }
+        body.light-mode #loginScreen .title { color: #1a1a1a; }
+        body.light-mode #loginScreen .login-box input { background: #fafafa; border-color: #ddd; color: #1a1a1a; }
+        body.light-mode #loginScreen .login-box input:focus { border-color: #1a1a1a; background: #ffffff; }
+        body.light-mode #loginScreen .login-box button { background: #1a1a1a; color: #ffffff; }
+        body.light-mode #loginScreen .login-box button:hover { background: #333; }
+        body.light-mode .panel-title { color: #1a1a1a; }
+        body.light-mode .panel-sub { color: #999; }
+        body.light-mode #themeToggle { border-color: #ddd; color: #333; }
+        body.light-mode #themeToggle:hover { background: #eee; }
+        body.light-mode .switch-btn { background: #f5f5f5; border-color: #ddd; color: #333; }
+        body.light-mode .switch-btn:hover { background: #eee; }
 
-        /* ----- MODO OSCURO ----- */
+        /* DARK MODE */
         body.dark-mode {
             background: #0a0a0a;
             color: #eee;
         }
-        body.dark-mode .container {
-            background: #111;
-        }
-        /* Barra superior */
-        body.dark-mode .top-bar {
-            background: #1a1a1a;
-            border-bottom-color: #2a2a2a;
-        }
-        body.dark-mode .top-bar .title {
-            color: #eee;
-        }
-        body.dark-mode .top-bar .badge {
-            background: #2a2a2a;
-            border-color: #333;
-            color: #aaa;
-        }
-        body.dark-mode .top-bar .separator {
-            color: #444;
-        }
-        /* Tabs */
-        body.dark-mode .tabs {
-            background: #1a1a1a;
-            border-bottom-color: #2a2a2a;
-        }
-        body.dark-mode .tab-btn {
-            color: #888;
-        }
-        body.dark-mode .tab-btn.active {
-            color: #eee;
-            border-bottom-color: #eee;
-        }
-        body.dark-mode .tab-btn:hover {
-            color: #eee;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        /* Home */
-        body.dark-mode .home-container {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-        }
-        body.dark-mode .home-greeting {
-            color: #eee;
-        }
-        body.dark-mode .home-greeting span {
-            color: #888;
-        }
-        body.dark-mode .home-sub {
-            color: #888;
-        }
-        body.dark-mode .home-footer {
-            color: #444;
-        }
-        /* Music */
-        body.dark-mode .music-player {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-        }
-        body.dark-mode .music-player .song-title {
-            color: #eee;
-        }
-        body.dark-mode .music-player .song-artist {
-            color: #888;
-        }
-        body.dark-mode .music-player .controls button {
-            color: #888;
-        }
-        body.dark-mode .music-player .controls button:hover {
-            color: #eee;
-            background: #2a2a2a;
-        }
-        body.dark-mode .music-player .controls .play-btn {
-            color: #eee;
-        }
-        body.dark-mode .progress-bar {
-            background: #2a2a2a;
-        }
-        body.dark-mode .progress-bar .progress-fill {
-            background: #eee;
-        }
-        body.dark-mode .time-info {
-            color: #888;
-        }
-        /* Lyrics */
-        body.dark-mode .lyrics-container {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-            color: #aaa;
-        }
-        /* Social */
-        body.dark-mode .social-btn {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-            color: #888;
-        }
-        body.dark-mode .social-btn:hover {
-            background: #2a2a2a;
-            border-color: #444;
-            color: #eee;
-        }
-        /* Playlist */
-        body.dark-mode .playlist-item {
-            border-bottom-color: #2a2a2a;
-            color: #888;
-        }
-        body.dark-mode .playlist-item:hover {
-            background: #1a1a1a;
-        }
-        body.dark-mode .playlist-item.active {
-            background: #2a2a2a;
-            color: #eee;
-        }
-        /* Login */
-        body.dark-mode #loginScreen {
-            background: #0a0a0a;
-        }
-        body.dark-mode #loginScreen .title {
-            color: #eee;
-        }
-        body.dark-mode #loginScreen .title span {
-            color: #888;
-        }
-        body.dark-mode #loginScreen .login-box input {
-            background: #1a1a1a;
-            border-color: #2a2a2a;
-            color: #eee;
-        }
-        body.dark-mode #loginScreen .login-box input:focus {
-            border-color: #eee;
-            background: #1a1a1a;
-        }
-        body.dark-mode #loginScreen .login-box button {
-            background: #2a2a2a;
-            color: #eee;
-        }
-        body.dark-mode #loginScreen .login-box button:hover {
-            background: #333;
-        }
-        /* Panel titles */
-        body.dark-mode .panel-title {
-            color: #eee;
-        }
-        body.dark-mode .panel-sub {
-            color: #888;
-        }
-        /* Tema toggle */
-        body.dark-mode #themeToggle {
-            border-color: #444;
-            color: #ccc;
-        }
-        body.dark-mode #themeToggle:hover {
-            background: #2a2a2a;
-        }
+        body.dark-mode .container { background: #111; }
+        body.dark-mode .top-bar { background: #1a1a1a; border-bottom-color: #2a2a2a; }
+        body.dark-mode .top-bar .title { color: #eee; }
+        body.dark-mode .top-bar .badge { background: #2a2a2a; border-color: #333; color: #aaa; }
+        body.dark-mode .top-bar .separator { color: #444; }
+        body.dark-mode .tabs { background: #1a1a1a; border-bottom-color: #2a2a2a; }
+        body.dark-mode .tab-btn { color: #888; }
+        body.dark-mode .tab-btn.active { color: #eee; border-bottom-color: #eee; }
+        body.dark-mode .tab-btn:hover { color: #eee; background: rgba(255,255,255,0.05); }
+        body.dark-mode .home-container { background: #1a1a1a; border-color: #2a2a2a; }
+        body.dark-mode .home-greeting { color: #eee; }
+        body.dark-mode .home-greeting span { color: #888; }
+        body.dark-mode .home-sub { color: #888; }
+        body.dark-mode .home-footer { color: #444; }
+        body.dark-mode .music-player { background: #1a1a1a; border-color: #2a2a2a; }
+        body.dark-mode .music-player .song-title { color: #eee; }
+        body.dark-mode .music-player .song-artist { color: #888; }
+        body.dark-mode .music-player .controls button { color: #888; }
+        body.dark-mode .music-player .controls button:hover { color: #eee; background: #2a2a2a; }
+        body.dark-mode .music-player .controls .play-btn { color: #eee; }
+        body.dark-mode .progress-bar { background: #2a2a2a; }
+        body.dark-mode .progress-bar .progress-fill { background: #eee; }
+        body.dark-mode .time-info { color: #888; }
+        body.dark-mode .lyrics-container { background: #1a1a1a; border-color: #2a2a2a; color: #aaa; }
+        body.dark-mode .social-btn { background: #1a1a1a; border-color: #2a2a2a; color: #888; }
+        body.dark-mode .social-btn:hover { background: #2a2a2a; border-color: #444; color: #eee; }
+        body.dark-mode .playlist-item { border-bottom-color: #2a2a2a; color: #888; }
+        body.dark-mode .playlist-item:hover { background: #1a1a1a; }
+        body.dark-mode .playlist-item.active { background: #2a2a2a; color: #eee; }
+        body.dark-mode #loginScreen { background: #0a0a0a; }
+        body.dark-mode #loginScreen .title { color: #eee; }
+        body.dark-mode #loginScreen .title span { color: #888; }
+        body.dark-mode #loginScreen .login-box input { background: #1a1a1a; border-color: #2a2a2a; color: #eee; }
+        body.dark-mode #loginScreen .login-box input:focus { border-color: #eee; background: #1a1a1a; }
+        body.dark-mode #loginScreen .login-box button { background: #2a2a2a; color: #eee; }
+        body.dark-mode #loginScreen .login-box button:hover { background: #333; }
+        body.dark-mode .panel-title { color: #eee; }
+        body.dark-mode .panel-sub { color: #888; }
+        body.dark-mode #themeToggle { border-color: #444; color: #ccc; }
+        body.dark-mode #themeToggle:hover { background: #2a2a2a; }
+        body.dark-mode .switch-btn { background: #1a1a1a; border-color: #444; color: #ccc; }
+        body.dark-mode .switch-btn:hover { background: #2a2a2a; }
 
         /* ============================================================
-           ELEMENTOS COMUNES
+           COMMON ELEMENTS
            ============================================================ */
 
-        /* ===== BOTÓN TEMA ===== */
         #themeToggle {
             background: transparent;
             border: 1px solid #ddd;
@@ -357,7 +153,19 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* ===== LOGIN ===== */
+        .switch-btn {
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+            margin-top: 4px;
+        }
+
         #loginScreen {
             position: fixed;
             top: 0;
@@ -377,16 +185,13 @@
             letter-spacing: -0.5px;
             margin-bottom: 30px;
         }
-        #loginScreen .title span {
-            color: #888;
-            font-weight: 300;
-        }
+        #loginScreen .title span { color: #888; font-weight: 300; }
         #loginScreen .login-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
-            width: 300px;
+            gap: 12px;
+            width: 320px;
             max-width: 90%;
         }
         #loginScreen .login-box input {
@@ -399,9 +204,7 @@
             outline: none;
             transition: border-color 0.2s ease;
         }
-        #loginScreen .login-box input:focus {
-            border-color: #1a1a1a;
-        }
+        #loginScreen .login-box input:focus { border-color: #1a1a1a; }
         #loginScreen .login-box button {
             width: 100%;
             padding: 14px 18px;
@@ -418,14 +221,21 @@
             font-size: 0.85rem;
             font-weight: 400;
             height: 20px;
+            text-align: center;
+        }
+        #loginScreen .login-box .success {
+            color: #33aa33;
+            font-size: 0.85rem;
+            font-weight: 400;
+            height: 20px;
+            text-align: center;
         }
 
-        /* ===== CONTENEDOR PRINCIPAL ===== */
         .container {
             width: 900px;
             max-width: 100%;
             border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
             overflow: hidden;
             opacity: 0;
             transition: opacity 0.8s ease, background 0.3s ease;
@@ -434,9 +244,7 @@
             display: flex;
             flex-direction: column;
         }
-        .container.active {
-            opacity: 1;
-        }
+        .container.active { opacity: 1; }
 
         #particles-canvas {
             position: absolute;
@@ -450,7 +258,6 @@
             border-radius: 16px;
         }
 
-        /* ===== TOP BAR ===== */
         .top-bar {
             padding: 20px 30px;
             border-bottom: 1px solid #eee;
@@ -468,10 +275,7 @@
             letter-spacing: -0.5px;
             transition: color 0.3s ease;
         }
-        .top-bar .title span {
-            font-weight: 300;
-            transition: color 0.3s ease;
-        }
+        .top-bar .title span { font-weight: 300; transition: color 0.3s ease; }
         .top-bar .right {
             display: flex;
             align-items: center;
@@ -491,15 +295,9 @@
             gap: 6px;
             transition: all 0.3s ease;
         }
-        .top-bar .right .badge .icon {
-            font-size: 0.8rem;
-            opacity: 0.6;
-        }
-        .top-bar .right .separator {
-            transition: color 0.3s ease;
-        }
+        .top-bar .right .badge .icon { font-size: 0.8rem; opacity: 0.6; }
+        .top-bar .right .separator { transition: color 0.3s ease; }
 
-        /* ===== TABS ===== */
         .tabs {
             display: flex;
             padding: 0 20px;
@@ -523,7 +321,6 @@
             white-space: nowrap;
         }
 
-        /* ===== CONTENIDO ===== */
         .content-area {
             padding: 30px 35px;
             min-height: 380px;
@@ -533,22 +330,17 @@
             overflow: hidden;
             transition: background 0.3s ease;
         }
-
         .panel {
             display: none;
             animation: fadeIn 0.3s ease;
             height: 100%;
         }
-        .panel.active {
-            display: block;
-        }
-
+        .panel.active { display: block; }
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== HOME ===== */
         .home-container {
             display: flex;
             flex-direction: column;
@@ -568,10 +360,7 @@
             margin-bottom: 10px;
             transition: color 0.3s ease;
         }
-        .home-greeting span {
-            font-weight: 300;
-            transition: color 0.3s ease;
-        }
+        .home-greeting span { font-weight: 300; transition: color 0.3s ease; }
         .home-sub {
             font-size: 1rem;
             font-weight: 400;
@@ -584,7 +373,6 @@
             transition: color 0.3s ease;
         }
 
-        /* ===== SOCIAL ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -627,7 +415,6 @@
             transition: color 0.3s ease;
         }
 
-        /* ===== MUSIC ===== */
         .music-container {
             display: flex;
             flex-direction: column;
@@ -637,17 +424,9 @@
             overflow-y: auto;
             padding-right: 5px;
         }
-        .music-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .music-container::-webkit-scrollbar-track {
-            background: #f0f0f0;
-            border-radius: 4px;
-        }
-        .music-container::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
+        .music-container::-webkit-scrollbar { width: 4px; }
+        .music-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+        .music-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
 
         .music-player {
             width: 100%;
@@ -687,9 +466,7 @@
             padding: 4px 8px;
             border-radius: 6px;
         }
-        .music-player .controls .play-btn {
-            font-size: 2rem;
-        }
+        .music-player .controls .play-btn { font-size: 2rem; }
         .music-player .progress-bar {
             width: 100%;
             height: 4px;
@@ -727,14 +504,9 @@
             transition: all 0.2s ease;
             border-radius: 6px;
         }
-        .playlist-item .title {
-            font-size: 0.95rem;
-        }
-        .playlist-item .duration {
-            font-size: 0.8rem;
-        }
+        .playlist-item .title { font-size: 0.95rem; }
+        .playlist-item .duration { font-size: 0.8rem; }
 
-        /* ===== LYRICS ===== */
         .lyrics-container {
             height: 380px;
             overflow-y: auto;
@@ -746,25 +518,12 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-        .lyrics-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .lyrics-container::-webkit-scrollbar-track {
-            background: #f0f0f0;
-            border-radius: 4px;
-        }
-        .lyrics-container::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 4px;
-        }
-        .lyrics-container .line {
-            padding: 2px 0;
-        }
-        .lyrics-container .line.empty {
-            height: 12px;
-        }
+        .lyrics-container::-webkit-scrollbar { width: 4px; }
+        .lyrics-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+        .lyrics-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+        .lyrics-container .line { padding: 2px 0; }
+        .lyrics-container .line.empty { height: 12px; }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
             .top-bar .title { font-size: 1.1rem; }
@@ -806,17 +565,24 @@
 </head>
 <body>
 
-    <!-- ===== LOGIN ===== -->
+    <!-- ============================================================
+    LOGIN / REGISTER SCREEN
+    ============================================================ -->
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
-            <input type="text" id="nameInput" placeholder="Name.." autofocus />
-            <button id="loginBtn">Enter</button>
+            <input type="email" id="emailInput" placeholder="Email" autofocus />
+            <input type="password" id="passwordInput" placeholder="Password" />
+            <button id="loginBtn">Sign in</button>
+            <button class="switch-btn" id="switchBtn">Create account</button>
             <div class="error" id="loginError"></div>
+            <div class="success" id="loginSuccess"></div>
         </div>
     </div>
 
-    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <!-- ============================================================
+    MAIN CONTAINER
+    ============================================================ -->
     <div class="container" id="mainContainer">
         <canvas id="particles-canvas"></canvas>
 
@@ -824,7 +590,7 @@
             <div class="title">✦ <span id="greetingDisplay">Welcome</span></div>
             <div class="right">
                 <span class="badge" id="ipBadge">
-                    <span class="icon">👁</span>
+                    <span class="icon">◈</span>
                     <span id="ipDisplay">0.0.0.0</span>
                 </span>
                 <span class="separator">|</span>
@@ -833,11 +599,13 @@
                 </span>
                 <span class="separator">|</span>
                 <span class="badge" id="visitasBadge">
-                    <span class="icon">👁</span>
+                    <span class="icon">◈</span>
                     <span id="visitasDisplay">0</span>
                 </span>
                 <span class="separator">|</span>
-                <button id="themeToggle" title="Cambiar tema">◈</button>
+                <button id="themeToggle" title="Toggle theme">◈</button>
+                <span class="separator">|</span>
+                <button id="logoutBtn" style="background:none; border:1px solid #ddd; border-radius:20px; padding:4px 12px; font-size:0.85rem; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.2s ease;">Logout</button>
             </div>
         </div>
 
@@ -853,13 +621,13 @@
             <!-- ===== HOME ===== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container">
-                    <div class="home-greeting">Hey, <span id="userNameDisplay">invitado</span></div>
+                    <div class="home-greeting">Hey, <span id="userNameDisplay">guest</span></div>
                     <div class="home-sub">Welcome to draco site</div>
                     <div class="home-footer">
                         ✦ ✦ ✦
                         <br>
                         <span style="font-size:0.8rem; letter-spacing:2px; color:inherit;">
-                             Views: <span id="visitasGlobal">0</span>
+                            Views: <span id="visitasGlobal">0</span>
                         </span>
                     </div>
                 </div>
@@ -881,9 +649,9 @@
                         <div class="song-title" id="currentSongTitle">entry 1</div>
                         <div class="song-artist">jaydes</div>
                         <div class="controls">
-                            <button id="prevBtn" title="Anterior">⏮</button>
-                            <button class="play-btn" id="playBtn" title="Reproducir">▶</button>
-                            <button id="nextBtn" title="Siguiente">⏭</button>
+                            <button id="prevBtn" title="Previous">⏮</button>
+                            <button class="play-btn" id="playBtn" title="Play">▶</button>
+                            <button id="nextBtn" title="Next">⏭</button>
                         </div>
                         <div class="progress-bar" id="progressBar">
                             <div class="progress-fill" id="progressFill"></div>
@@ -907,600 +675,673 @@
         </div>
     </div>
 
-    <!-- ===== AUDIO OCULTO ===== -->
+    <!-- ===== AUDIO ===== -->
     <audio id="audioPlayer"></audio>
 
-    <script>
-        (function() {
-            "use strict";
+    <!-- ============================================================
+    JAVASCRIPT (with Firebase)
+    ============================================================ -->
+    <script type="module">
+    // ============================================================
+    // 1. FIREBASE IMPORTS
+    // ============================================================
+    import { initializeApp } from "firebase/app";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
-            // ============================================================
-            // 1. ELEMENTOS
-            // ============================================================
-            const loginScreen = document.getElementById('loginScreen');
-            const nameInput = document.getElementById('nameInput');
-            const loginBtn = document.getElementById('loginBtn');
-            const loginError = document.getElementById('loginError');
-            const mainContainer = document.getElementById('mainContainer');
-            const userNameDisplay = document.getElementById('userNameDisplay');
-            const greetingDisplay = document.getElementById('greetingDisplay');
-            const tabs = document.querySelectorAll('.tab-btn');
-            const panels = {
-                home: document.getElementById('panel-home'),
-                about: document.getElementById('panel-about'),
-                music: document.getElementById('panel-music'),
-                lyrics: document.getElementById('panel-lyrics'),
-            };
-            const audioPlayer = document.getElementById('audioPlayer');
-            const clockDisplay = document.getElementById('clockDisplay');
-            const visitasDisplay = document.getElementById('visitasDisplay');
-            const ipDisplay = document.getElementById('ipDisplay');
-            const visitasGlobal = document.getElementById('visitasGlobal');
-            const lyricsContainer = document.getElementById('lyricsContainer');
-            const lyricsSub = document.getElementById('lyricsSub');
-            const playlistContainer = document.getElementById('playlistContainer');
-            const currentSongTitle = document.getElementById('currentSongTitle');
-            const playBtn = document.getElementById('playBtn');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const progressFill = document.getElementById('progressFill');
-            const progressBar = document.getElementById('progressBar');
-            const currentTimeDisplay = document.getElementById('currentTime');
-            const totalTimeDisplay = document.getElementById('totalTime');
-            const themeToggle = document.getElementById('themeToggle');
+    // ============================================================
+    // 2. FIREBASE CONFIG
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkttnzGQ0lWqFBL3oAWMpZKDCLxGpVroI",
+      authDomain: "paradise-71590.firebaseapp.com",
+      projectId: "paradise-71590",
+      storageBucket: "paradise-71590.firebasestorage.app",
+      messagingSenderId: "349324798721",
+      appId: "1:349324798721:web:89edc8f0f8d0f7f5134900",
+      measurementId: "G-ZLQERVKYZ2"
+    };
 
-            // ============================================================
-            // 2. TEMA (Modo oscuro/claro)
-            // ============================================================
-            const savedTheme = localStorage.getItem('draco_theme') || 'light';
-            document.body.classList.add(savedTheme + '-mode');
-            themeToggle.textContent = savedTheme === 'dark' ? '◆' : '◈';
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-            themeToggle.addEventListener('click', function() {
-                const isDark = document.body.classList.contains('dark-mode');
-                document.body.classList.remove('light-mode', 'dark-mode');
-                if (isDark) {
-                    document.body.classList.add('light-mode');
-                    localStorage.setItem('draco_theme', 'light');
-                    this.textContent = '◈';
-                } else {
-                    document.body.classList.add('dark-mode');
-                    localStorage.setItem('draco_theme', 'dark');
-                    this.textContent = '◆';
-                }
+    // ============================================================
+    // 3. DOM ELEMENTS
+    // ============================================================
+    const loginScreen = document.getElementById('loginScreen');
+    const mainContainer = document.getElementById('mainContainer');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const switchBtn = document.getElementById('switchBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginError = document.getElementById('loginError');
+    const loginSuccess = document.getElementById('loginSuccess');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const greetingDisplay = document.getElementById('greetingDisplay');
+    const themeToggle = document.getElementById('themeToggle');
+    const clockDisplay = document.getElementById('clockDisplay');
+    const visitasDisplay = document.getElementById('visitasDisplay');
+    const visitasGlobal = document.getElementById('visitasGlobal');
+    const ipDisplay = document.getElementById('ipDisplay');
+    const lyricsContainer = document.getElementById('lyricsContainer');
+    const lyricsSub = document.getElementById('lyricsSub');
+    const playlistContainer = document.getElementById('playlistContainer');
+    const currentSongTitle = document.getElementById('currentSongTitle');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressFill = document.getElementById('progressFill');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeDisplay = document.getElementById('currentTime');
+    const totalTimeDisplay = document.getElementById('totalTime');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = {
+        home: document.getElementById('panel-home'),
+        about: document.getElementById('panel-about'),
+        music: document.getElementById('panel-music'),
+        lyrics: document.getElementById('panel-lyrics'),
+    };
+
+    let isLoginMode = true;
+    let currentIndex = 0;
+    let isPlaying = false;
+    let isDragging = false;
+
+    // ============================================================
+    // 4. PLAYLIST
+    // ============================================================
+    const playlist = [{
+        id: 0,
+        title: 'entry 1',
+        file: 'entry1.mp3',
+        lyrics: [
+            "These cuts on my wrist, they ripe I swear 'cause they sometimes make me better",
+            "Dying just to see you again, so I'm tired of writing letters to you",
+            "Can't express myself, I always choke on my own words",
+            "Can't explain what's going on, all I know is that it hurts",
+            "I can't do this no more without you",
+            "Baby you're my rose, without you",
+            "Regret, all I cared and loved you",
+            "But I fucked it up and now I gotta leave",
+            "Lost the only thing I loved",
+            "Completely was my fault",
+            "Myself, I can't keep safe",
+            "You know it's all my fault, because you didn't have a say in it",
+            "I fuck everything up, but I'm just so tired of saying it",
+            "If you were here you'd be disappointed, but I can't sing to no one else",
+            "And I swear, I'm just so tired, that I might just kill myself"
+        ]
+    }, {
+        id: 1,
+        title: 'entry 2',
+        file: 'entry2.mp3',
+        lyrics: [
+            "(evvls)", "",
+            "Too many thoughts up in my head",
+            "Swear no one understands",
+            "But there was only one that would listen",
+            "Now you seen the cause and effect to my skin",
+            "Yeah, it really sucks feelin' like this, huh",
+            "People saying this is a phase, haha",
+            "Fifteen, think that I know it all, oh do you?",
+            "Carry the expression off my face",
+            "My brain tryna tell me that it's okay",
+            "My wrist tells me that it's all my fault",
+            "Might call my friends a dickhead, egotistical, act like they know it all",
+            "You don't know enough",
+            "I just want to fade away",
+            "Sometimes feels like this life is a game, I don't wanna play",
+            "",
+            "(I love you, evvls)"
+        ]
+    }, {
+        id: 2,
+        title: 'entry 3',
+        file: 'entry3.mp3',
+        lyrics: [
+            "Voices in my head again",
+            "My ultimatum's made up",
+            "Stuck inside my bed again",
+            "I wanna pretend, but I can't anymore, oh",
+            "I've so far been questioning, but the day's gone by and I cannot decide what I—",
+            "(Man, this shit's so dumb, I got people on my side but for a while, I've been done)",
+            "And it might sound cliché but for a while, I've been numb to it",
+            "(One, two, three, four)"
+        ]
+    }, {
+        id: 3,
+        title: 'entry 4',
+        file: 'entry4.mp3',
+        lyrics: [
+            "Ma-maybe she likes me",
+            "Maybe she's toying with me",
+            "",
+            "(Maybe she likes me) Falling in love is a tricky one for me",
+            "(Maybe she's toying with me)",
+            "(Maybe she likes me) I might trust you but don't wanna get fucked up",
+            "(Maybe she's toying with me)",
+            "(Maybe she likes me) You heard all my secrets",
+            "(Maybe she's toying with me)",
+            "I like your responses",
+            "(Maybe she likes me)",
+            "Though I wanna see this",
+            "(Maybe she's toying with me)",
+            "The pressure feels awful",
+            "(Maybe she likes me) Text you and delete it",
+            "(Maybe she's toying with me)",
+            "It's been rainy outside",
+            "(Maybe she likes me)",
+            "Gave you my jacket in case you needed it",
+            "(Maybe she's toying with me)",
+            "She won't hear this",
+            "",
+            "Maybe she likes me"
+        ]
+    }, {
+        id: 4,
+        title: 'entry 5',
+        file: 'entry5.mp3',
+        lyrics: [
+            "Cuts on my hands, I can't hold yours",
+            "I feel stripped of my skin and alone",
+            "Tell me what happened to me",
+            "My face in the pavement, look what you made me do",
+            "Cuts on my hands, I can't hold yours",
+            "I feel stripped of my skin and alone",
+            "Tell me what happened to me (Somethin' went wrong)",
+            "My face in the pavement, look what you made me do (Oh-oh)",
+            "Look what you made me do",
+            "(Blame it on the rain outside)",
+            "Look what you made me do",
+            "(Blame it on the cracks outside)",
+            "Look what you made me do",
+            "(Blame it on me, blame it on me)",
+            "Look what you made me do",
+            "(They blame it on me)"
+        ]
+    }];
+
+    // ============================================================
+    // 5. AUTH FUNCTIONS
+    // ============================================================
+    function showError(msg) {
+        loginError.textContent = msg;
+        loginSuccess.textContent = '';
+    }
+
+    function showSuccess(msg) {
+        loginSuccess.textContent = msg;
+        loginError.textContent = '';
+    }
+
+    function registerUser(email, password) {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                showSuccess('Account created! Welcome.');
+                console.log('User registered:', email);
+            })
+            .catch((error) => {
+                let msg = 'Registration error.';
+                if (error.code === 'auth/email-already-in-use') msg = 'Email already registered.';
+                else if (error.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
+                else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
+                showError(msg);
+                console.error('Error:', error.message);
             });
+    }
 
-            // ============================================================
-            // 3. CONTADOR GLOBAL DE VISITAS (API Count)
-            // ============================================================
-            function actualizarContadorGlobal() {
-                const COUNTER_NAME = 'draco_visitas_global';
-                fetch('https://api-count.com/api/v1/counters/' + COUNTER_NAME + '/increment')
-                    .then(r => r.json())
-                    .then(data => {
-                        if (visitasGlobal) {
-                            visitasGlobal.textContent = data.count || '?';
-                        }
-                    })
-                    .catch(() => {
-                        if (visitasGlobal) {
-                            visitasGlobal.textContent = '?';
-                        }
-                        console.log('Error al obtener contador global');
-                    });
-            }
+    function loginUser(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                showSuccess('Logged in! Welcome back.');
+                console.log('User logged in:', email);
+            })
+            .catch((error) => {
+                let msg = 'Login error.';
+                if (error.code === 'auth/user-not-found') msg = 'No account with this email.';
+                else if (error.code === 'auth/wrong-password') msg = 'Wrong password.';
+                else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
+                else if (error.code === 'auth/too-many-requests') msg = 'Too many attempts. Try later.';
+                showError(msg);
+                console.error('Error:', error.message);
+            });
+    }
 
-            // ============================================================
-            // 4. PLAYLIST
-            // ============================================================
-            const playlist = [{
-                id: 0,
-                title: 'entry 1',
-                file: 'entry1.mp3',
-                lyrics: [
-                    "These cuts on my wrist, they ripe I swear 'cause they sometimes make me better",
-                    "Dying just to see you again, so I'm tired of writing letters to you",
-                    "Can't express myself, I always choke on my own words",
-                    "Can't explain what's going on, all I know is that it hurts",
-                    "I can't do this no more without you",
-                    "Baby you're my rose, without you",
-                    "Regret, all I cared and loved you",
-                    "But I fucked it up and now I gotta leave",
-                    "Lost the only thing I loved",
-                    "Completely was my fault",
-                    "Myself, I can't keep safe",
-                    "You know it's all my fault, because you didn't have a say in it",
-                    "I fuck everything up, but I'm just so tired of saying it",
-                    "If you were here you'd be disappointed, but I can't sing to no one else",
-                    "And I swear, I'm just so tired, that I might just kill myself"
-                ]
-            }, {
-                id: 1,
-                title: 'entry 2',
-                file: 'entry2.mp3',
-                lyrics: [
-                    "(evvls)",
-                    "",
-                    "Too many thoughts up in my head",
-                    "Swear no one understands",
-                    "But there was only one that would listen",
-                    "Now you seen the cause and effect to my skin",
-                    "Yeah, it really sucks feelin' like this, huh",
-                    "People saying this is a phase, haha",
-                    "Fifteen, think that I know it all, oh do you?",
-                    "Carry the expression off my face",
-                    "My brain tryna tell me that it's okay",
-                    "My wrist tells me that it's all my fault",
-                    "Might call my friends a dickhead, egotistical, act like they know it all",
-                    "You don't know enough",
-                    "I just want to fade away",
-                    "Sometimes feels like this life is a game, I don't wanna play",
-                    "",
-                    "(I love you, evvls)"
-                ]
-            }, {
-                id: 2,
-                title: 'entry 3',
-                file: 'entry3.mp3',
-                lyrics: [
-                    "Voices in my head again",
-                    "My ultimatum's made up",
-                    "Stuck inside my bed again",
-                    "I wanna pretend, but I can't anymore, oh",
-                    "I've so far been questioning, but the day's gone by and I cannot decide what I—",
-                    "(Man, this shit's so dumb, I got people on my side but for a while, I've been done)",
-                    "And it might sound cliché but for a while, I've been numb to it",
-                    "(One, two, three, four)"
-                ]
-            }, {
-                id: 3,
-                title: 'entry 4',
-                file: 'entry4.mp3',
-                lyrics: [
-                    "Ma-maybe she likes me",
-                    "Maybe she's toying with me",
-                    "",
-                    "(Maybe she likes me) Falling in love is a tricky one for me",
-                    "(Maybe she's toying with me)",
-                    "(Maybe she likes me) I might trust you but don't wanna get fucked up",
-                    "(Maybe she's toying with me)",
-                    "(Maybe she likes me) You heard all my secrets",
-                    "(Maybe she's toying with me)",
-                    "I like your responses",
-                    "(Maybe she likes me)",
-                    "Though I wanna see this",
-                    "(Maybe she's toying with me)",
-                    "The pressure feels awful",
-                    "(Maybe she likes me) Text you and delete it",
-                    "(Maybe she's toying with me)",
-                    "It's been rainy outside",
-                    "(Maybe she likes me)",
-                    "Gave you my jacket in case you needed it",
-                    "(Maybe she's toying with me)",
-                    "She won't hear this",
-                    "",
-                    "Maybe she likes me"
-                ]
-            }, {
-                id: 4,
-                title: 'entry 5',
-                file: 'entry5.mp3',
-                lyrics: [
-                    "Cuts on my hands, I can't hold yours",
-                    "I feel stripped of my skin and alone",
-                    "Tell me what happened to me",
-                    "My face in the pavement, look what you made me do",
-                    "Cuts on my hands, I can't hold yours",
-                    "I feel stripped of my skin and alone",
-                    "Tell me what happened to me (Somethin' went wrong)",
-                    "My face in the pavement, look what you made me do (Oh-oh)",
-                    "Look what you made me do",
-                    "(Blame it on the rain outside)",
-                    "Look what you made me do",
-                    "(Blame it on the cracks outside)",
-                    "Look what you made me do",
-                    "(Blame it on me, blame it on me)",
-                    "Look what you made me do",
-                    "(They blame it on me)"
-                ]
-            }];
+    function logoutUser() {
+        signOut(auth).catch((error) => console.error('Logout error:', error.message));
+    }
 
-            // ============================================================
-            // 5. ESTADO DEL REPRODUCTOR
-            // ============================================================
-            let currentIndex = 0;
-            let isPlaying = false;
-            let isDragging = false;
+    // ============================================================
+    // 6. AUTH OBSERVER
+    // ============================================================
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loginScreen.style.display = 'none';
+            mainContainer.classList.add('active');
+            const displayName = user.email.split('@')[0] || 'user';
+            userNameDisplay.textContent = displayName;
+            greetingDisplay.textContent = 'Welcome, ' + displayName;
+            
+            // Load music after login
+            loadSong(0);
+            generatePlaylist();
+            audioPlayer.play().catch(e => console.log('Play error:', e));
+            
+            // Init particles
+            initParticles();
+            getIP();
+            updateGlobalCounter();
+            initTabs();
+        } else {
+            loginScreen.style.display = 'flex';
+            mainContainer.classList.remove('active');
+            loginError.textContent = '';
+            loginSuccess.textContent = '';
+            isLoginMode = true;
+            loginBtn.textContent = 'Sign in';
+            switchBtn.textContent = 'Create account';
+        }
+    });
 
-            // ============================================================
-            // 6. CONTADOR LOCAL DE VISITAS
-            // ============================================================
-            let visitas = parseInt(localStorage.getItem('draco_visitas')) || 0;
-            visitas += 1;
-            localStorage.setItem('draco_visitas', visitas);
-            visitasDisplay.textContent = visitas;
+    // ============================================================
+    // 7. EVENT LISTENERS (Auth)
+    // ============================================================
+    switchBtn.addEventListener('click', () => {
+        isLoginMode = !isLoginMode;
+        loginBtn.textContent = isLoginMode ? 'Sign in' : 'Register';
+        switchBtn.textContent = isLoginMode ? 'Create account' : 'Back to sign in';
+        loginError.textContent = '';
+        loginSuccess.textContent = '';
+    });
 
-            // ============================================================
-            // 7. RELOJ
-            // ============================================================
-            function actualizarReloj() {
-                const ahora = new Date();
-                const h = String(ahora.getHours()).padStart(2, '0');
-                const m = String(ahora.getMinutes()).padStart(2, '0');
-                const s = String(ahora.getSeconds()).padStart(2, '0');
-                clockDisplay.textContent = h + ':' + m + ':' + s;
-            }
-            actualizarReloj();
-            setInterval(actualizarReloj, 1000);
+    loginBtn.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-            // ============================================================
-            // 8. PARTÍCULAS
-            // ============================================================
-            function initParticles() {
-                const canvas = document.getElementById('particles-canvas');
-                const ctx = canvas.getContext('2d');
-                let width, height;
-                let particles = [];
+        if (!email || !password) {
+            showError('Please fill in all fields.');
+            return;
+        }
+        if (password.length < 6) {
+            showError('Password must be at least 6 characters.');
+            return;
+        }
 
-                function resize() {
-                    const rect = mainContainer.getBoundingClientRect();
-                    width = rect.width;
-                    height = rect.height;
-                    canvas.width = width;
-                    canvas.height = height;
-                }
+        if (isLoginMode) loginUser(email, password);
+        else registerUser(email, password);
+    });
 
-                function createParticles(count) {
-                    particles = [];
-                    for (let i = 0; i < count; i++) {
-                        particles.push({
-                            x: Math.random() * width,
-                            y: Math.random() * height,
-                            vx: (Math.random() - 0.5) * 0.5,
-                            vy: (Math.random() - 0.5) * 0.5,
-                            r: 1.5 + Math.random() * 2,
-                            alpha: 0.2 + Math.random() * 0.3,
-                        });
-                    }
-                }
+    emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
+    passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
+    logoutBtn.addEventListener('click', logoutUser);
 
-                function drawParticles() {
-                    ctx.clearRect(0, 0, width, height);
-                    for (const p of particles) {
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
-                        ctx.fill();
-                        p.x += p.vx;
-                        p.y += p.vy;
-                        if (p.x < 0 || p.x > width) p.vx *= -1;
-                        if (p.y < 0 || p.y > height) p.vy *= -1;
-                    }
-                    requestAnimationFrame(drawParticles);
-                }
+    // ============================================================
+    // 8. THEME
+    // ============================================================
+    const savedTheme = localStorage.getItem('draco_theme') || 'light';
+    document.body.classList.add(savedTheme + '-mode');
+    themeToggle.textContent = savedTheme === 'dark' ? '◆' : '◈';
 
-                resize();
-                createParticles(45);
-                drawParticles();
+    themeToggle.addEventListener('click', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        document.body.classList.remove('light-mode', 'dark-mode');
+        if (isDark) {
+            document.body.classList.add('light-mode');
+            localStorage.setItem('draco_theme', 'light');
+            this.textContent = '◈';
+        } else {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('draco_theme', 'dark');
+            this.textContent = '◆';
+        }
+    });
 
-                window.addEventListener('resize', () => {
-                    resize();
-                    createParticles(45);
+    // ============================================================
+    // 9. CLOCK
+    // ============================================================
+    function updateClock() {
+        const now = new Date();
+        clockDisplay.textContent = String(now.getHours()).padStart(2, '0') + ':' +
+                                   String(now.getMinutes()).padStart(2, '0') + ':' +
+                                   String(now.getSeconds()).padStart(2, '0');
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ============================================================
+    // 10. VISIT COUNTERS
+    // ============================================================
+    let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
+    visits += 1;
+    localStorage.setItem('draco_visitas', visits);
+    visitasDisplay.textContent = visits;
+
+    function updateGlobalCounter() {
+        const COUNTER_NAME = 'draco_visitas_global';
+        fetch('https://api-count.com/api/v1/counters/' + COUNTER_NAME + '/increment')
+            .then(r => r.json())
+            .then(data => {
+                if (visitasGlobal) visitasGlobal.textContent = data.count || '?';
+            })
+            .catch(() => {
+                if (visitasGlobal) visitasGlobal.textContent = '?';
+                console.log('Global counter error');
+            });
+    }
+
+    // ============================================================
+    // 11. IP
+    // ============================================================
+    function getIP() {
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(data => { ipDisplay.textContent = data.ip || '0.0.0.0'; })
+            .catch(() => { ipDisplay.textContent = '0.0.0.0'; });
+    }
+
+    // ============================================================
+    // 12. PARTICLES
+    // ============================================================
+    function initParticles() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            const rect = mainContainer.getBoundingClientRect();
+            width = rect.width;
+            height = rect.height;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function createParticles(count) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    r: 1.5 + Math.random() * 2,
+                    alpha: 0.2 + Math.random() * 0.3,
                 });
             }
+        }
 
-            // ============================================================
-            // 9. IP
-            // ============================================================
-            function obtenerIP() {
-                fetch('https://api.ipify.org?format=json')
-                    .then(r => r.json())
-                    .then(data => {
-                        ipDisplay.textContent = data.ip || '0.0.0.0';
-                    })
-                    .catch(() => {
-                        ipDisplay.textContent = '0.0.0.0';
-                    });
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (const p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
             }
+            requestAnimationFrame(drawParticles);
+        }
 
-            // ============================================================
-            // 10. REPRODUCTOR
-            // ============================================================
-            function loadSong(index) {
-                const song = playlist[index];
-                currentIndex = index;
-                audioPlayer.src = 'https://d-gq.github.io/' + song.file;
-                currentSongTitle.textContent = song.title;
-                lyricsSub.textContent = song.title.toUpperCase();
-                renderLyrics(song.lyrics);
-                updatePlaylistUI();
-                if (isPlaying) {
-                    audioPlayer.play().catch(e => console.log('Error:', e));
-                }
+        resize();
+        createParticles(45);
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            resize();
+            createParticles(45);
+        });
+    }
+
+    // ============================================================
+    // 13. MUSIC PLAYER
+    // ============================================================
+    function loadSong(index) {
+        const song = playlist[index];
+        currentIndex = index;
+        audioPlayer.src = 'https://d-gq.github.io/' + song.file;
+        currentSongTitle.textContent = song.title;
+        lyricsSub.textContent = song.title.toUpperCase();
+        renderLyrics(song.lyrics);
+        updatePlaylistUI();
+        if (isPlaying) {
+            audioPlayer.play().catch(e => console.log('Error:', e));
+        }
+    }
+
+    function renderLyrics(lyricsArray) {
+        let html = '';
+        lyricsArray.forEach(line => {
+            if (line === '') {
+                html += `<div class="line empty"></div>`;
+            } else {
+                html += `<div class="line">${line}</div>`;
             }
+        });
+        lyricsContainer.innerHTML = html;
+    }
 
-            function renderLyrics(lyricsArray) {
-                let html = '';
-                lyricsArray.forEach(line => {
-                    if (line === '') {
-                        html += `<div class="line empty"></div>`;
-                    } else {
-                        html += `<div class="line">${line}</div>`;
-                    }
-                });
-                lyricsContainer.innerHTML = html;
-            }
+    function updatePlaylistUI() {
+        const items = document.querySelectorAll('.playlist-item');
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === currentIndex);
+        });
+    }
 
-            function updatePlaylistUI() {
-                const items = document.querySelectorAll('.playlist-item');
-                items.forEach((item, i) => {
-                    item.classList.toggle('active', i === currentIndex);
-                });
-            }
+    function togglePlay() {
+        if (audioPlayer.paused) {
+            audioPlayer.play().catch(e => console.log('Error:', e));
+            isPlaying = true;
+            playBtn.textContent = '⏸';
+        } else {
+            audioPlayer.pause();
+            isPlaying = false;
+            playBtn.textContent = '▶';
+        }
+    }
 
-            function togglePlay() {
-                if (audioPlayer.paused) {
-                    audioPlayer.play().catch(e => console.log('Error:', e));
-                    isPlaying = true;
-                    playBtn.textContent = '⏸';
-                } else {
-                    audioPlayer.pause();
-                    isPlaying = false;
-                    playBtn.textContent = '▶';
-                }
-            }
+    function nextSong() {
+        const next = (currentIndex + 1) % playlist.length;
+        isPlaying = true;
+        loadSong(next);
+        audioPlayer.play().catch(e => console.log('Error:', e));
+        playBtn.textContent = '⏸';
+    }
 
-            function nextSong() {
-                const next = (currentIndex + 1) % playlist.length;
+    function prevSong() {
+        const prev = (currentIndex - 1 + playlist.length) % playlist.length;
+        isPlaying = true;
+        loadSong(prev);
+        audioPlayer.play().catch(e => console.log('Error:', e));
+        playBtn.textContent = '⏸';
+    }
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return '0:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return mins + ':' + String(secs).padStart(2, '0');
+    }
+
+    function updateProgress() {
+        if (!isDragging) {
+            const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
+            progressFill.style.width = percent + '%';
+            currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+            totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+        }
+    }
+
+    function generatePlaylist() {
+        let html = '';
+        playlist.forEach((song, index) => {
+            html += `
+                <div class="playlist-item" data-index="${index}">
+                    <span class="title">${song.title}</span>
+                    <span class="duration">${index + 1}</span>
+                </div>
+            `;
+        });
+        playlistContainer.innerHTML = html;
+
+        document.querySelectorAll('.playlist-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
                 isPlaying = true;
-                loadSong(next);
+                loadSong(index);
                 audioPlayer.play().catch(e => console.log('Error:', e));
                 playBtn.textContent = '⏸';
-            }
+            });
+        });
+    }
 
-            function prevSong() {
-                const prev = (currentIndex - 1 + playlist.length) % playlist.length;
-                isPlaying = true;
-                loadSong(prev);
-                audioPlayer.play().catch(e => console.log('Error:', e));
-                playBtn.textContent = '⏸';
-            }
-
-            function formatTime(seconds) {
-                if (isNaN(seconds)) return '0:00';
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return mins + ':' + String(secs).padStart(2, '0');
-            }
-
-            function updateProgress() {
-                if (!isDragging) {
-                    const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
-                    progressFill.style.width = percent + '%';
-                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
-                    totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
-                }
-            }
-
-            // ============================================================
-            // 11. GENERAR PLAYLIST
-            // ============================================================
-            function generarPlaylist() {
-                let html = '';
-                playlist.forEach((song, index) => {
-                    html += `
-                        <div class="playlist-item" data-index="${index}">
-                            <span class="title">${song.title}</span>
-                            <span class="duration">${index + 1}</span>
-                        </div>
-                    `;
-                });
-                playlistContainer.innerHTML = html;
-
-                document.querySelectorAll('.playlist-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        isPlaying = true;
-                        loadSong(index);
-                        audioPlayer.play().catch(e => console.log('Error:', e));
-                        playBtn.textContent = '⏸';
-                    });
-                });
-            }
-
-            // ============================================================
-            // 12. BOTONES SOCIAL
-            // ============================================================
-            function generarBotones(perfiles) {
-                let html = '';
-                perfiles.forEach(p => {
-                    if (p.tipo === 'discord') {
-                        html += `
-                            <button class="social-btn discord-copy" data-copy="${p.valor}">
-                                Discord
-                            </button>
-                        `;
-                    } else if (p.tipo === 'link') {
-                        html += `
-                            <a href="${p.url}" target="_blank" class="social-btn">
-                                ${p.nombre}
-                            </a>
-                        `;
-                    }
-                });
-                return html;
-            }
-
-            const perfilesAbout = [
-                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
-                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
-                { tipo: 'discord', valor: 'v.y.r' },
-                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
-                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
-            ];
-
-            // ============================================================
-            // 13. COPIAR
-            // ============================================================
-            function copiarAlPortapapeles(texto) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(texto)
-                        .then(() => mostrarNotificacion('Copiado: ' + texto))
-                        .catch(() => copiarFallback(texto));
-                } else {
-                    copiarFallback(texto);
-                }
-            }
-
-            function copiarFallback(texto) {
-                const input = document.createElement('input');
-                input.value = texto;
-                input.style.position = 'fixed';
-                input.style.opacity = '0';
-                input.style.pointerEvents = 'none';
-                document.body.appendChild(input);
-                input.select();
-                try {
-                    document.execCommand('copy');
-                    mostrarNotificacion('Copiado: ' + texto);
-                } catch (e) {
-                    mostrarNotificacion('Error al copiar');
-                }
-                document.body.removeChild(input);
-            }
-
-            function mostrarNotificacion(mensaje) {
-                const div = document.createElement('div');
-                div.textContent = mensaje;
-                div.style.cssText = `
-                    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-                    background: #f5f5f5; color: #333; padding: 12px 28px;
-                    border: 1px solid #ddd; border-radius: 8px;
-                    font-family: 'Inter', sans-serif; font-weight: 500;
-                    z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-                    letter-spacing: 0.5px; text-align: center;
+    // ============================================================
+    // 14. SOCIAL BUTTONS
+    // ============================================================
+    function generateSocialButtons(profiles) {
+        let html = '';
+        profiles.forEach(p => {
+            if (p.type === 'discord') {
+                html += `
+                    <button class="social-btn discord-copy" data-copy="${p.value}">
+                        Discord
+                    </button>
                 `;
-                document.body.appendChild(div);
-                setTimeout(() => {
-                    div.style.opacity = '0';
-                    div.style.transition = 'opacity 0.5s ease';
-                    setTimeout(() => div.remove(), 600);
-                }, 2500);
+            } else if (p.type === 'link') {
+                html += `
+                    <a href="${p.url}" target="_blank" class="social-btn">
+                        ${p.name}
+                    </a>
+                `;
             }
+        });
+        return html;
+    }
 
-            // ============================================================
-            // 14. PESTAÑAS
-            // ============================================================
-            function initTabs() {
-                tabs.forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        tabs.forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        const tab = this.dataset.tab;
-                        Object.keys(panels).forEach(key => {
-                            panels[key].classList.toggle('active', key === tab);
-                        });
-                    });
-                });
-            }
+    const socialProfiles = [
+        { type: 'link', name: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
+        { type: 'link', name: 'Instagram', url: 'https://www.instagram.com/omofagia' },
+        { type: 'discord', value: 'v.y.r' },
+        { type: 'link', name: 'Telegram', url: 'https://t.me/caquexia' },
+        { type: 'link', name: 'GitHub', url: 'https://github.com/d-gq' },
+    ];
 
-            // ============================================================
-            // 15. LOGIN
-            // ============================================================
-            function handleLogin() {
-                const name = nameInput.value.trim();
-                if (name === '') {
-                    loginError.textContent = 'Por favor, escribe tu nombre.';
-                    return;
-                }
-                if (name.length < 2) {
-                    loginError.textContent = 'El nombre debe tener al menos 2 letras.';
-                    return;
-                }
+    // ============================================================
+    // 15. COPY TO CLIPBOARD
+    // ============================================================
+    function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => showNotification('Copied: ' + text))
+                .catch(() => copyFallback(text));
+        } else {
+            copyFallback(text);
+        }
+    }
 
-                localStorage.setItem('draco_user', name);
+    function copyFallback(text) {
+        const input = document.createElement('input');
+        input.value = text;
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        try {
+            document.execCommand('copy');
+            showNotification('Copied: ' + text);
+        } catch (e) {
+            showNotification('Error copying');
+        }
+        document.body.removeChild(input);
+    }
 
-                loginScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loginScreen.style.display = 'none';
-                }, 800);
+    function showNotification(msg) {
+        const div = document.createElement('div');
+        div.textContent = msg;
+        div.style.cssText = `
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #f5f5f5; color: #333; padding: 12px 28px;
+            border: 1px solid #ddd; border-radius: 8px;
+            font-family: 'Inter', sans-serif; font-weight: 500;
+            z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            letter-spacing: 0.5px; text-align: center;
+        `;
+        document.body.appendChild(div);
+        setTimeout(() => {
+            div.style.opacity = '0';
+            div.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => div.remove(), 600);
+        }, 2500);
+    }
 
-                setTimeout(() => {
-                    mainContainer.classList.add('active');
-                    initParticles();
-                }, 300);
-
-                userNameDisplay.textContent = name;
-                greetingDisplay.textContent = 'Welcome, ' + name;
-
-                loadSong(0);
-                generarPlaylist();
-
-                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
-
-                audioPlayer.addEventListener('timeupdate', updateProgress);
-                audioPlayer.addEventListener('ended', nextSong);
-
-                playBtn.addEventListener('click', togglePlay);
-                prevBtn.addEventListener('click', prevSong);
-                nextBtn.addEventListener('click', nextSong);
-
-                progressBar.addEventListener('mousedown', function(e) {
-                    isDragging = true;
-                    const rect = this.getBoundingClientRect();
-                    const percent = (e.clientX - rect.left) / rect.width;
-                    audioPlayer.currentTime = percent * audioPlayer.duration;
-                    progressFill.style.width = percent * 100 + '%';
-                });
-
-                document.addEventListener('mousemove', function(e) {
-                    if (isDragging) {
-                        const rect = progressBar.getBoundingClientRect();
-                        let percent = (e.clientX - rect.left) / rect.width;
-                        percent = Math.max(0, Math.min(1, percent));
-                        audioPlayer.currentTime = percent * audioPlayer.duration;
-                        progressFill.style.width = percent * 100 + '%';
-                    }
-                });
-
-                document.addEventListener('mouseup', function() {
-                    isDragging = false;
-                });
-
-                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
-                document.querySelectorAll('.discord-copy').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const texto = this.dataset.copy;
-                        if (texto) copiarAlPortapapeles(texto);
-                    });
-                });
-
-                obtenerIP();
-                initTabs();
-                actualizarContadorGlobal();
-
-                console.log('Draco home - Activado como:', name);
-            }
-
-            // ============================================================
-            // 16. INICIAR
-            // ============================================================
-            loginBtn.addEventListener('click', handleLogin);
-            nameInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-
-            document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
-            document.querySelectorAll('.discord-copy').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const texto = this.dataset.copy;
-                    if (texto) copiarAlPortapapeles(texto);
+    // ============================================================
+    // 16. TABS
+    // ============================================================
+    function initTabs() {
+        tabs.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabs.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tab = this.dataset.tab;
+                Object.keys(panels).forEach(key => {
+                    panels[key].classList.toggle('active', key === tab);
                 });
             });
+        });
+    }
 
-        })();
+    // ============================================================
+    // 17. MUSIC EVENTS
+    // ============================================================
+    playBtn.addEventListener('click', togglePlay);
+    prevBtn.addEventListener('click', prevSong);
+    nextBtn.addEventListener('click', nextSong);
+
+    audioPlayer.addEventListener('timeupdate', updateProgress);
+    audioPlayer.addEventListener('ended', nextSong);
+
+    progressBar.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        const rect = this.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audioPlayer.currentTime = percent * audioPlayer.duration;
+        progressFill.style.width = percent * 100 + '%';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+            const rect = progressBar.getBoundingClientRect();
+            let percent = (e.clientX - rect.left) / rect.width;
+            percent = Math.max(0, Math.min(1, percent));
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+            progressFill.style.width = percent * 100 + '%';
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
+
+    // ============================================================
+    // 18. INIT SOCIAL
+    // ============================================================
+    document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
+    document.querySelectorAll('.discord-copy').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const text = this.dataset.copy;
+            if (text) copyToClipboard(text);
+        });
+    });
+
+    // ============================================================
+    // 19. INIT TABS (in case auth observer doesn't trigger)
+    // ============================================================
+    initTabs();
+
+    console.log('Paradise - Loaded with Firebase Auth');
     </script>
 </body>
 </html>
