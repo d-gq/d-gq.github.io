@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>(#_0)</title>
+    <title>Paradise</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===== RESET ===== */
@@ -1066,7 +1066,7 @@
             }
 
             // ============================================================
-            // 13. LOGIN
+            // 13. LOGIN (ARRECLADO)
             // ============================================================
             function handleLogin() {
                 const name = nameInput.value.trim();
@@ -1094,10 +1094,12 @@
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                // ===== ARREGLO: Cargar música y playlist DIRECTAMENTE =====
-                // Sin setTimeout, directamente después de mostrar la página
+                // ===== ARREGLO: Cargar y reproducir entry1 =====
                 loadSong(0);
                 generarPlaylist();
+
+                // Reproducir automáticamente al hacer clic en Entrar
+                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
 
                 audioPlayer.addEventListener('timeupdate', updateProgress);
                 audioPlayer.addEventListener('ended', nextSong);
