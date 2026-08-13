@@ -19,9 +19,7 @@
     </script>
 
     <style>
-        /* ============================================================
-           RESET
-           ============================================================ */
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -43,8 +41,6 @@
         /* ============================================================
            THEMES (LIGHT / DARK)
            ============================================================ */
-        
-        /* LIGHT MODE */
         body.light-mode {
             background: #f5f5f5;
             color: #1a1a1a;
@@ -95,7 +91,6 @@
         body.light-mode .wall-post .date { color: #999; }
         body.light-mode .wall-post .content { color: #333; }
 
-        /* DARK MODE */
         body.dark-mode {
             background: #0a0a0a;
             color: #eee;
@@ -148,7 +143,7 @@
         body.dark-mode .wall-post .content { color: #aaa; }
 
         /* ============================================================
-           ROLES (Clean Badge Style - SIN BRILLOS)
+           ROLES
            ============================================================ */
         .author-wrapper {
             display: flex;
@@ -207,6 +202,102 @@
             gap: 6px;
             font-weight: 600;
             font-size: 0.95rem;
+        }
+
+        /* ============================================================
+           MODAL DE CONFIRMACIÓN
+           ============================================================ */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .confirm-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .confirm-modal .modal-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 35px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            transform: scale(0.9) translateY(10px);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        body.dark-mode .confirm-modal .modal-box {
+            background: #1a1a1a;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .confirm-modal.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+        .confirm-modal .modal-box h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+        body.dark-mode .confirm-modal .modal-box h3 {
+            color: #eee;
+        }
+        .confirm-modal .modal-box p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        body.dark-mode .confirm-modal .modal-box p {
+            color: #aaa;
+        }
+        .confirm-modal .modal-box .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .confirm-modal .modal-box .buttons button {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .confirm-modal .modal-box .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .confirm-modal .modal-box .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+        body.dark-mode .confirm-modal .modal-box .btn-cancel {
+            background: #2a2a2a;
+            color: #ccc;
+        }
+        body.dark-mode .confirm-modal .modal-box .btn-cancel:hover {
+            background: #333;
+        }
+        .confirm-modal .modal-box .btn-delete {
+            background: #cc3333;
+            color: #fff;
+        }
+        .confirm-modal .modal-box .btn-delete:hover {
+            background: #aa2222;
+            transform: scale(1.02);
         }
 
         /* ============================================================
@@ -297,13 +388,13 @@
             cursor: pointer;
             opacity: 0.5;
             transition: opacity 0.2s ease;
+            font-family: 'Inter', sans-serif;
         }
         .wall-post .delete-btn:hover { opacity: 1; }
 
         /* ============================================================
            COMMON ELEMENTS
            ============================================================ */
-
         #themeToggle {
             background: transparent;
             border: 1px solid #ddd;
@@ -773,9 +864,7 @@
 </head>
 <body>
 
-    <!-- ============================================================
-    LOGIN / REGISTER SCREEN (OBLIGATORIO)
-    ============================================================ -->
+    <!-- ===== LOGIN ===== -->
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
@@ -789,9 +878,19 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    MAIN CONTAINER
-    ============================================================ -->
+    <!-- ===== MODAL DE CONFIRMACIÓN ===== -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="modal-box">
+            <h3>Delete this post?</h3>
+            <p>This action cannot be undone.</p>
+            <div class="buttons">
+                <button class="btn-cancel" id="confirmCancel">Cancel</button>
+                <button class="btn-delete" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
     <div class="container" id="mainContainer">
         <canvas id="particles-canvas"></canvas>
 
@@ -902,7 +1001,7 @@
     <audio id="audioPlayer"></audio>
 
     <!-- ============================================================
-    JAVASCRIPT (with Firebase + Firestore)
+    JAVASCRIPT
     ============================================================ -->
     <script type="module">
     // ============================================================
@@ -972,18 +1071,23 @@
     const postInput = document.getElementById('postInput');
     const postBtn = document.getElementById('postBtn');
     const wallPosts = document.getElementById('wallPosts');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmCancel = document.getElementById('confirmCancel');
+    const confirmDelete = document.getElementById('confirmDelete');
 
     let isLoginMode = true;
     let currentIndex = 0;
     let isPlaying = false;
     let isDragging = false;
     let currentUser = null;
+    let pendingDeleteId = null;
 
     // ============================================================
-    // 4. ROLES
+    // 4. ROLES - CON LOS NUEVOS UIDs
     // ============================================================
     const userRoles = {
         'iBD9gQPpAJNU0v7SxRaVrn7MZaG2': 'owner',
+        'a0w2us2No8cn8uWzQF3siH5FF5P2': 'admin',
     };
 
     function getUserRole(uid) {
@@ -994,7 +1098,7 @@
         const role = getUserRole(uid);
         const roleMap = {
             owner: {
-                icon: '<img src="owner.png" class="role-icon" alt="owner" />',
+                icon: '',
                 badge: '<span class="role-badge owner">Owner</span>',
                 canDeleteAll: true
             },
@@ -1013,7 +1117,7 @@
     }
 
     // ============================================================
-    // 5. PLAYLIST
+    // 5. PLAYLIST (COMPLETA)
     // ============================================================
     const playlist = [{
         id: 0,
@@ -1041,7 +1145,8 @@
         title: 'entry 2',
         file: 'entry2.mp3',
         lyrics: [
-            "(evvls)", "",
+            "(evvls)",
+            "",
             "Too many thoughts up in my head",
             "Swear no one understands",
             "But there was only one that would listen",
@@ -1133,7 +1238,6 @@
         loginError.textContent = msg;
         loginSuccess.textContent = '';
     }
-
     function showSuccess(msg) {
         loginSuccess.textContent = msg;
         loginError.textContent = '';
@@ -1142,11 +1246,10 @@
     function registerUser(email, password, displayName) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                return updateProfile(userCredential.user, { displayName: displayName })
-                    .then(() => {
-                        console.log('Nombre guardado correctamente:', displayName);
-                        showSuccess('Account created! Welcome, ' + displayName + '!');
-                    });
+                return updateProfile(userCredential.user, { displayName: displayName });
+            })
+            .then(() => {
+                showSuccess('Account created! Welcome!');
             })
             .catch((error) => {
                 let msg = 'Registration error.';
@@ -1161,9 +1264,7 @@
     function loginUser(email, password) {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
-                const user = auth.currentUser;
-                const displayName = user?.displayName || user?.email?.split('@')[0] || 'user';
-                showSuccess('Logged in! Welcome back, ' + displayName);
+                showSuccess('Logged in! Welcome back.');
                 console.log('User logged in:', email);
             })
             .catch((error) => {
@@ -1182,7 +1283,7 @@
     }
 
     // ============================================================
-    // 7. WALL (MURO) FUNCTIONS
+    // 7. WALL FUNCTIONS (CON MODAL)
     // ============================================================
     function loadPosts() {
         const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
@@ -1197,9 +1298,7 @@
                 const data = doc.data();
                 const postId = doc.id;
                 const isAuthor = currentUser && data.uid === currentUser.uid;
-                
                 const roleData = getRoleData(data.uid);
-                // Owner y Admin pueden borrar todo, el resto solo sus propios posts
                 const canDelete = roleData.canDeleteAll || isAuthor;
                 
                 const postDiv = document.createElement('div');
@@ -1223,14 +1322,9 @@
                 
                 const deleteBtn = postDiv.querySelector('.delete-btn');
                 if (deleteBtn) {
-                    deleteBtn.addEventListener('click', async () => {
-                        if (confirm('Delete this post?')) {
-                            try {
-                                await deleteDoc(doc(db, 'posts', postId));
-                            } catch (e) {
-                                console.error('Error deleting post:', e);
-                            }
-                        }
+                    deleteBtn.addEventListener('click', () => {
+                        pendingDeleteId = postId;
+                        confirmModal.classList.add('active');
                     });
                 }
                 
@@ -1262,7 +1356,34 @@
     }
 
     // ============================================================
-    // 8. AUTH OBSERVER
+    // 8. MODAL EVENTS
+    // ============================================================
+    confirmCancel.addEventListener('click', () => {
+        confirmModal.classList.remove('active');
+        pendingDeleteId = null;
+    });
+
+    confirmDelete.addEventListener('click', async () => {
+        if (!pendingDeleteId) return;
+        try {
+            await deleteDoc(doc(db, 'posts', pendingDeleteId));
+        } catch (e) {
+            console.error('Error deleting post:', e);
+            alert('Error deleting post.');
+        }
+        confirmModal.classList.remove('active');
+        pendingDeleteId = null;
+    });
+
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) {
+            confirmModal.classList.remove('active');
+            pendingDeleteId = null;
+        }
+    });
+
+    // ============================================================
+    // 9. AUTH OBSERVER
     // ============================================================
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
@@ -1275,8 +1396,6 @@
             userNameDisplay.textContent = displayName;
             greetingDisplay.textContent = 'Welcome, ' + displayName;
             
-            console.log('Usuario logueado con nombre:', displayName);
-            
             loadSong(0);
             generatePlaylist();
             audioPlayer.play().catch(e => console.log('Play error:', e));
@@ -1285,7 +1404,6 @@
             getIP();
             updateGlobalCounter();
             initTabs();
-            
             loadPosts();
             
             postBtn.addEventListener('click', publishPost);
@@ -1306,7 +1424,7 @@
     });
 
     // ============================================================
-    // 9. EVENT LISTENERS (Auth)
+    // 10. EVENT LISTENERS (Auth)
     // ============================================================
     switchBtn.addEventListener('click', () => {
         isLoginMode = !isLoginMode;
@@ -1350,7 +1468,7 @@
     nameInput.style.display = 'none';
 
     // ============================================================
-    // 10. THEME
+    // 11. THEME
     // ============================================================
     const savedTheme = localStorage.getItem('draco_theme') || 'light';
     document.body.classList.add(savedTheme + '-mode');
@@ -1371,7 +1489,7 @@
     });
 
     // ============================================================
-    // 11. CLOCK
+    // 12. CLOCK
     // ============================================================
     function updateClock() {
         const now = new Date();
@@ -1383,7 +1501,7 @@
     setInterval(updateClock, 1000);
 
     // ============================================================
-    // 12. VISIT COUNTERS
+    // 13. VISIT COUNTERS
     // ============================================================
     let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
     visits += 1;
@@ -1404,7 +1522,7 @@
     }
 
     // ============================================================
-    // 13. IP
+    // 14. IP
     // ============================================================
     function getIP() {
         fetch('https://api.ipify.org?format=json')
@@ -1414,7 +1532,7 @@
     }
 
     // ============================================================
-    // 14. PARTICLES
+    // 15. PARTICLES
     // ============================================================
     function initParticles() {
         const canvas = document.getElementById('particles-canvas');
@@ -1470,7 +1588,7 @@
     }
 
     // ============================================================
-    // 15. MUSIC PLAYER
+    // 16. MUSIC PLAYER FUNCTIONS
     // ============================================================
     function loadSong(index) {
         const song = playlist[index];
@@ -1572,7 +1690,7 @@
     }
 
     // ============================================================
-    // 16. SOCIAL BUTTONS
+    // 17. SOCIAL BUTTONS
     // ============================================================
     function generateSocialButtons(profiles) {
         let html = '';
@@ -1603,7 +1721,7 @@
     ];
 
     // ============================================================
-    // 17. COPY TO CLIPBOARD
+    // 18. COPY TO CLIPBOARD
     // ============================================================
     function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1651,7 +1769,7 @@
     }
 
     // ============================================================
-    // 18. TABS
+    // 19. TABS
     // ============================================================
     function initTabs() {
         tabs.forEach(btn => {
@@ -1667,7 +1785,7 @@
     }
 
     // ============================================================
-    // 19. MUSIC EVENTS
+    // 20. MUSIC EVENTS
     // ============================================================
     playBtn.addEventListener('click', togglePlay);
     prevBtn.addEventListener('click', prevSong);
@@ -1699,7 +1817,7 @@
     });
 
     // ============================================================
-    // 20. INIT SOCIAL
+    // 21. INIT SOCIAL
     // ============================================================
     document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
     document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1710,7 +1828,7 @@
     });
 
     // ============================================================
-    // 21. INIT TABS
+    // 22. INIT TABS
     // ============================================================
     initTabs();
 
