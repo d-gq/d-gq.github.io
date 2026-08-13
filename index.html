@@ -19,9 +19,7 @@
     </script>
 
     <style>
-        /* ============================================================
-           RESET
-           ============================================================ */
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -1010,7 +1008,7 @@
     // 1. FIREBASE IMPORTS
     // ============================================================
     import { initializeApp } from "firebase/app";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "firebase/auth";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
     // ============================================================
@@ -1234,12 +1232,16 @@
     }];
 
     // ============================================================
-    // 6. AUTH FUNCTIONS
+    // 6. AUTH FUNCTIONS (SIN VERIFICACIÓN)
     // ============================================================
     function showError(msg) {
         loginError.textContent = msg;
         loginSuccess.textContent = '';
-        // Los mensajes de verificación NO se borran solos
+        setTimeout(() => {
+            if (loginError.textContent === msg) {
+                loginError.textContent = '';
+            }
+        }, 5000);
     }
 
     function showSuccess(msg) {
@@ -1256,19 +1258,10 @@
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log('Usuario creado, UID:', user.uid);
-                
                 return updateProfile(user, { displayName: displayName })
                     .then(() => {
-                        console.log('Nombre actualizado:', displayName);
-                        return sendEmailVerification(user);
-                    })
-                    .then(() => {
-                        console.log('Correo de verificación enviado a:', email);
-                        showSuccess('✅ Account created! Check your email to verify.');
-                        // Mostrar mensaje permanente de verificación
-                        loginError.textContent = '📧 Please verify your email before logging in. Check your inbox.';
-                        return signOut(auth);
+                        showSuccess('✅ Account created! Welcome, ' + displayName + '!');
+                        console.log('User registered:', email);
                     });
             })
             .catch((error) => {
@@ -1283,14 +1276,10 @@
 
     function loginUser(email, password) {
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                if (!user.emailVerified) {
-                    loginError.textContent = '📧 Please verify your email before logging in. Check your inbox.';
-                    signOut(auth);
-                    return;
-                }
-                showSuccess('✅ Logged in! Welcome back.');
+            .then(() => {
+                const user = auth.currentUser;
+                const displayName = user?.displayName || user?.email?.split('@')[0] || 'user';
+                showSuccess('✅ Logged in! Welcome back, ' + displayName);
                 console.log('User logged in:', email);
             })
             .catch((error) => {
@@ -1409,22 +1398,12 @@
     });
 
     // ============================================================
-    // 9. AUTH OBSERVER (CON VERIFICACIÓN PERMANENTE)
+    // 9. AUTH OBSERVER (SIN VERIFICACIÓN)
     // ============================================================
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         
         if (user) {
-            // 🔥 SI NO ESTÁ VERIFICADO, EL MENSAJE SE QUEDA
-            if (!user.emailVerified) {
-                loginError.textContent = '📧 Please verify your email before accessing the page. Check your inbox.';
-                mainContainer.classList.remove('active');
-                loginScreen.style.display = 'flex';
-                signOut(auth);
-                return;
-            }
-            
-            // Si está verificado, mostrar la página
             loginScreen.style.display = 'none';
             mainContainer.classList.add('active');
             
@@ -1449,8 +1428,8 @@
         } else {
             loginScreen.style.display = 'flex';
             mainContainer.classList.remove('active');
-            // No borramos el mensaje de verificación si está ahí
-            // (se mantiene hasta que el usuario verifique)
+            loginError.textContent = '';
+            loginSuccess.textContent = '';
             isLoginMode = true;
             loginBtn.textContent = 'Sign in';
             switchBtn.textContent = 'Create account';
@@ -1467,7 +1446,8 @@
         loginBtn.textContent = isLoginMode ? 'Sign in' : 'Register';
         switchBtn.textContent = isLoginMode ? 'Create account' : 'Back to sign in';
         nameInput.style.display = isLoginMode ? 'none' : 'block';
-        // No borramos el mensaje de verificación
+        loginError.textContent = '';
+        loginSuccess.textContent = '';
     });
 
     loginBtn.addEventListener('click', () => {
@@ -1867,7 +1847,7 @@
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded with Firebase Auth + Email Verification');
+    console.log('Paradise - Loaded with Firebase Auth (NO verification)');
     </script>
 </body>
 </html>
