@@ -184,92 +184,45 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== HOME (frase) ===== */
+        /* ===== HOME (lyrics) ===== */
         .home-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            position: relative;
             height: 360px;
-            background: #fafafa;
+            overflow: hidden;
             border-radius: 10px;
+            background: #fafafa;
             border: 1px solid #eee;
-            padding: 30px;
+            padding: 20px 0;
         }
-        #fraseDisplay {
-            font-size: 1.6rem;
-            color: #1a1a1a;
-            max-width: 85%;
-            line-height: 1.7;
+        .lyrics-scroll {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            transition: transform 0.3s ease;
+        }
+        .lyrics-line {
+            font-size: 1.2rem;
+            color: #888;
+            padding: 6px 0;
             font-family: 'Georgia', 'Times New Roman', serif;
-            font-weight: 400;
+            text-align: center;
+            transition: all 0.3s ease;
             letter-spacing: 0.3px;
+            line-height: 1.6;
+        }
+        .lyrics-line.active {
+            color: #1a1a1a;
+            font-size: 1.6rem;
+            font-weight: 600;
         }
         .home-footer {
-            margin-top: 25px;
+            margin-top: 15px;
             font-size: 0.65rem;
             color: #bbb;
             letter-spacing: 4px;
-        }
-
-        /* ===== DRAW (lienzo) ===== */
-        .draw-container {
-            position: relative;
-            height: 360px;
-            border-radius: 10px;
-            background: #fafafa;
-            border: 1px solid #eee;
-            overflow: hidden;
-        }
-        #drawCanvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: crosshair;
-            touch-action: none;
-            background: #fafafa;
-        }
-        .draw-tools {
-            position: absolute;
-            bottom: 14px;
-            right: 16px;
-            display: flex;
-            gap: 8px;
-            z-index: 5;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 6px 10px;
-            border-radius: 30px;
-            border: 1px solid #ddd;
-            backdrop-filter: blur(4px);
-        }
-        .draw-tools button {
-            background: none;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            color: #555;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-        }
-        .draw-tools button:hover {
-            background: #eee;
-            color: #1a1a1a;
-        }
-        .draw-tools .clear-btn {
-            font-size: 1rem;
-            color: #888;
-        }
-        .draw-tools .clear-btn:hover {
-            background: #f0e0e0;
-            color: #bb3333;
+            text-align: center;
         }
 
         /* ===== BOTONES SOCIAL ===== */
@@ -331,22 +284,20 @@
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
-            .home-container { height: 280px; padding: 20px; }
-            .draw-container { height: 280px; }
-            #fraseDisplay { font-size: 1.2rem; max-width: 95%; }
+            .home-container { height: 280px; }
+            .lyrics-line { font-size: 1rem; }
+            .lyrics-line.active { font-size: 1.3rem; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
-            .draw-tools { bottom: 10px; right: 12px; padding: 4px 8px; gap: 4px; }
-            .draw-tools button { width: 24px; height: 24px; font-size: 0.7rem; }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 220px; }
-            .draw-container { height: 220px; }
-            #fraseDisplay { font-size: 1rem; }
+            .lyrics-line { font-size: 0.85rem; }
+            .lyrics-line.active { font-size: 1.1rem; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
         }
@@ -388,30 +339,17 @@
         <!-- ===== PESTAÑAS ===== -->
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
-            <button class="tab-btn" data-tab="draw">Draw</button>
             <button class="tab-btn" data-tab="about">Socialmedia</button>
         </div>
 
         <!-- ===== CONTENIDO ===== -->
         <div class="content-area">
 
-            <!-- ========== HOME ========== -->
+            <!-- ========== HOME (Lyrics) ========== -->
             <div class="panel active" id="panel-home">
-                <div class="home-container">
-                    <p id="fraseDisplay">Cargando frase...</p>
+                <div class="home-container" id="homeContainer">
+                    <div class="lyrics-scroll" id="lyricsScroll"></div>
                     <div class="home-footer">✦ ✦ ✦</div>
-                </div>
-            </div>
-
-            <!-- ========== DRAW ========== -->
-            <div class="panel" id="panel-draw">
-                <div class="panel-title">Draw</div>
-                <div class="panel-sub">DIBUJA ALGO</div>
-                <div class="draw-container">
-                    <canvas id="drawCanvas"></canvas>
-                    <div class="draw-tools">
-                        <button class="clear-btn" id="clearBtn" title="Borrar dibujo">⌧</button>
-                    </div>
                 </div>
             </div>
 
@@ -443,22 +381,43 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
-                draw: document.getElementById('panel-draw'),
                 about: document.getElementById('panel-about'),
             };
             const audioPlayer = document.getElementById('audioPlayer');
             const clockDisplay = document.getElementById('clockDisplay');
             const visitasDisplay = document.getElementById('visitasDisplay');
             const ipDisplay = document.getElementById('ipDisplay');
-            const fraseDisplay = document.getElementById('fraseDisplay');
+            const lyricsScroll = document.getElementById('lyricsScroll');
 
             // ============================================================
             // 2. CANCIÓN
             // ============================================================
-            const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
+            const SONG_URL = 'https://d-gq.github.io/jaydes.mp3';
 
             // ============================================================
-            // 3. CONTADOR DE VISITAS
+            // 3. LETRA SINCRONIZADA
+            // ============================================================
+            const lyrics = [
+                { time: 0, text: "Cuts on my hands, I can't hold yours" },
+                { time: 4, text: "I feel stripped of my skin and alone" },
+                { time: 8, text: "Tell me what happened to me" },
+                { time: 12, text: "My face in the pavement, look what you made me do" },
+                { time: 17, text: "Cuts on my hands, I can't hold yours" },
+                { time: 21, text: "I feel stripped of my skin and alone" },
+                { time: 25, text: "Tell me what happened to me (Somethin' went wrong)" },
+                { time: 29, text: "My face in the pavement, look what you made me do (Oh-oh)" },
+                { time: 34, text: "Look what you made me do" },
+                { time: 37, text: "(Blame it on the rain outside)" },
+                { time: 40, text: "Look what you made me do" },
+                { time: 43, text: "(Blame it on the cracks outside)" },
+                { time: 46, text: "Look what you made me do" },
+                { time: 48, text: "(Blame it on me, blame it on me)" },
+                { time: 50, text: "Look what you made me do" },
+                { time: 52, text: "(They blame it on me)" },
+            ];
+
+            // ============================================================
+            // 4. CONTADOR DE VISITAS
             // ============================================================
             let visitas = parseInt(localStorage.getItem('draco_visitas')) || 0;
             visitas += 1;
@@ -466,7 +425,7 @@
             visitasDisplay.textContent = visitas;
 
             // ============================================================
-            // 4. RELOJ
+            // 5. RELOJ
             // ============================================================
             function actualizarReloj() {
                 const ahora = new Date();
@@ -479,7 +438,7 @@
             setInterval(actualizarReloj, 1000);
 
             // ============================================================
-            // 5. PARTÍCULAS
+            // 6. PARTÍCULAS
             // ============================================================
             function initParticles() {
                 const canvas = document.getElementById('particles-canvas');
@@ -535,91 +494,6 @@
             }
 
             // ============================================================
-            // 6. LIENZO DE DIBUJO (ARREGLADO)
-            // ============================================================
-            function initCanvas() {
-                const canvas = document.getElementById('drawCanvas');
-                const ctx = canvas.getContext('2d');
-                const container = canvas.parentElement;
-                let drawing = false;
-                let lastX = 0;
-                let lastY = 0;
-
-                function resizeCanvas() {
-                    const rect = container.getBoundingClientRect();
-                    canvas.width = rect.width;
-                    canvas.height = rect.height;
-                    const saved = localStorage.getItem('draco_drawing');
-                    if (saved) {
-                        const img = new Image();
-                        img.onload = () => ctx.drawImage(img, 0, 0);
-                        img.src = saved;
-                    } else {
-                        ctx.fillStyle = '#fafafa';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                }
-
-                function getPos(e) {
-                    const rect = canvas.getBoundingClientRect();
-                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                    return {
-                        x: (clientX - rect.left) * (canvas.width / rect.width),
-                        y: (clientY - rect.top) * (canvas.height / rect.height)
-                    };
-                }
-
-                function startDraw(e) {
-                    e.preventDefault();
-                    drawing = true;
-                    const pos = getPos(e);
-                    lastX = pos.x;
-                    lastY = pos.y;
-                }
-
-                function draw(e) {
-                    e.preventDefault();
-                    if (!drawing) return;
-                    const pos = getPos(e);
-                    ctx.beginPath();
-                    ctx.moveTo(lastX, lastY);
-                    ctx.lineTo(pos.x, pos.y);
-                    ctx.strokeStyle = '#1a1a1a';
-                    ctx.lineWidth = 3;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.stroke();
-                    lastX = pos.x;
-                    lastY = pos.y;
-                    localStorage.setItem('draco_drawing', canvas.toDataURL());
-                }
-
-                function stopDraw(e) {
-                    e.preventDefault();
-                    drawing = false;
-                }
-
-                document.getElementById('clearBtn').addEventListener('click', function() {
-                    ctx.fillStyle = '#fafafa';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    localStorage.removeItem('draco_drawing');
-                });
-
-                canvas.addEventListener('mousedown', startDraw);
-                canvas.addEventListener('mousemove', draw);
-                canvas.addEventListener('mouseup', stopDraw);
-                canvas.addEventListener('mouseleave', stopDraw);
-
-                canvas.addEventListener('touchstart', startDraw, { passive: false });
-                canvas.addEventListener('touchmove', draw, { passive: false });
-                canvas.addEventListener('touchend', stopDraw, { passive: false });
-
-                window.addEventListener('resize', resizeCanvas);
-                setTimeout(resizeCanvas, 100);
-            }
-
-            // ============================================================
             // 7. IP
             // ============================================================
             function obtenerIP() {
@@ -634,26 +508,51 @@
             }
 
             // ============================================================
-            // 8. FRASE (ARREGLADO)
+            // 8. GENERAR LYRICS HTML
             // ============================================================
-            function cargarFrase() {
-                const timestamp = new Date().getTime();
-                fetch('frase.txt?t=' + timestamp)
-                    .then(r => r.text())
-                    .then(texto => {
-                        if (fraseDisplay) {
-                            fraseDisplay.textContent = texto.trim() || 'Frase no disponible.';
-                        }
-                    })
-                    .catch(() => {
-                        if (fraseDisplay) {
-                            fraseDisplay.textContent = 'Frase no disponible.';
-                        }
-                    });
+            function generarLyrics() {
+                let html = '';
+                lyrics.forEach((line, index) => {
+                    html += `<div class="lyrics-line" data-index="${index}" data-time="${line.time}">${line.text}</div>`;
+                });
+                return html;
             }
 
             // ============================================================
-            // 9. BOTONES SOCIAL
+            // 9. ACTUALIZAR LYRICS SEGÚN EL TIEMPO DEL AUDIO
+            // ============================================================
+            let currentLineIndex = -1;
+            let lyricsLines = [];
+
+            function actualizarLyrics() {
+                const currentTime = audioPlayer.currentTime;
+                let activeIndex = -1;
+
+                for (let i = lyrics.length - 1; i >= 0; i--) {
+                    if (currentTime >= lyrics[i].time) {
+                        activeIndex = i;
+                        break;
+                    }
+                }
+
+                if (activeIndex !== currentLineIndex) {
+                    currentLineIndex = activeIndex;
+                    lyricsLines.forEach((el, i) => {
+                        el.classList.toggle('active', i === activeIndex);
+                    });
+
+                    // Scroll automático
+                    if (activeIndex >= 0 && lyricsLines[activeIndex]) {
+                        const container = document.getElementById('homeContainer');
+                        const activeEl = lyricsLines[activeIndex];
+                        const scrollTop = activeEl.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2;
+                        lyricsScroll.style.transform = `translateY(-${scrollTop}px)`;
+                    }
+                }
+            }
+
+            // ============================================================
+            // 10. BOTONES SOCIAL
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -684,7 +583,7 @@
             ];
 
             // ============================================================
-            // 10. COPIAR
+            // 11. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -733,7 +632,7 @@
             }
 
             // ============================================================
-            // 11. PESTAÑAS
+            // 12. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -749,7 +648,7 @@
             }
 
             // ============================================================
-            // 12. ACTIVAR TODO
+            // 13. ACTIVAR TODO
             // ============================================================
             function activarTodo() {
                 clickScreen.style.opacity = '0';
@@ -764,11 +663,10 @@
 
                 audioPlayer.src = SONG_URL;
                 audioPlayer.volume = 0.7;
-                audioPlayer.loop = true;
+                audioPlayer.loop = false;
                 audioPlayer.play().catch(e => console.log('Error:', e));
 
                 obtenerIP();
-                cargarFrase();
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
                 document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -779,13 +677,29 @@
                 });
 
                 initTabs();
-                setTimeout(initCanvas, 500);
+
+                // Inicializar lyrics después de que el panel esté visible
+                setTimeout(() => {
+                    lyricsScroll.innerHTML = generarLyrics();
+                    lyricsLines = document.querySelectorAll('.lyrics-line');
+
+                    // Actualizar cada 100ms durante la reproducción
+                    const interval = setInterval(() => {
+                        if (!audioPlayer.paused) {
+                            actualizarLyrics();
+                        }
+                    }, 100);
+
+                    // Limpiar intervalo cuando se pausa o termina
+                    audioPlayer.addEventListener('pause', () => clearInterval(interval));
+                    audioPlayer.addEventListener('ended', () => clearInterval(interval));
+                }, 300);
 
                 console.log('Draco home - Activado');
             }
 
             // ============================================================
-            // 13. INICIAR
+            // 14. INICIAR
             // ============================================================
             clickScreen.addEventListener('click', activarTodo);
 
