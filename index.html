@@ -256,6 +256,97 @@
             text-align: center;
         }
 
+        /* ===== GAMES ===== */
+        .games-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 380px;
+        }
+        .sub-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .sub-tab-btn {
+            background: transparent;
+            border: none;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .sub-tab-btn:hover {
+            color: #333;
+        }
+        .sub-tab-btn.active {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .game-panel {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .game-panel.active {
+            display: block;
+        }
+
+        .game-panel canvas {
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .game-score {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+        .game-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .game-controls button {
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .game-controls button:hover {
+            background: #eee;
+            border-color: #ccc;
+        }
+
+        .game-over {
+            font-size: 1.1rem;
+            color: #cc3333;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* ===== SOCIAL ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -317,6 +408,7 @@
             .lyrics-line { font-size: 1.2rem; }
             .lyrics-line.active { font-size: 1.5rem; }
             .lyrics-container { height: 220px; }
+            .game-panel canvas { max-width: 100%; height: auto; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
@@ -324,6 +416,7 @@
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
+            .sub-tab-btn { font-size: 0.7rem; padding: 6px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 280px; }
             .lyrics-line { font-size: 0.95rem; padding: 4px 0; }
@@ -331,6 +424,8 @@
             .lyrics-container { height: 200px; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
+            .game-controls { flex-wrap: wrap; gap: 8px; }
+            .game-controls button { padding: 6px 14px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -348,7 +443,7 @@
             <div class="title">✦ <span>Welcome</span></div>
             <div class="right">
                 <span class="badge" id="ipBadge">
-                    <span class="icon">◈</span>
+                    <span class="icon">👁</span>
                     <span id="ipDisplay">0.0.0.0</span>
                 </span>
                 <span class="separator">|</span>
@@ -357,7 +452,7 @@
                 </span>
                 <span class="separator">|</span>
                 <span class="badge" id="visitasBadge">
-                    <span class="icon">◈</span>
+                    <span class="icon">👁</span>
                     <span id="visitasDisplay">0</span>
                 </span>
             </div>
@@ -365,13 +460,15 @@
 
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
+            <button class="tab-btn" data-tab="games">Games</button>
             <button class="tab-btn" data-tab="about">Socialmedia</button>
         </div>
 
         <div class="content-area">
 
+            <!-- ========== HOME ========== -->
             <div class="panel active" id="panel-home">
-                <div class="home-container" id="homeContainer">
+                <div class="home-container">
                     <div class="lyrics-wrapper">
                         <div class="lyrics-container" id="lyricsContainer"></div>
                     </div>
@@ -379,6 +476,64 @@
                 </div>
             </div>
 
+            <!-- ========== GAMES ========== -->
+            <div class="panel" id="panel-games">
+                <div class="panel-title">Games</div>
+                <div class="panel-sub">ELIGE TU JUEGO</div>
+                <div class="games-container">
+                    <div class="sub-tabs" id="subTabContainer">
+                        <button class="sub-tab-btn active" data-game="snake">Snake</button>
+                        <button class="sub-tab-btn" data-game="mines">Buscaminas</button>
+                        <button class="sub-tab-btn" data-game="twenty48">2048</button>
+                        <button class="sub-tab-btn" data-game="hangman">Ahorcado</button>
+                    </div>
+
+                    <!-- SNAKE -->
+                    <div class="game-panel active" id="game-snake">
+                        <div class="game-score">🐍 Puntuación: <span id="snakeScore">0</span></div>
+                        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+                        <div class="game-controls">
+                            <button id="snakeRestart">Reiniciar</button>
+                            <button id="snakePause">Pausa</button>
+                        </div>
+                        <div id="snakeGameOver" class="game-over"></div>
+                    </div>
+
+                    <!-- BUSCAMINAS -->
+                    <div class="game-panel" id="game-mines">
+                        <div class="game-score">💣 Minas: <span id="mineCount">0</span></div>
+                        <canvas id="minesCanvas" width="400" height="400"></canvas>
+                        <div class="game-controls">
+                            <button id="minesRestart">Reiniciar</button>
+                        </div>
+                        <div id="minesGameOver" class="game-over"></div>
+                    </div>
+
+                    <!-- 2048 -->
+                    <div class="game-panel" id="game-twenty48">
+                        <div class="game-score">🎯 Puntuación: <span id="score2048">0</span></div>
+                        <canvas id="canvas2048" width="400" height="400"></canvas>
+                        <div class="game-controls">
+                            <button id="restart2048">Reiniciar</button>
+                        </div>
+                        <div id="gameOver2048" class="game-over"></div>
+                    </div>
+
+                    <!-- AHORCADO -->
+                    <div class="game-panel" id="game-hangman">
+                        <div class="game-score">🔤 Intentos: <span id="hangmanAttempts">6</span></div>
+                        <div style="font-size: 2rem; letter-spacing: 12px; font-weight: 600; margin: 10px 0;" id="hangmanWord">_ _ _ _ _</div>
+                        <div style="font-size: 1.2rem; color: #666; margin-bottom: 10px;" id="hangmanHint"></div>
+                        <div id="hangmanKeyboard" style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 450px; margin: 0 auto;"></div>
+                        <div class="game-controls">
+                            <button id="hangmanRestart">Reiniciar</button>
+                        </div>
+                        <div id="hangmanGameOver" class="game-over"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== SOCIALMEDIA ========== -->
             <div class="panel" id="panel-about">
                 <div class="panel-title">Socialmedia</div>
                 <div class="panel-sub">(-_-")</div>
@@ -402,6 +557,7 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
+                games: document.getElementById('panel-games'),
                 about: document.getElementById('panel-about'),
             };
             const audioPlayer = document.getElementById('audioPlayer');
@@ -416,23 +572,23 @@
             const SONG_URL = 'https://d-gq.github.io/rose.mp3';
 
             // ============================================================
-            // 3. LETRA CON TIEMPOS RETRASADOS (+0.5s)
+            // 3. LETRA CON TIEMPOS RETRASADOS Y LÍNEA AJUSTADA
             // ============================================================
-const lyrics = [
-    { time: 2.29, text: "Knew from the start it would end this way" },
-    { time: 13.30, text: "Tell me how it feels to fade away, away from me" },
-    { time: 26.50, text: "Why won't you run away from this world to escape" },
-    { time: 34.58, text: "(Run away from this world to escape)" },
-    { time: 40.66, text: "I can't believe a word you said to me" },
-    { time: 47.15, text: "Don't say it to me" },
-    { time: 50.41, text: "Knew from the start it would end this way" },
-    { time: 62.70, text: "Tell me how it feels to fade away, away from me" },
-    { time: 76.03, text: "Why won't you run away from this world to escape" },
-    { time: 84.79, text: "(Run away from this world to escape)" },
-    { time: 90.66, text: "I can't believe a word you said to me" },
-    { time: 97.42, text: "Don't say it to me" },
-    { time: 101.00, text: "" },
-];
+            const lyrics = [
+                { time: 2.29, text: "Knew from the start it would end this way" },
+                { time: 14.00, text: "Tell me how it feels to fade away, away from me" },
+                { time: 26.50, text: "Why won't you run away from this world to escape" },
+                { time: 34.58, text: "(Run away from this world to escape)" },
+                { time: 40.66, text: "I can't believe a word you said to me" },
+                { time: 47.15, text: "Don't say it to me" },
+                { time: 50.41, text: "Knew from the start it would end this way" },
+                { time: 62.70, text: "Tell me how it feels to fade away, away from me" },
+                { time: 76.03, text: "Why won't you run away from this world to escape" },
+                { time: 84.79, text: "(Run away from this world to escape)" },
+                { time: 90.66, text: "I can't believe a word you said to me" },
+                { time: 97.42, text: "Don't say it to me" },
+                { time: 101.00, text: "" },
+            ];
 
             // ============================================================
             // 4. CONTADOR DE VISITAS
@@ -569,7 +725,6 @@ const lyrics = [
                     });
                 }
 
-                // Fade out final al terminar la canción
                 if (currentTime > 98 && currentTime < 99) {
                     lyricsLines.forEach(el => {
                         el.classList.remove('active');
@@ -659,7 +814,7 @@ const lyrics = [
             }
 
             // ============================================================
-            // 12. PESTAÑAS
+            // 12. PESTAÑAS PRINCIPALES
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -675,7 +830,627 @@ const lyrics = [
             }
 
             // ============================================================
-            // 13. ACTIVAR TODO
+            // 13. SUBPESTAÑAS (Games)
+            // ============================================================
+            const subTabs = document.querySelectorAll('.sub-tab-btn');
+            const gamePanels = {
+                snake: document.getElementById('game-snake'),
+                mines: document.getElementById('game-mines'),
+                twenty48: document.getElementById('game-twenty48'),
+                hangman: document.getElementById('game-hangman'),
+            };
+
+            function initSubTabs() {
+                subTabs.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        subTabs.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const game = this.dataset.game;
+                        Object.keys(gamePanels).forEach(key => {
+                            gamePanels[key].classList.toggle('active', key === game);
+                        });
+                    });
+                });
+            }
+
+            // ============================================================
+            // 14. SNAKE
+            // ============================================================
+            function initSnake() {
+                const canvas = document.getElementById('snakeCanvas');
+                const ctx = canvas.getContext('2d');
+                const scoreSpan = document.getElementById('snakeScore');
+                const gameOverDiv = document.getElementById('snakeGameOver');
+                const restartBtn = document.getElementById('snakeRestart');
+                const pauseBtn = document.getElementById('snakePause');
+
+                const gridSize = 20;
+                const tileCount = 20;
+                let snake = [{ x: 10, y: 10 }];
+                let direction = { x: 0, y: 0 };
+                let food = { x: 15, y: 15 };
+                let score = 0;
+                let gameOver = false;
+                let paused = false;
+                let interval = null;
+
+                function draw() {
+                    ctx.fillStyle = '#fafafa';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Dibujar comida
+                    ctx.fillStyle = '#cc3333';
+                    ctx.beginPath();
+                    ctx.arc(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize / 2 - 2, 0, Math.PI *
+                    2);
+                    ctx.fill();
+
+                    // Dibujar serpiente
+                    snake.forEach((seg, i) => {
+                        ctx.fillStyle = i === 0 ? '#1a1a1a' : '#555';
+                        ctx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
+                    });
+                }
+
+                function update() {
+                    if (paused || gameOver) return;
+
+                    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+                    // Colisión con paredes
+                    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                        endGame();
+                        return;
+                    }
+
+                    // Colisión con sí misma
+                    if (snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+                        endGame();
+                        return;
+                    }
+
+                    snake.unshift(head);
+
+                    if (head.x === food.x && head.y === food.y) {
+                        score++;
+                        scoreSpan.textContent = score;
+                        food = {
+                            x: Math.floor(Math.random() * tileCount),
+                            y: Math.floor(Math.random() * tileCount)
+                        };
+                    } else {
+                        snake.pop();
+                    }
+
+                    draw();
+                }
+
+                function endGame() {
+                    gameOver = true;
+                    gameOverDiv.textContent = '💀 Game Over';
+                    clearInterval(interval);
+                }
+
+                function restart() {
+                    snake = [{ x: 10, y: 10 }];
+                    direction = { x: 0, y: 0 };
+                    food = { x: 15, y: 15 };
+                    score = 0;
+                    scoreSpan.textContent = '0';
+                    gameOver = false;
+                    gameOverDiv.textContent = '';
+                    paused = false;
+                    pauseBtn.textContent = 'Pausa';
+                    clearInterval(interval);
+                    draw();
+                    interval = setInterval(update, 120);
+                }
+
+                function togglePause() {
+                    if (gameOver) return;
+                    paused = !paused;
+                    pauseBtn.textContent = paused ? 'Reanudar' : 'Pausa';
+                }
+
+                // Controles teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowUp' && direction.y === 0) direction = { x: 0, y: -1 };
+                    else if (e.key === 'ArrowDown' && direction.y === 0) direction = { x: 0, y: 1 };
+                    else if (e.key === 'ArrowLeft' && direction.x === 0) direction = { x: -1, y: 0 };
+                    else if (e.key === 'ArrowRight' && direction.x === 0) direction = { x: 1, y: 0 };
+                });
+
+                restartBtn.addEventListener('click', restart);
+                pauseBtn.addEventListener('click', togglePause);
+
+                restart();
+            }
+
+            // ============================================================
+            // 15. BUSCAMINAS
+            // ============================================================
+            function initMines() {
+                const canvas = document.getElementById('minesCanvas');
+                const ctx = canvas.getContext('2d');
+                const mineCountSpan = document.getElementById('mineCount');
+                const gameOverDiv = document.getElementById('minesGameOver');
+                const restartBtn = document.getElementById('minesRestart');
+
+                const size = 10;
+                const totalMines = 10;
+                let board = [];
+                let revealed = [];
+                let flagged = [];
+                let gameOver = false;
+                let firstClick = true;
+
+                function initBoard() {
+                    board = [];
+                    for (let y = 0; y < size; y++) {
+                        board[y] = [];
+                        revealed[y] = [];
+                        flagged[y] = [];
+                        for (let x = 0; x < size; x++) {
+                            board[y][x] = 0;
+                            revealed[y][x] = false;
+                            flagged[y][x] = false;
+                        }
+                    }
+                }
+
+                function placeMines(excludeX, excludeY) {
+                    let placed = 0;
+                    while (placed < totalMines) {
+                        const x = Math.floor(Math.random() * size);
+                        const y = Math.floor(Math.random() * size);
+                        if (board[y][x] === 0 && !(x === excludeX && y === excludeY)) {
+                            board[y][x] = -1;
+                            placed++;
+                        }
+                    }
+                    // Calcular números
+                    for (let y = 0; y < size; y++) {
+                        for (let x = 0; x < size; x++) {
+                            if (board[y][x] === -1) continue;
+                            let count = 0;
+                            for (let dy = -1; dy <= 1; dy++) {
+                                for (let dx = -1; dx <= 1; dx++) {
+                                    const ny = y + dy,
+                                        nx = x + dx;
+                                    if (ny >= 0 && ny < size && nx >= 0 && nx < size && board[ny][nx] === -1) count++;
+                                }
+                            }
+                            board[y][x] = count;
+                        }
+                    }
+                }
+
+                function draw() {
+                    const cellSize = canvas.width / size;
+                    ctx.fillStyle = '#fafafa';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    for (let y = 0; y < size; y++) {
+                        for (let x = 0; x < size; x++) {
+                            const isRevealed = revealed[y][x];
+                            const isFlagged = flagged[y][x];
+                            const value = board[y][x];
+
+                            if (isRevealed) {
+                                ctx.fillStyle = '#e8e8e8';
+                                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                                ctx.strokeStyle = '#ccc';
+                                ctx.lineWidth = 0.5;
+                                ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+
+                                if (value === -1) {
+                                    ctx.fillStyle = '#cc0000';
+                                    ctx.font = 'bold 24px sans-serif';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText('💣', x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+                                } else if (value > 0) {
+                                    ctx.fillStyle = '#1a1a1a';
+                                    ctx.font = 'bold 20px sans-serif';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(value, x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+                                }
+                            } else {
+                                ctx.fillStyle = '#d0d0d0';
+                                ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                                ctx.strokeStyle = '#bbb';
+                                ctx.lineWidth = 1;
+                                ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                                if (isFlagged) {
+                                    ctx.fillStyle = '#cc3333';
+                                    ctx.font = 'bold 24px sans-serif';
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText('🚩', x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                function reveal(x, y) {
+                    if (x < 0 || x >= size || y < 0 || y >= size) return;
+                    if (revealed[y][x] || flagged[y][x]) return;
+
+                    revealed[y][x] = true;
+
+                    if (board[y][x] === -1) {
+                        gameOver = true;
+                        gameOverDiv.textContent = '💀 ¡Has perdido!';
+                        // Revelar todas las minas
+                        for (let py = 0; py < size; py++) {
+                            for (let px = 0; px < size; px++) {
+                                if (board[py][px] === -1) revealed[py][px] = true;
+                            }
+                        }
+                        draw();
+                        return;
+                    }
+
+                    if (board[y][x] === 0) {
+                        for (let dy = -1; dy <= 1; dy++) {
+                            for (let dx = -1; dx <= 1; dx++) {
+                                reveal(x + dx, y + dy);
+                            }
+                        }
+                    }
+
+                    // Comprobar victoria
+                    let allRevealed = true;
+                    for (let py = 0; py < size; py++) {
+                        for (let px = 0; px < size; px++) {
+                            if (board[py][px] !== -1 && !revealed[py][px]) allRevealed = false;
+                        }
+                    }
+                    if (allRevealed) {
+                        gameOver = true;
+                        gameOverDiv.textContent = '🎉 ¡Has ganado!';
+                    }
+
+                    draw();
+                }
+
+                function handleClick(e) {
+                    if (gameOver) return;
+                    const rect = canvas.getBoundingClientRect();
+                    const scaleX = canvas.width / rect.width;
+                    const scaleY = canvas.height / rect.height;
+                    const x = Math.floor((e.clientX - rect.left) * scaleX / (canvas.width / size));
+                    const y = Math.floor((e.clientY - rect.top) * scaleY / (canvas.height / size));
+
+                    if (x < 0 || x >= size || y < 0 || y >= size) return;
+
+                    if (firstClick) {
+                        placeMines(x, y);
+                        firstClick = false;
+                    }
+
+                    if (e.button === 2) {
+                        // Clic derecho = bandera
+                        if (!revealed[y][x]) {
+                            flagged[y][x] = !flagged[y][x];
+                            draw();
+                        }
+                        return;
+                    }
+
+                    reveal(x, y);
+                }
+
+                function restartMines() {
+                    initBoard();
+                    firstClick = true;
+                    gameOver = false;
+                    gameOverDiv.textContent = '';
+                    draw();
+                }
+
+                canvas.addEventListener('mousedown', handleClick);
+                canvas.addEventListener('contextmenu', e => e.preventDefault());
+                restartBtn.addEventListener('click', restartMines);
+
+                initBoard();
+                draw();
+            }
+
+            // ============================================================
+            // 16. 2048
+            // ============================================================
+            function init2048() {
+                const canvas = document.getElementById('canvas2048');
+                const ctx = canvas.getContext('2d');
+                const scoreSpan = document.getElementById('score2048');
+                const gameOverDiv = document.getElementById('gameOver2048');
+                const restartBtn = document.getElementById('restart2048');
+
+                const size = 4;
+                let grid = [];
+                let score = 0;
+                let gameOver = false;
+                let hasMoved = false;
+
+                function initGrid() {
+                    grid = Array.from({ length: size }, () => Array(size).fill(0));
+                    score = 0;
+                    gameOver = false;
+                    gameOverDiv.textContent = '';
+                    scoreSpan.textContent = '0';
+                    addRandomTile();
+                    addRandomTile();
+                    draw();
+                }
+
+                function addRandomTile() {
+                    const empty = [];
+                    for (let y = 0; y < size; y++) {
+                        for (let x = 0; x < size; x++) {
+                            if (grid[y][x] === 0) empty.push({ x, y });
+                        }
+                    }
+                    if (empty.length === 0) return;
+                    const pos = empty[Math.floor(Math.random() * empty.length)];
+                    grid[pos.y][pos.x] = Math.random() < 0.9 ? 2 : 4;
+                }
+
+                function draw() {
+                    const cellSize = canvas.width / size;
+                    ctx.fillStyle = '#fafafa';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    const colors = {
+                        0: '#cdc1b4',
+                        2: '#eee4da',
+                        4: '#ede0c8',
+                        8: '#f2b179',
+                        16: '#f59563',
+                        32: '#f67c5f',
+                        64: '#f65e3b',
+                        128: '#edcf72',
+                        256: '#edcc61',
+                        512: '#edc850',
+                        1024: '#edc53f',
+                        2048: '#edc22e'
+                    };
+                    const textColors = {
+                        2: '#776e65',
+                        4: '#776e65',
+                        8: '#f9f6f2',
+                        16: '#f9f6f2',
+                        32: '#f9f6f2',
+                        64: '#f9f6f2',
+                        128: '#f9f6f2',
+                        256: '#f9f6f2',
+                        512: '#f9f6f2',
+                        1024: '#f9f6f2',
+                        2048: '#f9f6f2'
+                    };
+
+                    for (let y = 0; y < size; y++) {
+                        for (let x = 0; x < size; x++) {
+                            const val = grid[y][x];
+                            ctx.fillStyle = colors[val] || '#cdc1b4';
+                            ctx.fillRect(x * cellSize + 4, y * cellSize + 4, cellSize - 8, cellSize - 8);
+                            if (val !== 0) {
+                                ctx.fillStyle = textColors[val] || '#f9f6f2';
+                                ctx.font = `bold ${val > 100 ? 24 : 32}px Inter, sans-serif`;
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(val, x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+                            }
+                        }
+                    }
+                }
+
+                function slide(row) {
+                    let arr = row.filter(v => v !== 0);
+                    let newArr = [];
+                    let merged = false;
+                    for (let i = 0; i < arr.length; i++) {
+                        if (i + 1 < arr.length && arr[i] === arr[i + 1]) {
+                            newArr.push(arr[i] * 2);
+                            score += arr[i] * 2;
+                            i++;
+                            merged = true;
+                        } else {
+                            newArr.push(arr[i]);
+                        }
+                    }
+                    while (newArr.length < size) newArr.push(0);
+                    return { row: newArr, merged };
+                }
+
+                function move(direction) {
+                    if (gameOver) return;
+                    let moved = false;
+                    const oldGrid = grid.map(row => [...row]);
+
+                    if (direction === 'left') {
+                        for (let y = 0; y < size; y++) {
+                            const result = slide(grid[y]);
+                            grid[y] = result.row;
+                            if (result.merged) moved = true;
+                        }
+                    } else if (direction === 'right') {
+                        for (let y = 0; y < size; y++) {
+                            const reversed = [...grid[y]].reverse();
+                            const result = slide(reversed);
+                            grid[y] = result.row.reverse();
+                            if (result.merged) moved = true;
+                        }
+                    } else if (direction === 'up') {
+                        for (let x = 0; x < size; x++) {
+                            const col = [];
+                            for (let y = 0; y < size; y++) col.push(grid[y][x]);
+                            const result = slide(col);
+                            for (let y = 0; y < size; y++) grid[y][x] = result.row[y];
+                            if (result.merged) moved = true;
+                        }
+                    } else if (direction === 'down') {
+                        for (let x = 0; x < size; x++) {
+                            const col = [];
+                            for (let y = size - 1; y >= 0; y--) col.push(grid[y][x]);
+                            const result = slide(col);
+                            for (let y = size - 1; y >= 0; y--) grid[y][x] = result.row[size - 1 - y];
+                            if (result.merged) moved = true;
+                        }
+                    }
+
+                    if (moved) {
+                        addRandomTile();
+                        scoreSpan.textContent = score;
+                        draw();
+                        // Check game over
+                        if (!canMove()) {
+                            gameOver = true;
+                            gameOverDiv.textContent = '💀 Game Over';
+                        }
+                    }
+                }
+
+                function canMove() {
+                    for (let y = 0; y < size; y++) {
+                        for (let x = 0; x < size; x++) {
+                            if (grid[y][x] === 0) return true;
+                            if (x + 1 < size && grid[y][x] === grid[y][x + 1]) return true;
+                            if (y + 1 < size && grid[y][x] === grid[y + 1][x]) return true;
+                        }
+                    }
+                    return false;
+                }
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') move('left');
+                    else if (e.key === 'ArrowRight') move('right');
+                    else if (e.key === 'ArrowUp') move('up');
+                    else if (e.key === 'ArrowDown') move('down');
+                });
+
+                restartBtn.addEventListener('click', initGrid);
+                initGrid();
+            }
+
+            // ============================================================
+            // 17. AHORCADO
+            // ============================================================
+            function initHangman() {
+                const wordDisplay = document.getElementById('hangmanWord');
+                const hintDisplay = document.getElementById('hangmanHint');
+                const attemptsSpan = document.getElementById('hangmanAttempts');
+                const keyboardDiv = document.getElementById('hangmanKeyboard');
+                const gameOverDiv = document.getElementById('hangmanGameOver');
+                const restartBtn = document.getElementById('hangmanRestart');
+
+                const words = [
+                    { word: 'DRACO', hint: 'El nombre de esta página' },
+                    { word: 'VAMPYR', hint: 'Criatura de la noche' },
+                    { word: 'ROSE', hint: 'Una flor muy bonita' },
+                    { word: 'INFERNO', hint: 'El lugar al que vas si te portas mal' },
+                    { word: 'SNAKE', hint: 'Un reptil sin patas' },
+                    { word: 'GITHUB', hint: 'Donde guardas tu código' },
+                    { word: 'PYTHON', hint: 'Un lenguaje de programación' },
+                    { word: 'JAYDES', hint: 'Un artista musical' },
+                    { word: 'CACHALOT', hint: 'Una ballena muy grande' },
+                ];
+
+                let currentWord = '';
+                let guessed = [];
+                let attempts = 6;
+                let gameOver = false;
+
+                function pickWord() {
+                    const w = words[Math.floor(Math.random() * words.length)];
+                    currentWord = w.word;
+                    hintDisplay.textContent = '💡 Pista: ' + w.hint;
+                }
+
+                function updateDisplay() {
+                    let display = '';
+                    let allGuessed = true;
+                    for (const letter of currentWord) {
+                        if (guessed.includes(letter)) {
+                            display += letter + ' ';
+                        } else {
+                            display += '_ ';
+                            allGuessed = false;
+                        }
+                    }
+                    wordDisplay.textContent = display.trim();
+
+                    if (allGuessed && !gameOver) {
+                        gameOver = true;
+                        gameOverDiv.textContent = '🎉 ¡Has ganado!';
+                    }
+
+                    attemptsSpan.textContent = attempts;
+                }
+
+                function guessLetter(letter) {
+                    if (gameOver) return;
+                    if (guessed.includes(letter)) return;
+
+                    guessed.push(letter);
+
+                    if (!currentWord.includes(letter)) {
+                        attempts--;
+                        if (attempts === 0) {
+                            gameOver = true;
+                            gameOverDiv.textContent = '💀 Has perdido. La palabra era: ' + currentWord;
+                        }
+                    }
+
+                    updateDisplay();
+                }
+
+                function buildKeyboard() {
+                    keyboardDiv.innerHTML = '';
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    for (const letter of letters) {
+                        const btn = document.createElement('button');
+                        btn.textContent = letter;
+                        btn.style.cssText = `
+                            width: 40px; height: 40px;
+                            border: 1px solid #ddd;
+                            background: #f5f5f5;
+                            border-radius: 6px;
+                            font-family: 'Inter', sans-serif;
+                            font-weight: 500;
+                            font-size: 0.9rem;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            color: #333;
+                        `;
+                        btn.addEventListener('click', () => {
+                            guessLetter(letter);
+                            btn.disabled = true;
+                            btn.style.opacity = '0.4';
+                            btn.style.cursor = 'default';
+                        });
+                        keyboardDiv.appendChild(btn);
+                    }
+                }
+
+                function restartHangman() {
+                    guessed = [];
+                    attempts = 6;
+                    gameOver = false;
+                    gameOverDiv.textContent = '';
+                    pickWord();
+                    buildKeyboard();
+                    updateDisplay();
+                }
+
+                restartBtn.addEventListener('click', restartHangman);
+                restartHangman();
+            }
+
+            // ============================================================
+            // 18. ACTIVAR TODO
             // ============================================================
             function activarTodo() {
                 clickScreen.style.opacity = '0';
@@ -704,6 +1479,7 @@ const lyrics = [
                 });
 
                 initTabs();
+                initSubTabs();
 
                 setTimeout(() => {
                     lyricsContainer.innerHTML = generarLyrics();
@@ -719,11 +1495,19 @@ const lyrics = [
                     audioPlayer.addEventListener('ended', () => clearInterval(interval));
                 }, 300);
 
+                // Inicializar juegos
+                setTimeout(() => {
+                    initSnake();
+                    initMines();
+                    init2048();
+                    initHangman();
+                }, 400);
+
                 console.log('Draco home - Activado');
             }
 
             // ============================================================
-            // 14. INICIAR
+            // 19. INICIAR
             // ============================================================
             clickScreen.addEventListener('click', activarTodo);
 
@@ -737,6 +1521,7 @@ const lyrics = [
             });
 
             initTabs();
+            initSubTabs();
 
         })();
     </script>
