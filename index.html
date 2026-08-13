@@ -19,9 +19,7 @@
     </script>
 
     <style>
-        /* ============================================================
-           RESET
-           ============================================================ */
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -1234,31 +1232,47 @@
     }];
 
     // ============================================================
-    // 6. AUTH FUNCTIONS (CON VERIFICACIÓN DE EMAIL)
+    // 6. AUTH FUNCTIONS (CORREGIDAS)
     // ============================================================
     function showError(msg) {
         loginError.textContent = msg;
         loginSuccess.textContent = '';
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+            if (loginError.textContent === msg) {
+                loginError.textContent = '';
+            }
+        }, 5000);
     }
+
     function showSuccess(msg) {
         loginSuccess.textContent = msg;
         loginError.textContent = '';
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+            if (loginSuccess.textContent === msg) {
+                loginSuccess.textContent = '';
+            }
+        }, 5000);
     }
 
     function registerUser(email, password, displayName) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                console.log('Usuario creado, UID:', user.uid);
+                
                 // Actualizar el nombre
                 return updateProfile(user, { displayName: displayName })
                     .then(() => {
+                        console.log('Nombre actualizado:', displayName);
                         // Enviar correo de verificación
                         return sendEmailVerification(user);
                     })
                     .then(() => {
-                        showSuccess('Account created! Check your email to verify.');
-                        console.log('User registered:', email);
-                        // Cerrar sesión hasta que verifique
+                        console.log('Correo de verificación enviado a:', email);
+                        showSuccess('✅ Account created! Check your email to verify.');
+                        // Cerrar sesión para forzar la verificación
                         return signOut(auth);
                     });
             })
@@ -1267,22 +1281,21 @@
                 if (error.code === 'auth/email-already-in-use') msg = 'Email already registered.';
                 else if (error.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
                 else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
-                showError(msg);
+                showError('❌ ' + msg);
                 console.error('Error:', error.message);
             });
     }
 
     function loginUser(email, password) {
         signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                const user = auth.currentUser;
-                // Comprobar si el email está verificado
+            .then((userCredential) => {
+                const user = userCredential.user;
                 if (!user.emailVerified) {
-                    showError('Please verify your email before logging in. Check your inbox.');
+                    showError('📧 Please verify your email before logging in. Check your inbox.');
                     signOut(auth);
                     return;
                 }
-                showSuccess('Logged in! Welcome back.');
+                showSuccess('✅ Logged in! Welcome back.');
                 console.log('User logged in:', email);
             })
             .catch((error) => {
@@ -1291,7 +1304,7 @@
                 else if (error.code === 'auth/wrong-password') msg = 'Wrong password.';
                 else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
                 else if (error.code === 'auth/too-many-requests') msg = 'Too many attempts. Try later.';
-                showError(msg);
+                showError('❌ ' + msg);
                 console.error('Error:', error.message);
             });
     }
@@ -1409,7 +1422,7 @@
         if (user) {
             // 🔥 COMPROBAR SI EL EMAIL ESTÁ VERIFICADO
             if (!user.emailVerified) {
-                loginError.textContent = 'Please verify your email before accessing the page. Check your inbox.';
+                loginError.textContent = '📧 Please verify your email before accessing the page. Check your inbox.';
                 mainContainer.classList.remove('active');
                 loginScreen.style.display = 'flex';
                 // Deslogear automáticamente
