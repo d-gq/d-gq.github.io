@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Draco home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===== RESET ===== */
         * {
@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* ===== PANTALLA DE LOGIN ===== */
+        /* ===== LOGIN ===== */
         #loginScreen {
             position: fixed;
             top: 0;
@@ -127,6 +127,7 @@
             border-radius: 16px;
         }
 
+        /* ===== TOP BAR ===== */
         .top-bar {
             padding: 20px 30px;
             border-bottom: 1px solid #eee;
@@ -174,6 +175,7 @@
             color: #ddd;
         }
 
+        /* ===== TABS ===== */
         .tabs {
             display: flex;
             background: #fafafa;
@@ -208,6 +210,7 @@
             background: transparent;
         }
 
+        /* ===== CONTENIDO ===== */
         .content-area {
             padding: 30px 35px;
             min-height: 380px;
@@ -268,6 +271,129 @@
             letter-spacing: 4px;
         }
 
+        /* ===== MUSIC ===== */
+        .music-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            height: 380px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .music-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .music-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .music-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .music-player {
+            width: 100%;
+            max-width: 500px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .music-player .song-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .music-player .song-artist {
+            font-size: 0.85rem;
+            color: #888;
+            font-weight: 400;
+        }
+        .music-player .controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 5px;
+        }
+        .music-player .controls button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .music-player .controls button:hover {
+            color: #1a1a1a;
+            background: #eee;
+        }
+        .music-player .controls .play-btn {
+            font-size: 2rem;
+            color: #1a1a1a;
+        }
+        .music-player .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+        .music-player .progress-bar .progress-fill {
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .music-player .time-info {
+            font-size: 0.7rem;
+            color: #999;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .playlist {
+            width: 100%;
+            max-width: 500px;
+            flex-shrink: 0;
+        }
+        .playlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 6px;
+        }
+        .playlist-item:hover {
+            background: #f5f5f5;
+        }
+        .playlist-item.active {
+            background: #f0f0f0;
+            font-weight: 600;
+        }
+        .playlist-item .title {
+            font-size: 0.95rem;
+            color: #333;
+        }
+        .playlist-item .duration {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
         /* ===== LYRICS ===== */
         .lyrics-container {
             height: 380px;
@@ -277,7 +403,7 @@
             border: 1px solid #eee;
             padding: 25px 30px;
             font-family: 'Inter', sans-serif;
-            line-height: 1.8;
+            line-height: 2;
             font-size: 1rem;
             color: #444;
         }
@@ -293,13 +419,10 @@
             border-radius: 4px;
         }
         .lyrics-container .line {
-            padding: 3px 0;
-            transition: all 0.2s ease;
+            padding: 2px 0;
         }
-        .lyrics-container .line.active {
-            color: #1a1a1a;
-            font-weight: 600;
-            font-size: 1.1rem;
+        .lyrics-container .line.empty {
+            height: 12px;
         }
 
         /* ===== SOCIAL ===== */
@@ -364,6 +487,8 @@
             .home-container { height: 320px; padding: 20px; }
             .home-greeting { font-size: 1.8rem; }
             .lyrics-container { height: 320px; padding: 20px; font-size: 0.9rem; }
+            .music-container { height: 320px; }
+            .music-player { padding: 16px 18px; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
@@ -377,6 +502,11 @@
             .home-container { height: 260px; }
             .home-greeting { font-size: 1.4rem; }
             .lyrics-container { height: 260px; padding: 15px; font-size: 0.8rem; }
+            .music-container { height: 260px; }
+            .music-player { padding: 12px 14px; }
+            .music-player .controls button { font-size: 1.2rem; }
+            .music-player .controls .play-btn { font-size: 1.6rem; }
+            .playlist-item { padding: 8px 12px; font-size: 0.85rem; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
             #loginScreen .title { font-size: 1.4rem; }
@@ -388,7 +518,7 @@
 </head>
 <body>
 
-    <!-- ===== PANTALLA DE LOGIN ===== -->
+    <!-- ===== LOGIN ===== -->
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
@@ -423,13 +553,14 @@
 
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
+            <button class="tab-btn" data-tab="music">Music</button>
             <button class="tab-btn" data-tab="lyrics">Lyrics</button>
-            <button class="tab-btn" data-tab="about">Socialmedia</button>
+            <button class="tab-btn" data-tab="about">Social</button>
         </div>
 
         <div class="content-area">
 
-            <!-- ========== HOME ========== -->
+            <!-- ===== HOME ===== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container">
                     <div class="home-greeting">Hola, <span id="userNameDisplay">invitado</span></div>
@@ -438,18 +569,41 @@
                 </div>
             </div>
 
-            <!-- ========== LYRICS ========== -->
-            <div class="panel" id="panel-lyrics">
-                <div class="panel-title">Lyrics</div>
-                <div class="panel-sub">R O S E &nbsp;·&nbsp; J A Y D E S</div>
-                <div class="lyrics-container" id="lyricsContainer">
-                    <!-- Se genera con JavaScript -->
+            <!-- ===== MUSIC ===== -->
+            <div class="panel" id="panel-music">
+                <div class="panel-title">Music</div>
+                <div class="panel-sub">E N T R Y &nbsp; L O G</div>
+                <div class="music-container" id="musicContainer">
+                    <div class="music-player" id="musicPlayer">
+                        <div class="song-title" id="currentSongTitle">entry 1</div>
+                        <div class="song-artist">jaydes</div>
+                        <div class="controls">
+                            <button id="prevBtn" title="Anterior">⏮</button>
+                            <button class="play-btn" id="playBtn" title="Reproducir">▶</button>
+                            <button id="nextBtn" title="Siguiente">⏭</button>
+                        </div>
+                        <div class="progress-bar" id="progressBar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="time-info">
+                            <span id="currentTime">0:00</span>
+                            <span id="totalTime">0:00</span>
+                        </div>
+                    </div>
+                    <div class="playlist" id="playlistContainer"></div>
                 </div>
             </div>
 
-            <!-- ========== SOCIALMEDIA ========== -->
+            <!-- ===== LYRICS ===== -->
+            <div class="panel" id="panel-lyrics">
+                <div class="panel-title">Lyrics</div>
+                <div class="panel-sub" id="lyricsSub">E N T R Y &nbsp; 1</div>
+                <div class="lyrics-container" id="lyricsContainer"></div>
+            </div>
+
+            <!-- ===== SOCIAL ===== -->
             <div class="panel" id="panel-about">
-                <div class="panel-title">Socialmedia</div>
+                <div class="panel-title">Social</div>
                 <div class="panel-sub">(-_-")</div>
                 <div class="social-grid" id="social-about"></div>
             </div>
@@ -458,7 +612,7 @@
     </div>
 
     <!-- ===== AUDIO OCULTO ===== -->
-    <audio id="audioPlayer" loop></audio>
+    <audio id="audioPlayer"></audio>
 
     <script>
         (function() {
@@ -477,6 +631,7 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
+                music: document.getElementById('panel-music'),
                 lyrics: document.getElementById('panel-lyrics'),
                 about: document.getElementById('panel-about'),
             };
@@ -485,29 +640,138 @@
             const visitasDisplay = document.getElementById('visitasDisplay');
             const ipDisplay = document.getElementById('ipDisplay');
             const lyricsContainer = document.getElementById('lyricsContainer');
+            const lyricsSub = document.getElementById('lyricsSub');
+            const playlistContainer = document.getElementById('playlistContainer');
+            const currentSongTitle = document.getElementById('currentSongTitle');
+            const playBtn = document.getElementById('playBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressFill = document.getElementById('progressFill');
+            const progressBar = document.getElementById('progressBar');
+            const currentTimeDisplay = document.getElementById('currentTime');
+            const totalTimeDisplay = document.getElementById('totalTime');
 
             // ============================================================
-            // 2. CANCIÓN
+            // 2. PLAYLIST
             // ============================================================
-            const SONG_URL = 'https://d-gq.github.io/rose.mp3';
+            const playlist = [{
+                id: 0,
+                title: 'entry 1',
+                file: 'entry1.mp3',
+                lyrics: [
+                    "These cuts on my wrist, they ripe I swear 'cause they sometimes make me better",
+                    "Dying just to see you again, so I'm tired of writing letters to you",
+                    "Can't express myself, I always choke on my own words",
+                    "Can't explain what's going on, all I know is that it hurts",
+                    "I can't do this no more without you",
+                    "Baby you're my rose, without you",
+                    "Regret, all I cared and loved you",
+                    "But I fucked it up and now I gotta leave",
+                    "Lost the only thing I loved",
+                    "Completely was my fault",
+                    "Myself, I can't keep safe",
+                    "You know it's all my fault, because you didn't have a say in it",
+                    "I fuck everything up, but I'm just so tired of saying it",
+                    "If you were here you'd be disappointed, but I can't sing to no one else",
+                    "And I swear, I'm just so tired, that I might just kill myself"
+                ]
+            }, {
+                id: 1,
+                title: 'entry 2',
+                file: 'entry2.mp3',
+                lyrics: [
+                    "(evvls)",
+                    "",
+                    "Too many thoughts up in my head",
+                    "Swear no one understands",
+                    "But there was only one that would listen",
+                    "Now you seen the cause and effect to my skin",
+                    "Yeah, it really sucks feelin' like this, huh",
+                    "People saying this is a phase, haha",
+                    "Fifteen, think that I know it all, oh do you?",
+                    "Carry the expression off my face",
+                    "My brain tryna tell me that it's okay",
+                    "My wrist tells me that it's all my fault",
+                    "Might call my friends a dickhead, egotistical, act like they know it all",
+                    "You don't know enough",
+                    "I just want to fade away",
+                    "Sometimes feels like this life is a game, I don't wanna play",
+                    "",
+                    "(I love you, evvls)"
+                ]
+            }, {
+                id: 2,
+                title: 'entry 3',
+                file: 'entry3.mp3',
+                lyrics: [
+                    "Voices in my head again",
+                    "My ultimatum's made up",
+                    "Stuck inside my bed again",
+                    "I wanna pretend, but I can't anymore, oh",
+                    "I've so far been questioning, but the day's gone by and I cannot decide what I—",
+                    "(Man, this shit's so dumb, I got people on my side but for a while, I've been done)",
+                    "And it might sound cliché but for a while, I've been numb to it",
+                    "(One, two, three, four)"
+                ]
+            }, {
+                id: 3,
+                title: 'entry 4',
+                file: 'entry4.mp3',
+                lyrics: [
+                    "Ma-maybe she likes me",
+                    "Maybe she's toying with me",
+                    "",
+                    "(Maybe she likes me) Falling in love is a tricky one for me",
+                    "(Maybe she's toying with me)",
+                    "(Maybe she likes me) I might trust you but don't wanna get fucked up",
+                    "(Maybe she's toying with me)",
+                    "(Maybe she likes me) You heard all my secrets",
+                    "(Maybe she's toying with me)",
+                    "I like your responses",
+                    "(Maybe she likes me)",
+                    "Though I wanna see this",
+                    "(Maybe she's toying with me)",
+                    "The pressure feels awful",
+                    "(Maybe she likes me) Text you and delete it",
+                    "(Maybe she's toying with me)",
+                    "It's been rainy outside",
+                    "(Maybe she likes me)",
+                    "Gave you my jacket in case you needed it",
+                    "(Maybe she's toying with me)",
+                    "She won't hear this",
+                    "",
+                    "Maybe she likes me"
+                ]
+            }, {
+                id: 4,
+                title: 'entry 5',
+                file: 'entry5.mp3',
+                lyrics: [
+                    "Cuts on my hands, I can't hold yours",
+                    "I feel stripped of my skin and alone",
+                    "Tell me what happened to me",
+                    "My face in the pavement, look what you made me do",
+                    "Cuts on my hands, I can't hold yours",
+                    "I feel stripped of my skin and alone",
+                    "Tell me what happened to me (Somethin' went wrong)",
+                    "My face in the pavement, look what you made me do (Oh-oh)",
+                    "Look what you made me do",
+                    "(Blame it on the rain outside)",
+                    "Look what you made me do",
+                    "(Blame it on the cracks outside)",
+                    "Look what you made me do",
+                    "(Blame it on me, blame it on me)",
+                    "Look what you made me do",
+                    "(They blame it on me)"
+                ]
+            }];
 
             // ============================================================
-            // 3. LETRA COMPLETA
+            // 3. ESTADO DEL REPRODUCTOR
             // ============================================================
-            const lyrics = [
-                "Knew from the start it would end this way",
-                "Tell me how it feels to fade away, away from me",
-                "Why won't you run away from this world to escape",
-                "(Run away from this world to escape)",
-                "I can't believe a word you said to me",
-                "Don't say it to me",
-                "Knew from the start it would end this way",
-                "Tell me how it feels to fade away, away from me",
-                "Why won't you run away from this world to escape",
-                "(Run away from this world to escape)",
-                "I can't believe a word you said to me",
-                "Don't say it to me",
-            ];
+            let currentIndex = 0;
+            let isPlaying = false;
+            let isDragging = false;
 
             // ============================================================
             // 4. CONTADOR DE VISITAS
@@ -601,18 +865,112 @@
             }
 
             // ============================================================
-            // 8. GENERAR LYRICS
+            // 8. REPRODUCTOR
             // ============================================================
-            function generarLyrics() {
+            function loadSong(index) {
+                const song = playlist[index];
+                currentIndex = index;
+                audioPlayer.src = 'https://d-gq.github.io/' + song.file;
+                currentSongTitle.textContent = song.title;
+                lyricsSub.textContent = song.title.toUpperCase();
+                renderLyrics(song.lyrics);
+                updatePlaylistUI();
+                if (isPlaying) {
+                    audioPlayer.play().catch(e => console.log('Error:', e));
+                }
+            }
+
+            function renderLyrics(lyricsArray) {
                 let html = '';
-                lyrics.forEach(line => {
-                    html += `<div class="line">${line}</div>`;
+                lyricsArray.forEach(line => {
+                    if (line === '') {
+                        html += `<div class="line empty"></div>`;
+                    } else {
+                        html += `<div class="line">${line}</div>`;
+                    }
                 });
-                return html;
+                lyricsContainer.innerHTML = html;
+            }
+
+            function updatePlaylistUI() {
+                const items = document.querySelectorAll('.playlist-item');
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            function togglePlay() {
+                if (audioPlayer.paused) {
+                    audioPlayer.play().catch(e => console.log('Error:', e));
+                    isPlaying = true;
+                    playBtn.textContent = '⏸';
+                } else {
+                    audioPlayer.pause();
+                    isPlaying = false;
+                    playBtn.textContent = '▶';
+                }
+            }
+
+            function nextSong() {
+                const next = (currentIndex + 1) % playlist.length;
+                isPlaying = true;
+                loadSong(next);
+                audioPlayer.play().catch(e => console.log('Error:', e));
+                playBtn.textContent = '⏸';
+            }
+
+            function prevSong() {
+                const prev = (currentIndex - 1 + playlist.length) % playlist.length;
+                isPlaying = true;
+                loadSong(prev);
+                audioPlayer.play().catch(e => console.log('Error:', e));
+                playBtn.textContent = '⏸';
+            }
+
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return '0:00';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return mins + ':' + String(secs).padStart(2, '0');
+            }
+
+            function updateProgress() {
+                if (!isDragging) {
+                    const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
+                    progressFill.style.width = percent + '%';
+                    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+                    totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+                }
             }
 
             // ============================================================
-            // 9. LOGIN
+            // 9. GENERAR PLAYLIST
+            // ============================================================
+            function generarPlaylist() {
+                let html = '';
+                playlist.forEach((song, index) => {
+                    html += `
+                        <div class="playlist-item" data-index="${index}">
+                            <span class="title">${song.title}</span>
+                            <span class="duration">${index + 1}</span>
+                        </div>
+                    `;
+                });
+                playlistContainer.innerHTML = html;
+
+                document.querySelectorAll('.playlist-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        isPlaying = true;
+                        loadSong(index);
+                        audioPlayer.play().catch(e => console.log('Error:', e));
+                        playBtn.textContent = '⏸';
+                    });
+                });
+            }
+
+            // ============================================================
+            // 10. LOGIN
             // ============================================================
             function handleLogin() {
                 const name = nameInput.value.trim();
@@ -625,33 +983,26 @@
                     return;
                 }
 
-                // Guardar nombre en localStorage
                 localStorage.setItem('draco_user', name);
 
-                // Ocultar login
                 loginScreen.style.opacity = '0';
                 setTimeout(() => {
                     loginScreen.style.display = 'none';
                 }, 800);
 
-                // Mostrar contenido principal
                 setTimeout(() => {
                     mainContainer.classList.add('active');
                     initParticles();
                 }, 300);
 
-                // Actualizar nombre en Home y top bar
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                // Generar lyrics
-                lyricsContainer.innerHTML = generarLyrics();
+                loadSong(0);
+                generarPlaylist();
 
-                // Reproducir música
-                audioPlayer.src = SONG_URL;
-                audioPlayer.volume = 0.7;
-                audioPlayer.loop = false;
-                audioPlayer.play().catch(e => console.log('Error:', e));
+                audioPlayer.addEventListener('timeupdate', updateProgress);
+                audioPlayer.addEventListener('ended', nextSong);
 
                 obtenerIP();
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
@@ -665,11 +1016,38 @@
 
                 initTabs();
 
+                // Eventos del reproductor
+                playBtn.addEventListener('click', togglePlay);
+                prevBtn.addEventListener('click', prevSong);
+                nextBtn.addEventListener('click', nextSong);
+
+                progressBar.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    const rect = this.getBoundingClientRect();
+                    const percent = (e.clientX - rect.left) / rect.width;
+                    audioPlayer.currentTime = percent * audioPlayer.duration;
+                    progressFill.style.width = percent * 100 + '%';
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (isDragging) {
+                        const rect = progressBar.getBoundingClientRect();
+                        let percent = (e.clientX - rect.left) / rect.width;
+                        percent = Math.max(0, Math.min(1, percent));
+                        audioPlayer.currentTime = percent * audioPlayer.duration;
+                        progressFill.style.width = percent * 100 + '%';
+                    }
+                });
+
+                document.addEventListener('mouseup', function() {
+                    isDragging = false;
+                });
+
                 console.log('Draco home - Activado como:', name);
             }
 
             // ============================================================
-            // 10. BOTONES SOCIAL
+            // 11. BOTONES SOCIAL
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -700,7 +1078,7 @@
             ];
 
             // ============================================================
-            // 11. COPIAR
+            // 12. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -749,7 +1127,7 @@
             }
 
             // ============================================================
-            // 12. PESTAÑAS
+            // 13. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -765,17 +1143,14 @@
             }
 
             // ============================================================
-            // 13. INICIAR
+            // 14. INICIAR
             // ============================================================
-            // Comprobar si ya hay un nombre guardado
             const savedName = localStorage.getItem('draco_user');
             if (savedName) {
-                // Si ya hay nombre, hacer login automático
                 nameInput.value = savedName;
                 setTimeout(handleLogin, 100);
             }
 
-            // Eventos login
             loginBtn.addEventListener('click', handleLogin);
             nameInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
@@ -783,7 +1158,6 @@
                 }
             });
 
-            // Precargar botones sociales
             document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
             document.querySelectorAll('.discord-copy').forEach(btn => {
