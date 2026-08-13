@@ -23,6 +23,229 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* ===== TEMAS ===== */
+        body.light-mode {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+        body.light-mode .container {
+            background: #ffffff;
+        }
+        body.light-mode .top-bar {
+            border-bottom-color: #eee;
+        }
+        body.light-mode .top-bar .badge {
+            background: #f5f5f5;
+            border-color: #eee;
+            color: #888;
+        }
+        body.light-mode .tab-btn {
+            color: #888;
+        }
+        body.light-mode .tab-btn.active {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+        body.light-mode .home-container {
+            background: #fafafa;
+            border-color: #eee;
+        }
+        body.light-mode .music-player {
+            background: #fafafa;
+            border-color: #eee;
+        }
+        body.light-mode .lyrics-container {
+            background: #fafafa;
+            border-color: #eee;
+            color: #444;
+        }
+        body.light-mode .social-btn {
+            background: #f5f5f5;
+            border-color: #e8e8e8;
+            color: #333;
+        }
+        body.light-mode .social-btn:hover {
+            background: #eee;
+            border-color: #ccc;
+        }
+        body.light-mode .playlist-item {
+            border-bottom-color: #f0f0f0;
+            color: #333;
+        }
+        body.light-mode .playlist-item:hover {
+            background: #f5f5f5;
+        }
+        body.light-mode .playlist-item.active {
+            background: #f0f0f0;
+        }
+        body.light-mode .progress-bar {
+            background: #e0e0e0;
+        }
+        body.light-mode .time-info {
+            color: #999;
+        }
+        body.light-mode .home-footer {
+            color: #ccc;
+        }
+        body.light-mode #loginScreen {
+            background: #ffffff;
+        }
+        body.light-mode #loginScreen .title {
+            color: #1a1a1a;
+        }
+
+        body.dark-mode {
+            background: #0a0a0a;
+            color: #eee;
+        }
+        body.dark-mode .container {
+            background: #111;
+        }
+        body.dark-mode .top-bar {
+            border-bottom-color: #2a2a2a;
+        }
+        body.dark-mode .top-bar .badge {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            color: #888;
+        }
+        body.dark-mode .tab-btn {
+            color: #888;
+        }
+        body.dark-mode .tab-btn.active {
+            color: #eee;
+            border-bottom-color: #eee;
+        }
+        body.dark-mode .home-container {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+        }
+        body.dark-mode .home-greeting {
+            color: #eee;
+        }
+        body.dark-mode .home-greeting span {
+            color: #888;
+        }
+        body.dark-mode .home-sub {
+            color: #888;
+        }
+        body.dark-mode .music-player {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+        }
+        body.dark-mode .music-player .song-title {
+            color: #eee;
+        }
+        body.dark-mode .music-player .song-artist {
+            color: #888;
+        }
+        body.dark-mode .music-player .controls button {
+            color: #888;
+        }
+        body.dark-mode .music-player .controls button:hover {
+            color: #eee;
+            background: #2a2a2a;
+        }
+        body.dark-mode .music-player .controls .play-btn {
+            color: #eee;
+        }
+        body.dark-mode .progress-bar {
+            background: #2a2a2a;
+        }
+        body.dark-mode .progress-bar .progress-fill {
+            background: #eee;
+        }
+        body.dark-mode .time-info {
+            color: #888;
+        }
+        body.dark-mode .lyrics-container {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            color: #aaa;
+        }
+        body.dark-mode .social-btn {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            color: #888;
+        }
+        body.dark-mode .social-btn:hover {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #eee;
+        }
+        body.dark-mode .playlist-item {
+            border-bottom-color: #2a2a2a;
+            color: #888;
+        }
+        body.dark-mode .playlist-item:hover {
+            background: #1a1a1a;
+        }
+        body.dark-mode .playlist-item.active {
+            background: #2a2a2a;
+            color: #eee;
+        }
+        body.dark-mode .home-footer {
+            color: #444;
+        }
+        body.dark-mode #loginScreen {
+            background: #0a0a0a;
+        }
+        body.dark-mode #loginScreen .title {
+            color: #eee;
+        }
+        body.dark-mode #loginScreen .title span {
+            color: #888;
+        }
+        body.dark-mode #loginScreen .login-box input {
+            background: #1a1a1a;
+            border-color: #2a2a2a;
+            color: #eee;
+        }
+        body.dark-mode #loginScreen .login-box input:focus {
+            border-color: #eee;
+            background: #1a1a1a;
+        }
+        body.dark-mode #loginScreen .login-box button {
+            background: #2a2a2a;
+            color: #eee;
+        }
+        body.dark-mode #loginScreen .login-box button:hover {
+            background: #333;
+        }
+        body.dark-mode .panel-title {
+            color: #eee;
+        }
+        body.dark-mode .panel-sub {
+            color: #888;
+        }
+
+        /* ===== BOTÓN TEMA ===== */
+        #themeToggle {
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        body.light-mode #themeToggle {
+            border-color: #ddd;
+            color: #333;
+        }
+        body.light-mode #themeToggle:hover {
+            background: #eee;
+        }
+        body.dark-mode #themeToggle {
+            border-color: #444;
+            color: #ccc;
+        }
+        body.dark-mode #themeToggle:hover {
+            background: #2a2a2a;
         }
 
         /* ===== LOGIN ===== */
@@ -32,7 +255,6 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #ffffff;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -43,7 +265,6 @@
         #loginScreen .title {
             font-size: 2.5rem;
             font-weight: 600;
-            color: #1a1a1a;
             letter-spacing: -0.5px;
             margin-bottom: 30px;
         }
@@ -101,12 +322,11 @@
         .container {
             width: 900px;
             max-width: 100%;
-            background: #ffffff;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
             overflow: hidden;
             opacity: 0;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.8s ease, background 0.3s ease;
             position: relative;
             max-height: 95vh;
             display: flex;
@@ -138,24 +358,26 @@
             position: relative;
             z-index: 1;
             flex-shrink: 0;
+            transition: border-color 0.3s ease;
         }
         .top-bar .title {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #1a1a1a;
             letter-spacing: -0.5px;
+            transition: color 0.3s ease;
         }
         .top-bar .title span {
             color: #888;
             font-weight: 300;
+            transition: color 0.3s ease;
         }
         .top-bar .right {
             display: flex;
             align-items: center;
             gap: 16px;
             font-size: 0.85rem;
-            color: #888;
             font-weight: 400;
+            transition: color 0.3s ease;
         }
         .top-bar .right .badge {
             background: #f5f5f5;
@@ -167,6 +389,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: all 0.3s ease;
         }
         .top-bar .right .badge .icon {
             font-size: 0.8rem;
@@ -174,6 +397,7 @@
         }
         .top-bar .right .separator {
             color: #ddd;
+            transition: color 0.3s ease;
         }
 
         /* ===== TABS ===== */
@@ -187,11 +411,11 @@
             z-index: 1;
             flex-shrink: 0;
             overflow-x: auto;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .tab-btn {
             background: transparent;
             border: none;
-            color: #888;
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             font-weight: 500;
@@ -205,21 +429,16 @@
             color: #333;
             background: rgba(0, 0, 0, 0.03);
         }
-        .tab-btn.active {
-            color: #1a1a1a;
-            border-bottom-color: #1a1a1a;
-            background: transparent;
-        }
 
         /* ===== CONTENIDO ===== */
         .content-area {
             padding: 30px 35px;
             min-height: 380px;
-            background: #ffffff;
             position: relative;
             z-index: 1;
             flex: 1;
             overflow: hidden;
+            transition: background 0.3s ease;
         }
 
         .panel {
@@ -244,32 +463,34 @@
             align-items: center;
             text-align: center;
             height: 380px;
-            background: #fafafa;
             border-radius: 10px;
             border: 1px solid #eee;
             padding: 30px;
+            transition: all 0.3s ease;
         }
         .home-greeting {
             font-size: 2.5rem;
             font-weight: 600;
-            color: #1a1a1a;
             letter-spacing: -0.5px;
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
         .home-greeting span {
             color: #888;
             font-weight: 300;
+            transition: color 0.3s ease;
         }
         .home-sub {
             font-size: 1rem;
             color: #888;
             font-weight: 400;
+            transition: color 0.3s ease;
         }
         .home-footer {
             margin-top: 25px;
             font-size: 0.6rem;
-            color: #ccc;
             letter-spacing: 4px;
+            transition: color 0.3s ease;
         }
 
         /* ===== SOCIAL ===== */
@@ -283,12 +504,10 @@
             margin-right: auto;
         }
         .social-btn {
-            background: #f5f5f5;
             border: 1px solid #e8e8e8;
             border-radius: 10px;
             padding: 14px 12px;
             text-align: center;
-            color: #333;
             font-family: 'Inter', sans-serif;
             font-weight: 500;
             font-size: 0.95rem;
@@ -298,29 +517,23 @@
             display: block;
             letter-spacing: 0.3px;
         }
-        .social-btn:hover {
-            background: #eee;
-            border-color: #ccc;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
 
         .panel-title {
             font-size: 1.8rem;
             font-weight: 600;
-            color: #1a1a1a;
             text-align: center;
             margin-bottom: 4px;
             letter-spacing: -0.5px;
+            transition: color 0.3s ease;
         }
         .panel-sub {
             text-align: center;
-            color: #999;
             font-size: 0.8rem;
             letter-spacing: 3px;
             margin-top: 0;
             margin-bottom: 20px;
             font-weight: 300;
+            transition: color 0.3s ease;
         }
 
         /* ===== MUSIC ===== */
@@ -348,7 +561,6 @@
         .music-player {
             width: 100%;
             max-width: 500px;
-            background: #fafafa;
             border: 1px solid #eee;
             border-radius: 12px;
             padding: 20px 25px;
@@ -357,16 +569,17 @@
             align-items: center;
             gap: 12px;
             flex-shrink: 0;
+            transition: all 0.3s ease;
         }
         .music-player .song-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #1a1a1a;
+            transition: color 0.3s ease;
         }
         .music-player .song-artist {
             font-size: 0.85rem;
-            color: #888;
             font-weight: 400;
+            transition: color 0.3s ease;
         }
         .music-player .controls {
             display: flex;
@@ -378,41 +591,34 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #555;
             cursor: pointer;
             transition: all 0.2s ease;
             padding: 4px 8px;
             border-radius: 6px;
         }
-        .music-player .controls button:hover {
-            color: #1a1a1a;
-            background: #eee;
-        }
         .music-player .controls .play-btn {
             font-size: 2rem;
-            color: #1a1a1a;
         }
         .music-player .progress-bar {
             width: 100%;
             height: 4px;
-            background: #e0e0e0;
             border-radius: 4px;
             cursor: pointer;
             position: relative;
+            transition: background 0.3s ease;
         }
         .music-player .progress-bar .progress-fill {
             height: 100%;
-            background: #1a1a1a;
             border-radius: 4px;
             width: 0%;
-            transition: width 0.1s linear;
+            transition: width 0.1s linear, background 0.3s ease;
         }
         .music-player .time-info {
             font-size: 0.7rem;
-            color: #999;
             width: 100%;
             display: flex;
             justify-content: space-between;
+            transition: color 0.3s ease;
         }
 
         .playlist {
@@ -430,34 +636,24 @@
             transition: all 0.2s ease;
             border-radius: 6px;
         }
-        .playlist-item:hover {
-            background: #f5f5f5;
-        }
-        .playlist-item.active {
-            background: #f0f0f0;
-            font-weight: 600;
-        }
         .playlist-item .title {
             font-size: 0.95rem;
-            color: #333;
         }
         .playlist-item .duration {
             font-size: 0.8rem;
-            color: #999;
         }
 
         /* ===== LYRICS ===== */
         .lyrics-container {
             height: 380px;
             overflow-y: auto;
-            background: #fafafa;
             border-radius: 10px;
             border: 1px solid #eee;
             padding: 25px 30px;
             font-family: 'Inter', sans-serif;
             line-height: 2;
             font-size: 1rem;
-            color: #444;
+            transition: all 0.3s ease;
         }
         .lyrics-container::-webkit-scrollbar {
             width: 4px;
@@ -549,6 +745,8 @@
                     <span class="icon">👁</span>
                     <span id="visitasDisplay">0</span>
                 </span>
+                <span class="separator">|</span>
+                <button id="themeToggle" title="Cambiar tema">🌙</button>
             </div>
         </div>
 
@@ -566,7 +764,13 @@
                 <div class="home-container">
                     <div class="home-greeting">Hey, <span id="userNameDisplay">invitado</span></div>
                     <div class="home-sub">Welcome to draco site</div>
-                    <div class="home-footer">✦ ✦ ✦</div>
+                    <div class="home-footer">
+                        ✦ ✦ ✦
+                        <br>
+                        <span style="font-size:0.8rem; letter-spacing:2px; color:inherit;">
+                            🌍 Visitas: <span id="visitasGlobal">0</span>
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -640,6 +844,7 @@
             const clockDisplay = document.getElementById('clockDisplay');
             const visitasDisplay = document.getElementById('visitasDisplay');
             const ipDisplay = document.getElementById('ipDisplay');
+            const visitasGlobal = document.getElementById('visitasGlobal');
             const lyricsContainer = document.getElementById('lyricsContainer');
             const lyricsSub = document.getElementById('lyricsSub');
             const playlistContainer = document.getElementById('playlistContainer');
@@ -651,9 +856,52 @@
             const progressBar = document.getElementById('progressBar');
             const currentTimeDisplay = document.getElementById('currentTime');
             const totalTimeDisplay = document.getElementById('totalTime');
+            const themeToggle = document.getElementById('themeToggle');
 
             // ============================================================
-            // 2. PLAYLIST
+            // 2. TEMA (Modo oscuro/claro)
+            // ============================================================
+            const savedTheme = localStorage.getItem('draco_theme') || 'light';
+            document.body.classList.add(savedTheme + '-mode');
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.body.classList.contains('dark-mode');
+                document.body.classList.remove('light-mode', 'dark-mode');
+                if (isDark) {
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('draco_theme', 'light');
+                    this.textContent = '🌙';
+                } else {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('draco_theme', 'dark');
+                    this.textContent = '☀️';
+                }
+            });
+
+            // ============================================================
+            // 3. CONTADOR GLOBAL DE VISITAS (API Count)
+            // ============================================================
+            function actualizarContadorGlobal() {
+                const COUNTER_NAME = 'draco_visitas_global';
+                // Incrementar y obtener el contador
+                fetch('https://api-count.com/api/v1/counters/' + COUNTER_NAME + '/increment')
+                    .then(r => r.json())
+                    .then(data => {
+                        if (visitasGlobal) {
+                            visitasGlobal.textContent = data.count || '?';
+                        }
+                    })
+                    .catch(() => {
+                        if (visitasGlobal) {
+                            visitasGlobal.textContent = '?';
+                        }
+                        console.log('Error al obtener contador global');
+                    });
+            }
+
+            // ============================================================
+            // 4. PLAYLIST
             // ============================================================
             const playlist = [{
                 id: 0,
@@ -768,14 +1016,14 @@
             }];
 
             // ============================================================
-            // 3. ESTADO DEL REPRODUCTOR
+            // 5. ESTADO DEL REPRODUCTOR
             // ============================================================
             let currentIndex = 0;
             let isPlaying = false;
             let isDragging = false;
 
             // ============================================================
-            // 4. CONTADOR DE VISITAS
+            // 6. CONTADOR LOCAL DE VISITAS
             // ============================================================
             let visitas = parseInt(localStorage.getItem('draco_visitas')) || 0;
             visitas += 1;
@@ -783,7 +1031,7 @@
             visitasDisplay.textContent = visitas;
 
             // ============================================================
-            // 5. RELOJ
+            // 7. RELOJ
             // ============================================================
             function actualizarReloj() {
                 const ahora = new Date();
@@ -796,7 +1044,7 @@
             setInterval(actualizarReloj, 1000);
 
             // ============================================================
-            // 6. PARTÍCULAS
+            // 8. PARTÍCULAS
             // ============================================================
             function initParticles() {
                 const canvas = document.getElementById('particles-canvas');
@@ -852,7 +1100,7 @@
             }
 
             // ============================================================
-            // 7. IP
+            // 9. IP
             // ============================================================
             function obtenerIP() {
                 fetch('https://api.ipify.org?format=json')
@@ -866,7 +1114,7 @@
             }
 
             // ============================================================
-            // 8. REPRODUCTOR
+            // 10. REPRODUCTOR
             // ============================================================
             function loadSong(index) {
                 const song = playlist[index];
@@ -945,7 +1193,7 @@
             }
 
             // ============================================================
-            // 9. GENERAR PLAYLIST
+            // 11. GENERAR PLAYLIST
             // ============================================================
             function generarPlaylist() {
                 let html = '';
@@ -971,7 +1219,7 @@
             }
 
             // ============================================================
-            // 10. BOTONES SOCIAL
+            // 12. BOTONES SOCIAL
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -1002,7 +1250,7 @@
             ];
 
             // ============================================================
-            // 11. COPIAR
+            // 13. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1051,7 +1299,7 @@
             }
 
             // ============================================================
-            // 12. PESTAÑAS
+            // 14. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -1067,7 +1315,7 @@
             }
 
             // ============================================================
-            // 13. LOGIN (ARRECLADO)
+            // 15. LOGIN
             // ============================================================
             function handleLogin() {
                 const name = nameInput.value.trim();
@@ -1095,7 +1343,7 @@
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                // ===== ARREGLO: Cargar y reproducir entry1 =====
+                // Cargar y reproducir entry1
                 loadSong(0);
                 generarPlaylist();
 
@@ -1143,11 +1391,14 @@
                 obtenerIP();
                 initTabs();
 
+                // Contador global
+                actualizarContadorGlobal();
+
                 console.log('Draco home - Activado como:', name);
             }
 
             // ============================================================
-            // 14. INICIAR
+            // 16. INICIAR
             // ============================================================
             loginBtn.addEventListener('click', handleLogin);
             nameInput.addEventListener('keydown', function(e) {
