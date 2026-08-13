@@ -19,7 +19,9 @@
     </script>
 
     <style>
-        /* ===== RESET ===== */
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -1008,7 +1010,7 @@
     // 1. FIREBASE IMPORTS
     // ============================================================
     import { initializeApp } from "firebase/app";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, sendEmailVerification } from "firebase/auth";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
     // ============================================================
@@ -1083,7 +1085,7 @@
     let pendingDeleteId = null;
 
     // ============================================================
-    // 4. ROLES - CON LOS NUEVOS UIDs
+    // 4. ROLES
     // ============================================================
     const userRoles = {
         'iBD9gQPpAJNU0v7SxRaVrn7MZaG2': 'owner',
@@ -1117,7 +1119,7 @@
     }
 
     // ============================================================
-    // 5. PLAYLIST (COMPLETA)
+    // 5. PLAYLIST
     // ============================================================
     const playlist = [{
         id: 0,
@@ -1232,7 +1234,7 @@
     }];
 
     // ============================================================
-    // 6. AUTH FUNCTIONS
+    // 6. AUTH FUNCTIONS (CON VERIFICACIÓN DE EMAIL)
     // ============================================================
     function showError(msg) {
         loginError.textContent = msg;
@@ -1246,10 +1248,19 @@
     function registerUser(email, password, displayName) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                return updateProfile(userCredential.user, { displayName: displayName });
-            })
-            .then(() => {
-                showSuccess('Account created! Welcome!');
+                const user = userCredential.user;
+                // Actualizar el nombre
+                return updateProfile(user, { displayName: displayName })
+                    .then(() => {
+                        // Enviar correo de verificación
+                        return sendEmailVerification(user);
+                    })
+                    .then(() => {
+                        showSuccess('Account created! Check your email to verify.');
+                        console.log('User registered:', email);
+                        // Cerrar sesión hasta que verifique
+                        return signOut(auth);
+                    });
             })
             .catch((error) => {
                 let msg = 'Registration error.';
@@ -1264,6 +1275,13 @@
     function loginUser(email, password) {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
+                const user = auth.currentUser;
+                // Comprobar si el email está verificado
+                if (!user.emailVerified) {
+                    showError('Please verify your email before logging in. Check your inbox.');
+                    signOut(auth);
+                    return;
+                }
                 showSuccess('Logged in! Welcome back.');
                 console.log('User logged in:', email);
             })
@@ -1383,12 +1401,23 @@
     });
 
     // ============================================================
-    // 9. AUTH OBSERVER
+    // 9. AUTH OBSERVER (CON VERIFICACIÓN)
     // ============================================================
     onAuthStateChanged(auth, (user) => {
         currentUser = user;
         
         if (user) {
+            // 🔥 COMPROBAR SI EL EMAIL ESTÁ VERIFICADO
+            if (!user.emailVerified) {
+                loginError.textContent = 'Please verify your email before accessing the page. Check your inbox.';
+                mainContainer.classList.remove('active');
+                loginScreen.style.display = 'flex';
+                // Deslogear automáticamente
+                signOut(auth);
+                return;
+            }
+            
+            // Si está verificado, mostrar la página
             loginScreen.style.display = 'none';
             mainContainer.classList.add('active');
             
@@ -1832,7 +1861,7 @@
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded with Firebase Auth + Firestore + Roles');
+    console.log('Paradise - Loaded with Firebase Auth + Email Verification');
     </script>
 </body>
 </html>
