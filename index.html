@@ -12,7 +12,8 @@
     {
       "imports": {
         "firebase/app": "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js",
-        "firebase/auth": "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js"
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js"
       }
     }
     </script>
@@ -89,6 +90,10 @@
         body.light-mode #themeToggle:hover { background: #eee; }
         body.light-mode .switch-btn { background: #f5f5f5; border-color: #ddd; color: #333; }
         body.light-mode .switch-btn:hover { background: #eee; }
+        body.light-mode .wall-post { background: #fafafa; border-color: #eee; }
+        body.light-mode .wall-post .author { color: #1a1a1a; }
+        body.light-mode .wall-post .date { color: #999; }
+        body.light-mode .wall-post .content { color: #333; }
 
         /* DARK MODE */
         body.dark-mode {
@@ -137,6 +142,104 @@
         body.dark-mode #themeToggle:hover { background: #2a2a2a; }
         body.dark-mode .switch-btn { background: #1a1a1a; border-color: #444; color: #ccc; }
         body.dark-mode .switch-btn:hover { background: #2a2a2a; }
+        body.dark-mode .wall-post { background: #1a1a1a; border-color: #2a2a2a; }
+        body.dark-mode .wall-post .author { color: #eee; }
+        body.dark-mode .wall-post .date { color: #888; }
+        body.dark-mode .wall-post .content { color: #aaa; }
+
+        /* ============================================================
+           WALL (MURO)
+           ============================================================ */
+        .wall-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            height: 380px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .wall-container::-webkit-scrollbar { width: 4px; }
+        .wall-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+        .wall-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+        .wall-input-area {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .wall-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+            background: #fafafa;
+        }
+        .wall-input-area input:focus { border-color: #1a1a1a; }
+        .wall-input-area button {
+            padding: 10px 20px;
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            flex-shrink: 0;
+        }
+        .wall-input-area button:hover { background: #333; }
+
+        .wall-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .wall-posts::-webkit-scrollbar { width: 4px; }
+        .wall-posts::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+        .wall-posts::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+        .wall-post {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 12px 16px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .wall-post .author {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .wall-post .date {
+            font-size: 0.7rem;
+            margin-left: 10px;
+        }
+        .wall-post .content {
+            font-size: 0.95rem;
+            margin-top: 4px;
+            word-wrap: break-word;
+        }
+        .wall-post .delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #cc3333;
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+        .wall-post .delete-btn:hover { opacity: 1; }
 
         /* ============================================================
            COMMON ELEMENTS
@@ -190,7 +293,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             width: 320px;
             max-width: 90%;
         }
@@ -279,10 +382,11 @@
         .top-bar .right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             font-size: 0.85rem;
             font-weight: 400;
             transition: color 0.3s ease;
+            flex-wrap: wrap;
         }
         .top-bar .right .badge {
             padding: 4px 12px;
@@ -415,6 +519,7 @@
             transition: color 0.3s ease;
         }
 
+        /* ===== MUSIC ===== */
         .music-container {
             display: flex;
             flex-direction: column;
@@ -527,7 +632,7 @@
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
             .top-bar .title { font-size: 1.1rem; }
-            .top-bar .right { font-size: 0.7rem; gap: 10px; flex-wrap: wrap; justify-content: center; }
+            .top-bar .right { font-size: 0.7rem; gap: 8px; justify-content: center; }
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
@@ -541,6 +646,9 @@
             .panel-title { font-size: 1.4rem; }
             #loginScreen .title { font-size: 1.8rem; }
             #loginScreen .login-box { width: 260px; }
+            .wall-container { height: 320px; }
+            .wall-input-area input { font-size: 0.85rem; }
+            .wall-input-area button { font-size: 0.85rem; padding: 8px 16px; }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
@@ -560,6 +668,13 @@
             #loginScreen .login-box { width: 220px; }
             #loginScreen .login-box input { padding: 10px 14px; font-size: 0.9rem; }
             #loginScreen .login-box button { padding: 10px 14px; font-size: 0.9rem; }
+            .wall-container { height: 260px; }
+            .wall-input-area { flex-direction: column; gap: 6px; }
+            .wall-input-area input { font-size: 0.8rem; padding: 8px 12px; }
+            .wall-input-area button { font-size: 0.8rem; padding: 8px 12px; }
+            .wall-post { padding: 10px 12px; }
+            .wall-post .author { font-size: 0.85rem; }
+            .wall-post .content { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -571,6 +686,7 @@
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
+            <input type="text" id="nameInput" placeholder="Name" />
             <input type="email" id="emailInput" placeholder="Email" autofocus />
             <input type="password" id="passwordInput" placeholder="Password" />
             <button id="loginBtn">Sign in</button>
@@ -614,6 +730,7 @@
             <button class="tab-btn" data-tab="about">Social</button>
             <button class="tab-btn" data-tab="music">Music</button>
             <button class="tab-btn" data-tab="lyrics">Lyrics</button>
+            <button class="tab-btn" data-tab="wall">Wall</button>
         </div>
 
         <div class="content-area">
@@ -672,6 +789,19 @@
                 <div class="lyrics-container" id="lyricsContainer"></div>
             </div>
 
+            <!-- ===== WALL ===== -->
+            <div class="panel" id="panel-wall">
+                <div class="panel-title">Wall</div>
+                <div class="panel-sub">S H A R E &nbsp; S O M E T H I N G</div>
+                <div class="wall-container" id="wallContainer">
+                    <div class="wall-input-area">
+                        <input type="text" id="postInput" placeholder="What's on your mind?" maxlength="200" />
+                        <button id="postBtn">Post</button>
+                    </div>
+                    <div class="wall-posts" id="wallPosts"></div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -679,14 +809,15 @@
     <audio id="audioPlayer"></audio>
 
     <!-- ============================================================
-    JAVASCRIPT (with Firebase)
+    JAVASCRIPT (with Firebase + Firestore)
     ============================================================ -->
     <script type="module">
     // ============================================================
     // 1. FIREBASE IMPORTS
     // ============================================================
     import { initializeApp } from "firebase/app";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
+    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
 
     // ============================================================
     // 2. FIREBASE CONFIG
@@ -703,12 +834,14 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
     // ============================================================
     // 3. DOM ELEMENTS
     // ============================================================
     const loginScreen = document.getElementById('loginScreen');
     const mainContainer = document.getElementById('mainContainer');
+    const nameInput = document.getElementById('nameInput');
     const emailInput = document.getElementById('emailInput');
     const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
@@ -741,12 +874,17 @@
         about: document.getElementById('panel-about'),
         music: document.getElementById('panel-music'),
         lyrics: document.getElementById('panel-lyrics'),
+        wall: document.getElementById('panel-wall'),
     };
+    const postInput = document.getElementById('postInput');
+    const postBtn = document.getElementById('postBtn');
+    const wallPosts = document.getElementById('wallPosts');
 
     let isLoginMode = true;
     let currentIndex = 0;
     let isPlaying = false;
     let isDragging = false;
+    let currentUser = null;
 
     // ============================================================
     // 4. PLAYLIST
@@ -875,8 +1013,12 @@
         loginError.textContent = '';
     }
 
-    function registerUser(email, password) {
+    function registerUser(email, password, displayName) {
         createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Guardar el nombre en el perfil de Firebase
+                return updateProfile(userCredential.user, { displayName: displayName });
+            })
             .then(() => {
                 showSuccess('Account created! Welcome.');
                 console.log('User registered:', email);
@@ -913,13 +1055,88 @@
     }
 
     // ============================================================
-    // 6. AUTH OBSERVER
+    // 6. WALL (MURO) FUNCTIONS
+    // ============================================================
+    function loadPosts() {
+        const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+        
+        onSnapshot(q, (snapshot) => {
+            wallPosts.innerHTML = '';
+            if (snapshot.empty) {
+                wallPosts.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">No posts yet. Be the first!</div>';
+                return;
+            }
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const postId = doc.id;
+                const isAuthor = currentUser && data.uid === currentUser.uid;
+                
+                const postDiv = document.createElement('div');
+                postDiv.className = 'wall-post';
+                
+                const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
+                const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+                
+                postDiv.innerHTML = `
+                    <span class="author">${data.author || 'Anonymous'}</span>
+                    <span class="date">${dateStr}</span>
+                    ${isAuthor ? `<button class="delete-btn" data-id="${postId}">✕</button>` : ''}
+                    <div class="content">${data.text || ''}</div>
+                `;
+                
+                // Delete functionality
+                const deleteBtn = postDiv.querySelector('.delete-btn');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', async () => {
+                        if (confirm('Delete this post?')) {
+                            try {
+                                await deleteDoc(doc(db, 'posts', postId));
+                            } catch (e) {
+                                console.error('Error deleting post:', e);
+                            }
+                        }
+                    });
+                }
+                
+                wallPosts.appendChild(postDiv);
+            });
+            // Scroll to top to see newest posts
+            wallPosts.scrollTop = 0;
+        }, (error) => {
+            console.error('Error loading posts:', error);
+            wallPosts.innerHTML = '<div style="text-align:center;color:#cc3333;padding:20px;">Error loading posts.</div>';
+        });
+    }
+
+    async function publishPost() {
+        const text = postInput.value.trim();
+        if (!text || !currentUser) return;
+        
+        try {
+            await addDoc(collection(db, 'posts'), {
+                text: text,
+                author: currentUser.displayName || currentUser.email.split('@')[0] || 'Anonymous',
+                uid: currentUser.uid,
+                timestamp: serverTimestamp()
+            });
+            postInput.value = '';
+        } catch (e) {
+            console.error('Error publishing post:', e);
+            alert('Error publishing post.');
+        }
+    }
+
+    // ============================================================
+    // 7. AUTH OBSERVER
     // ============================================================
     onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        
         if (user) {
             loginScreen.style.display = 'none';
             mainContainer.classList.add('active');
-            const displayName = user.email.split('@')[0] || 'user';
+            
+            const displayName = user.displayName || user.email.split('@')[0] || 'user';
             userNameDisplay.textContent = displayName;
             greetingDisplay.textContent = 'Welcome, ' + displayName;
             
@@ -933,6 +1150,15 @@
             getIP();
             updateGlobalCounter();
             initTabs();
+            
+            // Load wall posts
+            loadPosts();
+            
+            // Post button
+            postBtn.addEventListener('click', publishPost);
+            postInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') publishPost();
+            });
         } else {
             loginScreen.style.display = 'flex';
             mainContainer.classList.remove('active');
@@ -941,16 +1167,21 @@
             isLoginMode = true;
             loginBtn.textContent = 'Sign in';
             switchBtn.textContent = 'Create account';
+            nameInput.style.display = 'none';
+            
+            // Clean up wall listeners
+            wallPosts.innerHTML = '';
         }
     });
 
     // ============================================================
-    // 7. EVENT LISTENERS (Auth)
+    // 8. EVENT LISTENERS (Auth)
     // ============================================================
     switchBtn.addEventListener('click', () => {
         isLoginMode = !isLoginMode;
         loginBtn.textContent = isLoginMode ? 'Sign in' : 'Register';
         switchBtn.textContent = isLoginMode ? 'Create account' : 'Back to sign in';
+        nameInput.style.display = isLoginMode ? 'none' : 'block';
         loginError.textContent = '';
         loginSuccess.textContent = '';
     });
@@ -958,6 +1189,7 @@
     loginBtn.addEventListener('click', () => {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
+        const name = nameInput.value.trim();
 
         if (!email || !password) {
             showError('Please fill in all fields.');
@@ -968,16 +1200,27 @@
             return;
         }
 
-        if (isLoginMode) loginUser(email, password);
-        else registerUser(email, password);
+        if (isLoginMode) {
+            loginUser(email, password);
+        } else {
+            if (!name) {
+                showError('Please enter your name.');
+                return;
+            }
+            registerUser(email, password, name);
+        }
     });
 
     emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
     passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
+    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
     logoutBtn.addEventListener('click', logoutUser);
 
+    // Hide name input initially (login mode)
+    nameInput.style.display = 'none';
+
     // ============================================================
-    // 8. THEME
+    // 9. THEME
     // ============================================================
     const savedTheme = localStorage.getItem('draco_theme') || 'light';
     document.body.classList.add(savedTheme + '-mode');
@@ -998,7 +1241,7 @@
     });
 
     // ============================================================
-    // 9. CLOCK
+    // 10. CLOCK
     // ============================================================
     function updateClock() {
         const now = new Date();
@@ -1010,7 +1253,7 @@
     setInterval(updateClock, 1000);
 
     // ============================================================
-    // 10. VISIT COUNTERS
+    // 11. VISIT COUNTERS
     // ============================================================
     let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
     visits += 1;
@@ -1031,7 +1274,7 @@
     }
 
     // ============================================================
-    // 11. IP
+    // 12. IP
     // ============================================================
     function getIP() {
         fetch('https://api.ipify.org?format=json')
@@ -1041,7 +1284,7 @@
     }
 
     // ============================================================
-    // 12. PARTICLES
+    // 13. PARTICLES
     // ============================================================
     function initParticles() {
         const canvas = document.getElementById('particles-canvas');
@@ -1097,7 +1340,7 @@
     }
 
     // ============================================================
-    // 13. MUSIC PLAYER
+    // 14. MUSIC PLAYER
     // ============================================================
     function loadSong(index) {
         const song = playlist[index];
@@ -1199,7 +1442,7 @@
     }
 
     // ============================================================
-    // 14. SOCIAL BUTTONS
+    // 15. SOCIAL BUTTONS
     // ============================================================
     function generateSocialButtons(profiles) {
         let html = '';
@@ -1230,7 +1473,7 @@
     ];
 
     // ============================================================
-    // 15. COPY TO CLIPBOARD
+    // 16. COPY TO CLIPBOARD
     // ============================================================
     function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1278,7 +1521,7 @@
     }
 
     // ============================================================
-    // 16. TABS
+    // 17. TABS
     // ============================================================
     function initTabs() {
         tabs.forEach(btn => {
@@ -1294,7 +1537,7 @@
     }
 
     // ============================================================
-    // 17. MUSIC EVENTS
+    // 18. MUSIC EVENTS
     // ============================================================
     playBtn.addEventListener('click', togglePlay);
     prevBtn.addEventListener('click', prevSong);
@@ -1326,7 +1569,7 @@
     });
 
     // ============================================================
-    // 18. INIT SOCIAL
+    // 19. INIT SOCIAL
     // ============================================================
     document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
     document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1337,11 +1580,11 @@
     });
 
     // ============================================================
-    // 19. INIT TABS (in case auth observer doesn't trigger)
+    // 20. INIT TABS
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded with Firebase Auth');
+    console.log('Paradise - Loaded with Firebase Auth + Firestore');
     </script>
 </body>
 </html>
