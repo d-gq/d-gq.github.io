@@ -184,8 +184,37 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== HOME - LIENZO DE DIBUJO ===== */
+        /* ===== HOME (frase) ===== */
         .home-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 360px;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            padding: 30px;
+        }
+        #fraseDisplay {
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            max-width: 85%;
+            line-height: 1.7;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+        .home-footer {
+            margin-top: 25px;
+            font-size: 0.65rem;
+            color: #bbb;
+            letter-spacing: 4px;
+        }
+
+        /* ===== DRAW (lienzo) ===== */
+        .draw-container {
             position: relative;
             height: 360px;
             border-radius: 10px;
@@ -201,8 +230,6 @@
             touch-action: none;
             background: #fafafa;
         }
-
-        /* ===== BOTONES DE DIBUJO (sin emojis) ===== */
         .draw-tools {
             position: absolute;
             bottom: 14px;
@@ -243,11 +270,6 @@
         .draw-tools .clear-btn:hover {
             background: #f0e0e0;
             color: #bb3333;
-        }
-        .draw-tools .separator {
-            width: 1px;
-            background: #ddd;
-            margin: 0 4px;
         }
 
         /* ===== BOTONES SOCIAL ===== */
@@ -309,7 +331,9 @@
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
             .content-area { padding: 20px; }
-            .home-container { height: 280px; }
+            .home-container { height: 280px; padding: 20px; }
+            .draw-container { height: 280px; }
+            #fraseDisplay { font-size: 1.2rem; max-width: 95%; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
             .panel-title { font-size: 1.4rem; }
@@ -321,6 +345,8 @@
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
             .home-container { height: 220px; }
+            .draw-container { height: 220px; }
+            #fraseDisplay { font-size: 1rem; }
             .social-btn { font-size: 0.75rem; padding: 8px 4px; }
             .top-bar .right .badge { font-size: 0.6rem; padding: 2px 8px; }
         }
@@ -362,6 +388,7 @@
         <!-- ===== PESTAÑAS ===== -->
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
+            <button class="tab-btn" data-tab="draw">Draw</button>
             <button class="tab-btn" data-tab="about">Socialmedia</button>
         </div>
 
@@ -370,7 +397,17 @@
 
             <!-- ========== HOME ========== -->
             <div class="panel active" id="panel-home">
-                <div class="home-container" id="homeContainer">
+                <div class="home-container">
+                    <p id="fraseDisplay">Cargando frase...</p>
+                    <div class="home-footer">✦ ✦ ✦</div>
+                </div>
+            </div>
+
+            <!-- ========== DRAW ========== -->
+            <div class="panel" id="panel-draw">
+                <div class="panel-title">Draw</div>
+                <div class="panel-sub">DIBUJA ALGO</div>
+                <div class="draw-container">
                     <canvas id="drawCanvas"></canvas>
                     <div class="draw-tools">
                         <button class="clear-btn" id="clearBtn" title="Borrar dibujo">⌧</button>
@@ -406,12 +443,14 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
+                draw: document.getElementById('panel-draw'),
                 about: document.getElementById('panel-about'),
             };
             const audioPlayer = document.getElementById('audioPlayer');
             const clockDisplay = document.getElementById('clockDisplay');
             const visitasDisplay = document.getElementById('visitasDisplay');
             const ipDisplay = document.getElementById('ipDisplay');
+            const fraseDisplay = document.getElementById('fraseDisplay');
 
             // ============================================================
             // 2. CANCIÓN
@@ -501,7 +540,7 @@
             function initCanvas() {
                 const canvas = document.getElementById('drawCanvas');
                 const ctx = canvas.getContext('2d');
-                const container = document.getElementById('homeContainer');
+                const container = canvas.parentElement;
                 let drawing = false;
                 let lastX = 0;
                 let lastY = 0;
@@ -510,7 +549,6 @@
                     const rect = container.getBoundingClientRect();
                     canvas.width = rect.width;
                     canvas.height = rect.height;
-                    // Restaurar dibujo guardado
                     const saved = localStorage.getItem('draco_drawing');
                     if (saved) {
                         const img = new Image();
@@ -554,7 +592,7 @@
                     ctx.stroke();
                     lastX = pos.x;
                     lastY = pos.y;
-                    guardarDibujo();
+                    localStorage.setItem('draco_drawing', canvas.toDataURL());
                 }
 
                 function stopDraw(e) {
@@ -562,35 +600,27 @@
                     drawing = false;
                 }
 
-                function guardarDibujo() {
-                    localStorage.setItem('draco_drawing', canvas.toDataURL());
-                }
-
-                // Borrar dibujo
                 document.getElementById('clearBtn').addEventListener('click', function() {
                     ctx.fillStyle = '#fafafa';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     localStorage.removeItem('draco_drawing');
                 });
 
-                // Eventos ratón
                 canvas.addEventListener('mousedown', startDraw);
                 canvas.addEventListener('mousemove', draw);
                 canvas.addEventListener('mouseup', stopDraw);
                 canvas.addEventListener('mouseleave', stopDraw);
 
-                // Eventos táctiles (móvil)
                 canvas.addEventListener('touchstart', startDraw, { passive: false });
                 canvas.addEventListener('touchmove', draw, { passive: false });
                 canvas.addEventListener('touchend', stopDraw, { passive: false });
 
-                // Redimensionar
                 window.addEventListener('resize', resizeCanvas);
                 resizeCanvas();
             }
 
             // ============================================================
-            // 7. IP Y DATOS
+            // 7. IP
             // ============================================================
             function obtenerIP() {
                 fetch('https://api.ipify.org?format=json')
@@ -604,7 +634,25 @@
             }
 
             // ============================================================
-            // 8. BOTONES SOCIAL
+            // 8. FRASE
+            // ============================================================
+            function cargarFrase() {
+                fetch('frase.txt')
+                    .then(r => r.text())
+                    .then(texto => {
+                        if (fraseDisplay) {
+                            fraseDisplay.textContent = texto.trim() || 'Frase no disponible.';
+                        }
+                    })
+                    .catch(() => {
+                        if (fraseDisplay) {
+                            fraseDisplay.textContent = 'Frase no disponible.';
+                        }
+                    });
+            }
+
+            // ============================================================
+            // 9. BOTONES SOCIAL
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -635,7 +683,7 @@
             ];
 
             // ============================================================
-            // 9. COPIAR AL PORTAPAPELES
+            // 10. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -684,7 +732,7 @@
             }
 
             // ============================================================
-            // 10. PESTAÑAS
+            // 11. PESTAÑAS
             // ============================================================
             function initTabs() {
                 tabs.forEach(btn => {
@@ -700,7 +748,7 @@
             }
 
             // ============================================================
-            // 11. ACTIVAR TODO
+            // 12. ACTIVAR TODO
             // ============================================================
             function activarTodo() {
                 clickScreen.style.opacity = '0';
@@ -719,6 +767,7 @@
                 audioPlayer.play().catch(e => console.log('Error:', e));
 
                 obtenerIP();
+                cargarFrase();
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
                 document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -729,19 +778,16 @@
                 });
 
                 initTabs();
-
-                // Iniciar lienzo DESPUÉS de que el contenedor sea visible
                 setTimeout(initCanvas, 400);
 
                 console.log('Draco home - Activado');
             }
 
             // ============================================================
-            // 12. INICIAR
+            // 13. INICIAR
             // ============================================================
             clickScreen.addEventListener('click', activarTodo);
 
-            // Precargar botones
             document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
             document.querySelectorAll('.discord-copy').forEach(btn => {
