@@ -26,7 +26,11 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* ===== TEMAS ===== */
+        /* ============================================================
+           TEMAS (MODO CLARO / OSCURO)
+           ============================================================ */
+        
+        /* ----- MODO CLARO (por defecto) ----- */
         body.light-mode {
             background: #f5f5f5;
             color: #1a1a1a;
@@ -34,13 +38,26 @@
         body.light-mode .container {
             background: #ffffff;
         }
+        /* Barra superior */
         body.light-mode .top-bar {
+            background: #ffffff;
             border-bottom-color: #eee;
+        }
+        body.light-mode .top-bar .title {
+            color: #1a1a1a;
         }
         body.light-mode .top-bar .badge {
             background: #f5f5f5;
             border-color: #eee;
             color: #888;
+        }
+        body.light-mode .top-bar .separator {
+            color: #ddd;
+        }
+        /* Tabs */
+        body.light-mode .tabs {
+            background: #fafafa;
+            border-bottom-color: #eee;
         }
         body.light-mode .tab-btn {
             color: #888;
@@ -49,19 +66,64 @@
             color: #1a1a1a;
             border-bottom-color: #1a1a1a;
         }
+        body.light-mode .tab-btn:hover {
+            color: #333;
+            background: rgba(0, 0, 0, 0.03);
+        }
+        /* Home */
         body.light-mode .home-container {
             background: #fafafa;
             border-color: #eee;
         }
+        body.light-mode .home-greeting {
+            color: #1a1a1a;
+        }
+        body.light-mode .home-greeting span {
+            color: #888;
+        }
+        body.light-mode .home-sub {
+            color: #888;
+        }
+        body.light-mode .home-footer {
+            color: #ccc;
+        }
+        /* Music */
         body.light-mode .music-player {
             background: #fafafa;
             border-color: #eee;
         }
+        body.light-mode .music-player .song-title {
+            color: #1a1a1a;
+        }
+        body.light-mode .music-player .song-artist {
+            color: #888;
+        }
+        body.light-mode .music-player .controls button {
+            color: #555;
+        }
+        body.light-mode .music-player .controls button:hover {
+            color: #1a1a1a;
+            background: #eee;
+        }
+        body.light-mode .music-player .controls .play-btn {
+            color: #1a1a1a;
+        }
+        body.light-mode .progress-bar {
+            background: #e0e0e0;
+        }
+        body.light-mode .progress-bar .progress-fill {
+            background: #1a1a1a;
+        }
+        body.light-mode .time-info {
+            color: #999;
+        }
+        /* Lyrics */
         body.light-mode .lyrics-container {
             background: #fafafa;
             border-color: #eee;
             color: #444;
         }
+        /* Social */
         body.light-mode .social-btn {
             background: #f5f5f5;
             border-color: #e8e8e8;
@@ -71,6 +133,7 @@
             background: #eee;
             border-color: #ccc;
         }
+        /* Playlist */
         body.light-mode .playlist-item {
             border-bottom-color: #f0f0f0;
             color: #333;
@@ -81,22 +144,46 @@
         body.light-mode .playlist-item.active {
             background: #f0f0f0;
         }
-        body.light-mode .progress-bar {
-            background: #e0e0e0;
-        }
-        body.light-mode .time-info {
-            color: #999;
-        }
-        body.light-mode .home-footer {
-            color: #ccc;
-        }
+        /* Login */
         body.light-mode #loginScreen {
             background: #ffffff;
         }
         body.light-mode #loginScreen .title {
             color: #1a1a1a;
         }
+        body.light-mode #loginScreen .login-box input {
+            background: #fafafa;
+            border-color: #ddd;
+            color: #1a1a1a;
+        }
+        body.light-mode #loginScreen .login-box input:focus {
+            border-color: #1a1a1a;
+            background: #ffffff;
+        }
+        body.light-mode #loginScreen .login-box button {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+        body.light-mode #loginScreen .login-box button:hover {
+            background: #333;
+        }
+        /* Panel titles */
+        body.light-mode .panel-title {
+            color: #1a1a1a;
+        }
+        body.light-mode .panel-sub {
+            color: #999;
+        }
+        /* Tema toggle */
+        body.light-mode #themeToggle {
+            border-color: #ddd;
+            color: #333;
+        }
+        body.light-mode #themeToggle:hover {
+            background: #eee;
+        }
 
+        /* ----- MODO OSCURO ----- */
         body.dark-mode {
             background: #0a0a0a;
             color: #eee;
@@ -104,13 +191,26 @@
         body.dark-mode .container {
             background: #111;
         }
+        /* Barra superior */
         body.dark-mode .top-bar {
+            background: #1a1a1a;
             border-bottom-color: #2a2a2a;
         }
+        body.dark-mode .top-bar .title {
+            color: #eee;
+        }
         body.dark-mode .top-bar .badge {
+            background: #2a2a2a;
+            border-color: #333;
+            color: #aaa;
+        }
+        body.dark-mode .top-bar .separator {
+            color: #444;
+        }
+        /* Tabs */
+        body.dark-mode .tabs {
             background: #1a1a1a;
-            border-color: #2a2a2a;
-            color: #888;
+            border-bottom-color: #2a2a2a;
         }
         body.dark-mode .tab-btn {
             color: #888;
@@ -119,6 +219,11 @@
             color: #eee;
             border-bottom-color: #eee;
         }
+        body.dark-mode .tab-btn:hover {
+            color: #eee;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        /* Home */
         body.dark-mode .home-container {
             background: #1a1a1a;
             border-color: #2a2a2a;
@@ -132,6 +237,10 @@
         body.dark-mode .home-sub {
             color: #888;
         }
+        body.dark-mode .home-footer {
+            color: #444;
+        }
+        /* Music */
         body.dark-mode .music-player {
             background: #1a1a1a;
             border-color: #2a2a2a;
@@ -161,11 +270,13 @@
         body.dark-mode .time-info {
             color: #888;
         }
+        /* Lyrics */
         body.dark-mode .lyrics-container {
             background: #1a1a1a;
             border-color: #2a2a2a;
             color: #aaa;
         }
+        /* Social */
         body.dark-mode .social-btn {
             background: #1a1a1a;
             border-color: #2a2a2a;
@@ -176,6 +287,7 @@
             border-color: #444;
             color: #eee;
         }
+        /* Playlist */
         body.dark-mode .playlist-item {
             border-bottom-color: #2a2a2a;
             color: #888;
@@ -187,9 +299,7 @@
             background: #2a2a2a;
             color: #eee;
         }
-        body.dark-mode .home-footer {
-            color: #444;
-        }
+        /* Login */
         body.dark-mode #loginScreen {
             background: #0a0a0a;
         }
@@ -215,12 +325,25 @@
         body.dark-mode #loginScreen .login-box button:hover {
             background: #333;
         }
+        /* Panel titles */
         body.dark-mode .panel-title {
             color: #eee;
         }
         body.dark-mode .panel-sub {
             color: #888;
         }
+        /* Tema toggle */
+        body.dark-mode #themeToggle {
+            border-color: #444;
+            color: #ccc;
+        }
+        body.dark-mode #themeToggle:hover {
+            background: #2a2a2a;
+        }
+
+        /* ============================================================
+           ELEMENTOS COMUNES
+           ============================================================ */
 
         /* ===== BOTÓN TEMA ===== */
         #themeToggle {
@@ -232,20 +355,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
-        }
-        body.light-mode #themeToggle {
-            border-color: #ddd;
-            color: #333;
-        }
-        body.light-mode #themeToggle:hover {
-            background: #eee;
-        }
-        body.dark-mode #themeToggle {
-            border-color: #444;
-            color: #ccc;
-        }
-        body.dark-mode #themeToggle:hover {
-            background: #2a2a2a;
         }
 
         /* ===== LOGIN ===== */
@@ -289,17 +398,13 @@
             font-size: 1rem;
             outline: none;
             transition: border-color 0.2s ease;
-            background: #fafafa;
         }
         #loginScreen .login-box input:focus {
             border-color: #1a1a1a;
-            background: #ffffff;
         }
         #loginScreen .login-box button {
             width: 100%;
             padding: 14px 18px;
-            background: #1a1a1a;
-            color: #ffffff;
             border: none;
             border-radius: 10px;
             font-family: 'Inter', sans-serif;
@@ -307,9 +412,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.2s ease;
-        }
-        #loginScreen .login-box button:hover {
-            background: #333;
         }
         #loginScreen .login-box .error {
             color: #cc3333;
@@ -358,7 +460,7 @@
             position: relative;
             z-index: 1;
             flex-shrink: 0;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         .top-bar .title {
             font-size: 1.4rem;
@@ -367,7 +469,6 @@
             transition: color 0.3s ease;
         }
         .top-bar .title span {
-            color: #888;
             font-weight: 300;
             transition: color 0.3s ease;
         }
@@ -380,7 +481,6 @@
             transition: color 0.3s ease;
         }
         .top-bar .right .badge {
-            background: #f5f5f5;
             padding: 4px 12px;
             border-radius: 20px;
             border: 1px solid #eee;
@@ -396,22 +496,19 @@
             opacity: 0.6;
         }
         .top-bar .right .separator {
-            color: #ddd;
             transition: color 0.3s ease;
         }
 
         /* ===== TABS ===== */
         .tabs {
             display: flex;
-            background: #fafafa;
-            border-bottom: 1px solid #eee;
             padding: 0 20px;
             gap: 4px;
             position: relative;
             z-index: 1;
             flex-shrink: 0;
             overflow-x: auto;
-            transition: background 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         .tab-btn {
             background: transparent;
@@ -424,10 +521,6 @@
             transition: all 0.2s ease;
             border-bottom: 2px solid transparent;
             white-space: nowrap;
-        }
-        .tab-btn:hover {
-            color: #333;
-            background: rgba(0, 0, 0, 0.03);
         }
 
         /* ===== CONTENIDO ===== */
@@ -476,13 +569,11 @@
             transition: color 0.3s ease;
         }
         .home-greeting span {
-            color: #888;
             font-weight: 300;
             transition: color 0.3s ease;
         }
         .home-sub {
             font-size: 1rem;
-            color: #888;
             font-weight: 400;
             transition: color 0.3s ease;
         }
@@ -746,7 +837,7 @@
                     <span id="visitasDisplay">0</span>
                 </span>
                 <span class="separator">|</span>
-                <button id="themeToggle" title="Cambiar tema">🌙</button>
+                <button id="themeToggle" title="Cambiar tema">◈</button>
             </div>
         </div>
 
@@ -768,7 +859,7 @@
                         ✦ ✦ ✦
                         <br>
                         <span style="font-size:0.8rem; letter-spacing:2px; color:inherit;">
-                            🌍 Visitas: <span id="visitasGlobal">0</span>
+                             Views: <span id="visitasGlobal">0</span>
                         </span>
                     </div>
                 </div>
@@ -863,7 +954,7 @@
             // ============================================================
             const savedTheme = localStorage.getItem('draco_theme') || 'light';
             document.body.classList.add(savedTheme + '-mode');
-            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            themeToggle.textContent = savedTheme === 'dark' ? '◆' : '◈';
 
             themeToggle.addEventListener('click', function() {
                 const isDark = document.body.classList.contains('dark-mode');
@@ -871,11 +962,11 @@
                 if (isDark) {
                     document.body.classList.add('light-mode');
                     localStorage.setItem('draco_theme', 'light');
-                    this.textContent = '🌙';
+                    this.textContent = '◈';
                 } else {
                     document.body.classList.add('dark-mode');
                     localStorage.setItem('draco_theme', 'dark');
-                    this.textContent = '☀️';
+                    this.textContent = '◆';
                 }
             });
 
@@ -884,7 +975,6 @@
             // ============================================================
             function actualizarContadorGlobal() {
                 const COUNTER_NAME = 'draco_visitas_global';
-                // Incrementar y obtener el contador
                 fetch('https://api-count.com/api/v1/counters/' + COUNTER_NAME + '/increment')
                     .then(r => r.json())
                     .then(data => {
@@ -1343,11 +1433,9 @@
                 userNameDisplay.textContent = name;
                 greetingDisplay.textContent = 'Welcome, ' + name;
 
-                // Cargar y reproducir entry1
                 loadSong(0);
                 generarPlaylist();
 
-                // Reproducir automáticamente al hacer clic en Entrar
                 audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
 
                 audioPlayer.addEventListener('timeupdate', updateProgress);
@@ -1379,7 +1467,6 @@
                     isDragging = false;
                 });
 
-                // Social
                 document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
                 document.querySelectorAll('.discord-copy').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -1390,8 +1477,6 @@
 
                 obtenerIP();
                 initTabs();
-
-                // Contador global
                 actualizarContadorGlobal();
 
                 console.log('Draco home - Activado como:', name);
@@ -1407,7 +1492,6 @@
                 }
             });
 
-            // Precargar social
             document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
             document.querySelectorAll('.discord-copy').forEach(btn => {
                 btn.addEventListener('click', function() {
