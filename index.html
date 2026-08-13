@@ -416,22 +416,22 @@
             const SONG_URL = 'https://d-gq.github.io/rose.mp3';
 
             // ============================================================
-            // 3. LETRA CON TIEMPOS AJUSTADOS (-0.5s)
+            // 3. LETRA CON TIEMPOS RETRASADOS (+0.5s)
             // ============================================================
             const lyrics = [
-                { time: 1.29, text: "Knew from the start it would end this way" },
-                { time: 11.93, text: "Tell me how it feels to fade away, away from me" },
-                { time: 25.34, text: "Why won't you run away from this world to escape" },
-                { time: 33.58, text: "(Run away from this world to escape)" },
-                { time: 39.66, text: "I can't believe a word you said to me" },
-                { time: 46.15, text: "Don't say it to me" },
-                { time: 49.41, text: "Knew from the start it would end this way" },
-                { time: 61.70, text: "Tell me how it feels to fade away, away from me" },
-                { time: 75.03, text: "Why won't you run away from this world to escape" },
-                { time: 83.79, text: "(Run away from this world to escape)" },
-                { time: 89.66, text: "I can't believe a word you said to me" },
-                { time: 96.42, text: "Don't say it to me" },
-                { time: 99.50, text: "" }, // línea vacía para fade out final
+                { time: 1.79, text: "Knew from the start it would end this way" },
+                { time: 12.43, text: "Tell me how it feels to fade away, away from me" },
+                { time: 25.84, text: "Why won't you run away from this world to escape" },
+                { time: 34.08, text: "(Run away from this world to escape)" },
+                { time: 40.16, text: "I can't believe a word you said to me" },
+                { time: 46.65, text: "Don't say it to me" },
+                { time: 49.91, text: "Knew from the start it would end this way" },
+                { time: 62.20, text: "Tell me how it feels to fade away, away from me" },
+                { time: 75.53, text: "Why won't you run away from this world to escape" },
+                { time: 84.29, text: "(Run away from this world to escape)" },
+                { time: 90.16, text: "I can't believe a word you said to me" },
+                { time: 96.92, text: "Don't say it to me" },
+                { time: 100.50, text: "" },
             ];
 
             // ============================================================
@@ -537,11 +537,10 @@
             }
 
             // ============================================================
-            // 9. ACTUALIZAR LYRICS (con fade in/out)
+            // 9. ACTUALIZAR LYRICS
             // ============================================================
             let currentLineIndex = -1;
             let lyricsLines = [];
-            let isFadingOut = false;
 
             function actualizarLyrics() {
                 const currentTime = audioPlayer.currentTime;
@@ -570,8 +569,8 @@
                     });
                 }
 
-                // Fade out general cuando hay silencio
-                if (currentTime > 97 && currentTime < 98) {
+                // Fade out final al terminar la canción
+                if (currentTime > 98 && currentTime < 99) {
                     lyricsLines.forEach(el => {
                         el.classList.remove('active');
                         el.classList.add('fade-out');
