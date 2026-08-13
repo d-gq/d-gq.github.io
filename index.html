@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to hell</title>
+    <title>Welcome</title>
     <style>
         /* ===== RESET ===== */
         * {
@@ -12,10 +12,10 @@
             box-sizing: border-box;
         }
         body {
-            background: #0a0a0a;
+            background: #f5f5f5;
             min-height: 100vh;
-            font-family: 'Segoe UI', 'Arial', sans-serif;
-            color: #eee;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1a1a1a;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,14 +23,14 @@
             overflow: hidden;
         }
 
-        /* ===== PANTALLA DE CLICK ===== */
+        /* ===== PANTALLA DE ENTRADA ===== */
         #clickScreen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #000000;
+            background: #ffffff;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -39,311 +39,268 @@
             cursor: pointer;
             transition: opacity 0.8s ease;
         }
-        #clickScreen h1 {
-            font-size: 10rem;
-            color: #ff0000;
-            text-shadow: 0 0 60px #ff0000, 0 0 120px #ff000088, 0 0 200px #ff000044;
-            animation: clickPulse 1.5s infinite alternate;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            user-select: none;
+        #clickScreen .icon {
+            font-size: 4rem;
+            color: #333;
+            transition: transform 0.3s ease;
+        }
+        #clickScreen .icon:hover {
+            transform: scale(1.1);
         }
         #clickScreen .sub {
-            color: #662222;
-            font-size: 1.2rem;
-            letter-spacing: 8px;
+            color: #999;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
             margin-top: 20px;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            animation: clickPulse 1.5s infinite alternate 0.5s;
-        }
-        @keyframes clickPulse {
-            0% { opacity: 0.4; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1.05); }
+            font-weight: 300;
         }
 
         /* ===== CONTENEDOR PRINCIPAL ===== */
-        .media-player {
-            width: 1000px;
+        .container {
+            width: 900px;
             max-width: 100%;
-            background: #0f0f0f;
-            border: 2px solid #1a1a1a;
-            border-radius: 12px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
             overflow: hidden;
-            box-shadow: 0 0 60px rgba(180, 0, 0, 0.15);
-            position: relative;
             opacity: 0;
-            transition: opacity 1.5s ease;
+            transition: opacity 0.8s ease;
         }
-        .media-player.active {
+        .container.active {
             opacity: 1;
         }
 
-        /* ===== BANDA ROJA SUPERIOR ===== */
+        /* ===== BARRA SUPERIOR ===== */
         .top-bar {
-            background: linear-gradient(90deg, #8b0000, #cc0000, #8b0000);
-            padding: 12px 25px;
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #550000;
         }
         .top-bar .title {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            letter-spacing: 2px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
         }
         .top-bar .title span {
-            color: #ff8888;
+            color: #888;
+            font-weight: 300;
         }
 
         /* ===== PESTAÑAS ===== */
         .tabs {
             display: flex;
-            background: #1a1a1a;
-            border-bottom: 2px solid #2a0000;
-            padding: 0 15px;
-            gap: 5px;
-            flex-wrap: wrap;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+            padding: 0 20px;
+            gap: 4px;
         }
         .tab-btn {
             background: transparent;
             border: none;
             color: #888;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            padding: 12px 22px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 14px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
         }
         .tab-btn:hover {
-            color: #fff;
-            background: rgba(139, 0, 0, 0.2);
+            color: #333;
+            background: rgba(0, 0, 0, 0.03);
         }
         .tab-btn.active {
-            color: #ff3333;
-            border-bottom-color: #cc0000;
-            background: rgba(139, 0, 0, 0.15);
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+            background: transparent;
         }
 
-        /* ===== CONTENEDOR DE CONTENIDO ===== */
+        /* ===== CONTENIDO ===== */
         .content-area {
-            position: relative;
-            min-height: 420px;
-            background: #0a0a0a;
-            overflow: hidden;
+            padding: 30px 35px;
+            min-height: 360px;
+            background: #ffffff;
         }
 
-        /* ===== CADA PANEL ===== */
         .panel {
             display: none;
-            padding: 25px 30px 30px 30px;
-            animation: fadeIn 0.4s ease;
-            min-height: 380px;
+            animation: fadeIn 0.3s ease;
         }
         .panel.active {
             display: block;
         }
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(8px); }
+            0% { opacity: 0; transform: translateY(6px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== HOME ===== */
         .home-container {
             position: relative;
-            height: 400px;
+            height: 340px;
             overflow: hidden;
-            background: #0a0a0a;
-            border-radius: 4px;
+            border-radius: 8px;
+            background: #fafafa;
+            padding: 10px 0;
         }
         .home-scroll {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            animation: scrollUpHome 50s linear infinite;
-            padding: 10px 0;
+            animation: scrollUpHome 45s linear infinite;
+            padding: 10px 20px;
         }
         @keyframes scrollUpHome {
             0% { transform: translateY(0); opacity: 0; }
-            5% { opacity: 1; }
-            95% { opacity: 1; }
+            6% { opacity: 1; }
+            94% { opacity: 1; }
             100% { transform: translateY(-100%); opacity: 0; }
         }
         .home-scroll .info-line {
-            font-size: 0.95rem;
-            color: #ffaa55;
-            text-shadow: 0 0 12px #ff660044;
-            padding: 5px 0;
-            border-bottom: 1px solid #2a0a0a;
-            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #444;
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: space-between;
             gap: 20px;
-            padding-right: 10px;
         }
         .home-scroll .info-line .label {
-            color: #ff8844;
+            color: #888;
             font-weight: 400;
-            letter-spacing: 1px;
-            white-space: nowrap;
+            letter-spacing: 0.3px;
         }
         .home-scroll .info-line .value {
-            color: #ffeecc;
-            font-weight: 600;
+            color: #1a1a1a;
+            font-weight: 500;
             text-align: right;
             word-break: break-all;
             max-width: 65%;
         }
         .home-footer {
-            margin-top: 15px;
-            font-size: 0.7rem;
-            color: #442222;
-            letter-spacing: 6px;
+            margin-top: 12px;
+            font-size: 0.6rem;
+            color: #ccc;
+            letter-spacing: 4px;
             text-align: center;
-            font-family: 'Georgia', serif;
         }
 
-        /* ===== BOTONES DE REDES ===== */
+        /* ===== BOTONES ABOUT ME ===== */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
+            gap: 14px;
             margin-top: 20px;
-            max-width: 650px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
         .social-btn {
-            background: transparent;
-            border: 2px solid transparent;
-            border-radius: 8px;
+            background: #f5f5f5;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
             padding: 14px 12px;
             text-align: center;
-            color: #884444;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
-            box-shadow: none;
             display: block;
+            letter-spacing: 0.3px;
         }
         .social-btn:hover {
-            border-color: #8b0000;
-            color: #ff6644;
-            background: rgba(139, 0, 0, 0.12);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.15);
-            transform: scale(1.02);
+            background: #eee;
+            border-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .panel-title {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 2rem;
-            color: #ff2222;
-            text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
             text-align: center;
             margin-bottom: 4px;
-            letter-spacing: 4px;
+            letter-spacing: -0.5px;
         }
         .panel-sub {
             text-align: center;
-            color: #662222;
+            color: #999;
             font-size: 0.8rem;
-            letter-spacing: 6px;
+            letter-spacing: 3px;
             margin-top: 0;
             margin-bottom: 20px;
-            font-family: 'Georgia', serif;
+            font-weight: 300;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
-            .top-bar .title { font-size: 1.2rem; }
+            .top-bar { padding: 16px 20px; flex-direction: column; gap: 6px; }
+            .top-bar .title { font-size: 1.1rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
-            .panel { padding: 15px; }
-            .home-container { height: 320px; }
+            .content-area { padding: 20px; }
+            .home-container { height: 280px; }
             .home-scroll .info-line { font-size: 0.75rem; flex-direction: column; align-items: flex-start; gap: 2px; }
             .home-scroll .info-line .value { text-align: left; max-width: 100%; }
-            .social-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
-            .social-btn { font-size: 0.9rem; padding: 10px 6px; }
-            .panel-title { font-size: 1.5rem; }
-            #clickScreen h1 { font-size: 6rem; }
+            .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
+            .social-btn { font-size: 0.8rem; padding: 10px 6px; }
+            .panel-title { font-size: 1.4rem; }
         }
         @media (max-width: 450px) {
-            .top-bar { flex-direction: column; gap: 6px; padding: 10px 15px; }
-            .top-bar .title { font-size: 1rem; }
-            .tabs { justify-content: center; padding: 0 8px; gap: 2px; }
-            .tab-btn { font-size: 0.7rem; padding: 8px 10px; }
+            .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
+            .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .home-container { height: 280px; }
-            .social-btn { font-size: 0.8rem; padding: 8px 4px; }
-            #clickScreen h1 { font-size: 4.5rem; }
+            .home-container { height: 240px; }
+            .social-btn { font-size: 0.75rem; padding: 8px 4px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== PANTALLA DE CLICK ===== -->
+    <!-- ===== PANTALLA DE ENTRADA ===== -->
     <div id="clickScreen">
-        <h1>⛧</h1>
-        <div class="sub">T O C A &nbsp; P A R A &nbsp; E N T R A R</div>
+        <div class="icon">▶</div>
+        <div class="sub">T O C A &nbsp; P A R A &nbsp; C O N T I N U A R</div>
     </div>
 
     <!-- ===== CONTENEDOR PRINCIPAL ===== -->
-    <div class="media-player" id="mediaPlayer">
+    <div class="container" id="mainContainer">
 
-        <!-- ===== BANDA ROJA ===== -->
         <div class="top-bar">
-            <div class="title">🔥 <span>Welcome</span> to hell</div>
-            <div style="font-size:0.7rem; color:#ff8888; letter-spacing:3px; opacity:0.6;">⛧ INFERNO ⛧</div>
+            <div class="title">✦ <span>welcome</span></div>
+            <div style="font-size:0.65rem; color:#bbb; letter-spacing:2px;">✦ ✦ ✦</div>
         </div>
 
-        <!-- ===== PESTAÑAS ===== -->
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
-            <button class="tab-btn" data-tab="vampyr">Vampyr</button>
-            <button class="tab-btn" data-tab="demian">Demian</button>
-            <button class="tab-btn" data-tab="paradise">Paradise</button>
+            <button class="tab-btn" data-tab="about">About me</button>
         </div>
 
-        <!-- ===== CONTENIDO ===== -->
         <div class="content-area">
 
-            <!-- ========== HOME ========== -->
+            <!-- ===== HOME ===== -->
             <div class="panel active" id="panel-home">
                 <div class="home-container" id="homeContainer">
                     <div class="home-scroll" id="homeScroll">
-                        <div class="home-footer">⛧ ⛧ ⛧</div>
+                        <div class="home-footer">✦ ✦ ✦</div>
                     </div>
                 </div>
             </div>
 
-            <!-- ========== VAMPYR ========== -->
-            <div class="panel" id="panel-vampyr">
-                <div class="panel-title">Vampyr</div>
-                <div class="panel-sub">PRIMER DIOS</div>
-                <div class="social-grid" id="social-vampyr"></div>
-            </div>
-
-            <!-- ========== DEMIAN ========== -->
-            <div class="panel" id="panel-demian">
-                <div class="panel-title">Demian</div>
-                <div class="panel-sub">EL ELEGIDO</div>
-                <div class="social-grid" id="social-demian"></div>
-            </div>
-
-            <!-- ========== PARADISE ========== -->
-            <div class="panel" id="panel-paradise">
-                <div class="panel-title">Paradise</div>
-                <div class="panel-sub">EL PARAISO PERDIDO</div>
-                <div class="social-grid" id="social-paradise"></div>
+            <!-- ===== ABOUT ME ===== -->
+            <div class="panel" id="panel-about">
+                <div class="panel-title">About me</div>
+                <div class="panel-sub">CONECTA CONMIGO</div>
+                <div class="social-grid" id="social-about"></div>
             </div>
 
         </div>
@@ -352,9 +309,6 @@
     <!-- ===== AUDIO OCULTO ===== -->
     <audio id="audioPlayer" loop></audio>
 
-    <!-- ============================================================ -->
-    <!-- JAVASCRIPT -->
-    <!-- ============================================================ -->
     <script>
         (function() {
             "use strict";
@@ -363,13 +317,11 @@
             // 1. ELEMENTOS
             // ============================================================
             const clickScreen = document.getElementById('clickScreen');
-            const mediaPlayer = document.getElementById('mediaPlayer');
+            const mainContainer = document.getElementById('mainContainer');
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 home: document.getElementById('panel-home'),
-                vampyr: document.getElementById('panel-vampyr'),
-                demian: document.getElementById('panel-demian'),
-                paradise: document.getElementById('panel-paradise'),
+                about: document.getElementById('panel-about'),
             };
             const homeScroll = document.getElementById('homeScroll');
             const audioPlayer = document.getElementById('audioPlayer');
@@ -380,7 +332,7 @@
             const SONG_URL = 'https://d-gq.github.io/cachalot.mp3';
 
             // ============================================================
-            // 3. RECOLECTAR INFO + CIUDAD/ISP
+            // 3. RECOLECTAR INFO
             // ============================================================
             function recolectarInfoCompleta(callback) {
                 const info = {};
@@ -486,7 +438,7 @@
             }
 
             // ============================================================
-            // 4. GENERAR HTML DE INFO (HOME)
+            // 4. GENERAR HTML DE INFO
             // ============================================================
             function generarInfoHTML(info) {
                 const items = [
@@ -535,12 +487,12 @@
                         </div>`;
                     }
                 });
-                html += '<div class="home-footer">⛧ ⛧ ⛧</div>';
+                html += '<div class="home-footer">✦ ✦ ✦</div>';
                 return html;
             }
 
             // ============================================================
-            // 5. GENERAR BOTONES SOCIALES (sin emojis)
+            // 5. GENERAR BOTONES (About me)
             // ============================================================
             function generarBotones(perfiles) {
                 let html = '';
@@ -563,30 +515,18 @@
             }
 
             // ============================================================
-            // 6. PERFILES
+            // 6. PERFILES (mismos que antes, solo en About me)
             // ============================================================
-            const perfiles = {
-                vampyr: [
-                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
-                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
-                    { tipo: 'discord', valor: 'v.y.r' },
-                    { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
-                    { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
-                ],
-                demian: [
-                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2011849227/profile' },
-                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/intoxicatorio' },
-                    { tipo: 'discord', valor: '6vjy' },
-                ],
-                paradise: [
-                    { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/2292725732/profile' },
-                    { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/dormitado' },
-                    { tipo: 'discord', valor: '60x4' },
-                ]
-            };
+            const perfilesAbout = [
+                { tipo: 'link', nombre: 'Roblox', url: 'https://www.roblox.com/es/users/10752298002/profile' },
+                { tipo: 'link', nombre: 'Instagram', url: 'https://www.instagram.com/omofagia' },
+                { tipo: 'discord', valor: 'v.y.r' },
+                { tipo: 'link', nombre: 'Telegram', url: 'https://t.me/caquexia' },
+                { tipo: 'link', nombre: 'GitHub', url: 'https://github.com/d-gq' },
+            ];
 
             // ============================================================
-            // 7. COPIAR AL PORTAPAPELES
+            // 7. COPIAR
             // ============================================================
             function copiarAlPortapapeles(texto) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -620,11 +560,11 @@
                 div.textContent = mensaje;
                 div.style.cssText = `
                     position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-                    background: #0a0a0a; color: #ff6644; padding: 12px 28px;
-                    border: 2px solid #8b0000; border-radius: 8px;
-                    font-family: 'Georgia', serif; font-weight: 600;
-                    z-index: 9999; box-shadow: 0 0 40px rgba(139,0,0,0.4);
-                    letter-spacing: 1px; text-align: center;
+                    background: #f5f5f5; color: #333; padding: 12px 28px;
+                    border: 1px solid #ddd; border-radius: 8px;
+                    font-family: 'Inter', sans-serif; font-weight: 500;
+                    z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+                    letter-spacing: 0.5px; text-align: center;
                 `;
                 document.body.appendChild(div);
                 setTimeout(() => {
@@ -650,7 +590,7 @@
                             const scroll = document.getElementById('homeScroll');
                             scroll.style.animation = 'none';
                             setTimeout(() => {
-                                scroll.style.animation = 'scrollUpHome 50s linear infinite';
+                                scroll.style.animation = 'scrollUpHome 45s linear infinite';
                             }, 50);
                         }
                     });
@@ -658,37 +598,29 @@
             }
 
             // ============================================================
-            // 9. ACTIVAR TODO AL HACER CLICK
+            // 9. ACTIVAR TODO
             // ============================================================
             function activarTodo() {
-                // Ocultar pantalla de click
                 clickScreen.style.opacity = '0';
                 setTimeout(() => {
                     clickScreen.style.display = 'none';
                 }, 800);
 
-                // Mostrar reproductor
                 setTimeout(() => {
-                    mediaPlayer.classList.add('active');
+                    mainContainer.classList.add('active');
                 }, 300);
 
-                // Reproducir música automáticamente
                 audioPlayer.src = SONG_URL;
                 audioPlayer.volume = 0.7;
                 audioPlayer.loop = true;
-                audioPlayer.play().catch(e => console.log('Error al reproducir:', e));
+                audioPlayer.play().catch(e => console.log('Error:', e));
 
-                // Cargar info en Home (si no está ya cargada)
                 recolectarInfoCompleta(function(info) {
                     homeScroll.innerHTML = generarInfoHTML(info);
                 });
 
-                // Generar botones sociales
-                document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
-                document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
-                document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
+                document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
-                // Evento copiar para botones Discord
                 document.querySelectorAll('.discord-copy').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const texto = this.dataset.copy;
@@ -696,37 +628,25 @@
                     });
                 });
 
-                // Inicializar pestañas
                 initTabs();
-
-                console.log('Welcome to hell - Activado');
+                console.log('Welcome - Activado');
             }
 
             // ============================================================
-            // 10. INICIALIZAR
+            // 10. INICIAR
             // ============================================================
-            // La página carga con la pantalla de click visible.
-            // Al hacer clic, se activa todo.
-
             clickScreen.addEventListener('click', activarTodo);
 
-            // Precargar la info en segundo plano mientras el usuario ve la pantalla de click
-            // (así cuando entre ya esté lista)
+            // Precargar info
             recolectarInfoCompleta(function(info) {
-                // Guardamos la info en una variable global para usarla después
-                window._infoPrecargada = info;
-                // Si ya se ha activado, la mostramos; si no, la guardamos.
-                if (document.getElementById('mediaPlayer').classList.contains('active')) {
+                if (mainContainer.classList.contains('active')) {
                     homeScroll.innerHTML = generarInfoHTML(info);
                 }
             });
 
-            // También precargamos los botones sociales
-            document.getElementById('social-vampyr').innerHTML = generarBotones(perfiles.vampyr);
-            document.getElementById('social-demian').innerHTML = generarBotones(perfiles.demian);
-            document.getElementById('social-paradise').innerHTML = generarBotones(perfiles.paradise);
+            // Precargar botones
+            document.getElementById('social-about').innerHTML = generarBotones(perfilesAbout);
 
-            // Evento copiar para botones Discord (ya cargados)
             document.querySelectorAll('.discord-copy').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const texto = this.dataset.copy;
@@ -734,7 +654,6 @@
                 });
             });
 
-            // Inicializar pestañas (aunque estén ocultas, para que funcionen cuando se muestren)
             initTabs();
 
         })();
