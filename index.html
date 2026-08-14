@@ -19,7 +19,9 @@
     </script>
 
     <style>
-        /* ===== RESET ===== */
+        /* ============================================================
+           RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +37,7 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         /* ============================================================
@@ -129,6 +131,23 @@
         body.dark-mode #themeToggle:hover { background: #2a2a2a; }
 
         /* ============================================================
+           ANIMACIONES GLOBALES
+           ============================================================ */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(204, 0, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ============================================================
            COMMON ELEMENTS
            ============================================================ */
         #themeToggle {
@@ -138,10 +157,15 @@
             padding: 4px 12px;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
+        #themeToggle:hover {
+            transform: scale(1.05);
+            background: rgba(0,0,0,0.05);
+        }
 
+        /* ===== LOGIN ===== */
         #loginScreen {
             position: fixed;
             top: 0;
@@ -160,6 +184,7 @@
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease;
         }
         #loginScreen .title span { color: #888; font-weight: 300; }
         #loginScreen .login-box {
@@ -169,6 +194,7 @@
             gap: 12px;
             width: 320px;
             max-width: 90%;
+            animation: fadeInUp 0.6s ease 0.2s both;
         }
         #loginScreen .login-box input {
             width: 100%;
@@ -178,9 +204,12 @@
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        #loginScreen .login-box input:focus { border-color: #1a1a1a; }
+        #loginScreen .login-box input:focus {
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.08);
+        }
         #loginScreen .login-box button {
             width: 100%;
             padding: 14px 18px;
@@ -192,13 +221,17 @@
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s ease;
+            transition: all 0.3s ease;
             letter-spacing: 2px;
+            position: relative;
         }
         #loginScreen .login-box button:hover {
             background: #cc0000;
             transform: scale(1.02);
             box-shadow: 0 0 30px rgba(204, 0, 0, 0.3);
+        }
+        #loginScreen .login-box button:active {
+            transform: scale(0.97);
         }
         #loginScreen .login-box .error {
             color: #cc3333;
@@ -206,8 +239,10 @@
             font-weight: 400;
             height: 20px;
             text-align: center;
+            animation: fadeInUp 0.3s ease;
         }
 
+        /* ===== CONTAINER ===== */
         .container {
             width: 900px;
             max-width: 100%;
@@ -221,7 +256,10 @@
             display: flex;
             flex-direction: column;
         }
-        .container.active { opacity: 1; }
+        .container.active {
+            opacity: 1;
+            animation: fadeInUp 0.6s ease;
+        }
 
         #particles-canvas {
             position: absolute;
@@ -233,8 +271,10 @@
             z-index: 0;
             opacity: 0.2;
             border-radius: 16px;
+            transition: opacity 0.5s ease;
         }
 
+        /* ===== TOP BAR ===== */
         .top-bar {
             padding: 20px 30px;
             border-bottom: 1px solid #eee;
@@ -276,6 +316,7 @@
         .top-bar .right .badge .icon { font-size: 0.8rem; opacity: 0.6; }
         .top-bar .right .separator { transition: color 0.3s ease; }
 
+        /* ===== TABS ===== */
         .tabs {
             display: flex;
             padding: 0 20px;
@@ -294,11 +335,30 @@
             font-weight: 500;
             padding: 14px 20px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border-bottom: 2px solid transparent;
             white-space: nowrap;
+            position: relative;
+        }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .tab-btn:hover::after {
+            width: 60%;
+        }
+        .tab-btn.active::after {
+            width: 100%;
         }
 
+        /* ===== CONTENT AREA ===== */
         .content-area {
             padding: 30px 35px;
             min-height: 380px;
@@ -310,15 +370,12 @@
         }
         .panel {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: fadeInUp 0.5s ease;
             height: 100%;
         }
         .panel.active { display: block; }
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(6px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
 
+        /* ===== HOME ===== */
         .home-container {
             display: flex;
             flex-direction: column;
@@ -344,10 +401,11 @@
             font-size: 0.6rem;
             letter-spacing: 4px;
             transition: color 0.3s ease;
+            opacity: 0.6;
         }
 
         /* ============================================================
-           MUSIC (CORREGIDO)
+           MUSIC
            ============================================================ */
         .music-container {
             display: flex;
@@ -398,9 +456,15 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             padding: 4px 8px;
             border-radius: 6px;
+            color: #555;
+        }
+        .music-player .controls button:hover {
+            color: #1a1a1a;
+            background: rgba(0,0,0,0.06);
+            transform: scale(1.1);
         }
         .music-player .controls .play-btn { font-size: 2rem; }
         .music-player .progress-bar {
@@ -410,12 +474,25 @@
             cursor: pointer;
             position: relative;
             transition: background 0.3s ease;
+            overflow: hidden;
         }
         .music-player .progress-bar .progress-fill {
             height: 100%;
             border-radius: 4px;
             width: 0%;
-            transition: width 0.1s linear, background 0.3s ease;
+            transition: width 0.15s ease-out, background 0.3s ease;
+            position: relative;
+        }
+        .music-player .progress-bar .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
         }
         .music-player .time-info {
             font-size: 0.7rem;
@@ -436,11 +513,28 @@
             padding: 10px 16px;
             border-bottom: 1px solid #f0f0f0;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border-radius: 6px;
+            position: relative;
+        }
+        .playlist-item:hover {
+            background: #f5f5f5;
+            transform: translateX(4px);
+        }
+        .playlist-item.active {
+            background: #f0f0f0;
+            font-weight: 600;
+        }
+        .playlist-item.active::before {
+            content: '▶';
+            position: absolute;
+            left: -8px;
+            color: #cc0000;
+            font-size: 0.7rem;
+            animation: pulseGlow 1.5s infinite;
         }
         .playlist-item .title { font-size: 0.95rem; }
-        .playlist-item .duration { font-size: 0.8rem; }
+        .playlist-item .duration { font-size: 0.8rem; opacity: 0.5; }
 
         .music-sub-tabs {
             display: flex;
@@ -458,16 +552,17 @@
             font-weight: 500;
             padding: 6px 16px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             color: #888;
         }
-        .music-sub-btn:hover { color: #333; }
+        .music-sub-btn:hover { color: #333; transform: translateY(-1px); }
         .music-sub-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
         body.dark-mode .music-sub-btn.active { color: #eee; border-bottom-color: #eee; }
 
         .music-panel {
             display: none;
             width: 100%;
+            animation: fadeInUp 0.4s ease;
         }
         .music-panel.active { display: block; }
 
@@ -487,7 +582,7 @@
         .lyrics-container::-webkit-scrollbar { width: 4px; }
         .lyrics-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
         .lyrics-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        .lyrics-container .line { padding: 2px 0; }
+        .lyrics-container .line { padding: 2px 0; transition: color 0.3s ease; }
         .lyrics-container .line.empty { height: 12px; }
 
         /* ===== SOCIAL ===== */
@@ -509,12 +604,17 @@
             font-weight: 500;
             font-size: 0.95rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
             display: block;
             letter-spacing: 0.3px;
         }
-        .social-btn:hover { background: #eee; border-color: #ccc; }
+        .social-btn:hover {
+            background: #eee;
+            border-color: #ccc;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
 
         .panel-title {
             font-size: 1.8rem;
@@ -532,6 +632,7 @@
             margin-bottom: 20px;
             font-weight: 300;
             transition: color 0.3s ease;
+            opacity: 0.7;
         }
 
         @media (max-width: 700px) {
@@ -578,7 +679,7 @@
 </head>
 <body>
 
-    <!-- ===== LOGIN (SOLO NOMBRE) ===== -->
+    <!-- ===== LOGIN ===== -->
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
@@ -634,14 +735,11 @@
                 <div class="panel-title">Music</div>
                 <div class="panel-sub">E N T R Y &nbsp; L O G</div>
                 <div class="music-container">
-                    
-                    <!-- Sub-tabs: Player / Lyrics -->
                     <div class="music-sub-tabs" id="musicSubTabs">
                         <button class="music-sub-btn active" data-sub="player">Player</button>
                         <button class="music-sub-btn" data-sub="lyrics">Lyrics</button>
                     </div>
 
-                    <!-- Player Panel -->
                     <div class="music-panel active" id="musicPlayerPanel">
                         <div class="music-player" id="musicPlayer">
                             <div class="song-title" id="currentSongTitle">entry 1</div>
@@ -662,11 +760,9 @@
                         <div class="playlist" id="playlistContainer"></div>
                     </div>
 
-                    <!-- Lyrics Panel -->
                     <div class="music-panel" id="musicLyricsPanel">
                         <div class="lyrics-container" id="lyricsContainer"></div>
                     </div>
-
                 </div>
             </div>
 
@@ -684,7 +780,7 @@
     <audio id="audioPlayer"></audio>
 
     <!-- ============================================================
-    JAVASCRIPT (SIN AUTO-LOGIN)
+    JAVASCRIPT
     ============================================================ -->
     <script type="module">
     // ============================================================
@@ -752,7 +848,7 @@
     let currentUser = null;
 
     // ============================================================
-    // 4. LOGIN (SOLO NOMBRE - SIN AUTO-LOGIN)
+    // 4. LOGIN
     // ============================================================
     function handleLogin() {
         const name = nameInput.value.trim();
@@ -765,7 +861,6 @@
             return;
         }
 
-        // Guardar nombre solo para la sesión actual (no auto-login)
         sessionStorage.setItem('draco_user', name);
 
         loginScreen.style.opacity = '0';
@@ -1014,7 +1109,7 @@
     }
 
     // ============================================================
-    // 7. MUSIC SUB-TABS (Player / Lyrics)
+    // 7. MUSIC SUB-TABS
     // ============================================================
     function initMusicSubTabs() {
         musicSubBtns.forEach(btn => {
@@ -1098,6 +1193,7 @@
             font-family: 'Inter', sans-serif; font-weight: 500;
             z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
             letter-spacing: 0.5px; text-align: center;
+            animation: fadeInUp 0.3s ease;
         `;
         document.body.appendChild(div);
         setTimeout(() => {
@@ -1278,7 +1374,7 @@
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded (No auto-login)');
+    console.log('Paradise - Loaded');
     </script>
 </body>
 </html>
