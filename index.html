@@ -39,7 +39,7 @@
         }
 
         /* ============================================================
-           TEMAS (LIGHT / DARK)
+           THEMES (LIGHT / DARK)
            ============================================================ */
         body.light-mode {
             background: #f5f5f5;
@@ -104,7 +104,7 @@
         body.dark-mode .platform-stats { color: #888; }
 
         /* ============================================================
-           ANIMACIONES
+           ANIMATIONS
            ============================================================ */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(12px); }
@@ -450,7 +450,7 @@
         .lyrics-container .line.empty { height: 12px; }
 
         /* ============================================================
-           SOCIAL - PLATAFORMAS
+           SOCIAL - PLATFORMS
            ============================================================ */
         .social-grid {
             display: grid;
@@ -610,7 +610,7 @@
         </div>
     </div>
 
-    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <!-- ===== MAIN CONTAINER ===== -->
     <div class="container" id="mainContainer">
         <div class="top-bar">
             <div class="title">✦ <span id="greetingDisplay">Welcome</span></div>
@@ -690,7 +690,7 @@
                 <div class="panel-title">Social</div>
                 <div class="panel-sub">C O N N E C T</div>
                 <div class="social-grid" id="socialGrid">
-                    <!-- Generado con JavaScript -->
+                    <!-- Generated with JavaScript -->
                 </div>
             </div>
 
@@ -769,17 +769,17 @@
     let isDragging = false;
 
     // ============================================================
-    // 4. SOCIAL DATA (TUS DATOS)
+    // 4. SOCIAL DATA (YOUR DATA)
     // ============================================================
     const socialData = {
         platforms: [
             {
                 id: 'roblox',
                 name: 'Roblox',
-                username: 'prefuneraI',
+                username: 'drakoxd',
                 userId: '10752298002',
                 url: 'https://www.roblox.com/es/users/10752298002/profile',
-                type: 'roblox', // Para usar la API
+                type: 'roblox',
                 stats: { followers: null, following: null }
             },
             {
@@ -826,7 +826,7 @@
     };
 
     // ============================================================
-    // 5. FUNCIONES SOCIAL
+    // 5. SOCIAL FUNCTIONS
     // ============================================================
     function renderSocial() {
         let html = '';
@@ -846,7 +846,7 @@
         });
         socialGrid.innerHTML = html;
 
-        // Eventos de copiar para Discord
+        // Copy events for Discord
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const text = this.dataset.copy;
@@ -854,7 +854,7 @@
             });
         });
 
-        // Obtener stats de Roblox con la API
+        // Fetch Roblox stats
         fetchRobloxStats();
     }
 
@@ -862,10 +862,10 @@
         const stats = platform.stats;
         let html = '';
         if (stats.followers !== undefined && stats.followers !== null) {
-            html += `<span>👤 <span class="num" id="${platform.id}-followers">${stats.followers}</span> Followers</span>`;
+            html += `<span>👤 <span class="num" id="${platform.id}-followers">${stats.followers}</span> followers</span>`;
         }
         if (stats.following !== undefined && stats.following !== null) {
-            html += `<span>👥 <span class="num" id="${platform.id}-following">${stats.following}</span> Following</span>`;
+            html += `<span>👥 <span class="num" id="${platform.id}-following">${stats.following}</span> following</span>`;
         }
         if (stats.likes !== undefined && stats.likes !== null) {
             html += `<span>❤️ <span class="num">${stats.likes}</span> likes</span>`;
@@ -875,15 +875,15 @@
 
     function renderActions(platform) {
         if (platform.type === 'copy') {
-            return `<button class="copy-btn" data-copy="${platform.username}"> Copiar</button>`;
+            return `<button class="copy-btn" data-copy="${platform.username}">📋 Copy</button>`;
         } else if (platform.type === 'link' || platform.type === 'manual' || platform.type === 'roblox') {
-            return `<a href="${platform.url}" target="_blank">Ver perfil</a>`;
+            return `<a href="${platform.url}" target="_blank">View profile</a>`;
         }
         return '';
     }
 
     // ============================================================
-    // 6. ROBLOX API (automático)
+    // 6. ROBLOX API (automatic)
     // ============================================================
     async function fetchRobloxStats() {
         const roblox = socialData.platforms.find(p => p.id === 'roblox');
@@ -891,25 +891,22 @@
 
         try {
             const userId = roblox.userId;
-            // Obtener seguidores
             const followersRes = await fetch(`https://friends.roblox.com/v1/users/${userId}/followers?limit=1`);
             const followersData = await followersRes.json();
             const followers = followersData.count || 0;
 
-            // Obtener seguidos
             const followingRes = await fetch(`https://friends.roblox.com/v1/users/${userId}/followings?limit=1`);
             const followingData = await followingRes.json();
             const following = followingData.count || 0;
 
-            // Actualizar UI
             const followersEl = document.getElementById('roblox-followers');
             const followingEl = document.getElementById('roblox-following');
             if (followersEl) followersEl.textContent = formatNumber(followers);
             if (followingEl) followingEl.textContent = formatNumber(following);
 
-            console.log(`Roblox: ${followers} seguidores, ${following} siguiendo`);
+            console.log(`Roblox: ${followers} followers, ${following} following`);
         } catch (e) {
-            console.error('Error al obtener datos de Roblox:', e);
+            console.error('Error fetching Roblox data:', e);
         }
     }
 
