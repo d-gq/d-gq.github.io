@@ -862,10 +862,10 @@
         const stats = platform.stats;
         let html = '';
         if (stats.followers !== undefined && stats.followers !== null) {
-            html += `<span>👤 <span class="num" id="${platform.id}-followers">${stats.followers}</span> seguidores</span>`;
+            html += `<span>👤 <span class="num" id="${platform.id}-followers">${stats.followers}</span> Followers</span>`;
         }
         if (stats.following !== undefined && stats.following !== null) {
-            html += `<span>👥 <span class="num" id="${platform.id}-following">${stats.following}</span> siguiendo</span>`;
+            html += `<span>👥 <span class="num" id="${platform.id}-following">${stats.following}</span> Following</span>`;
         }
         if (stats.likes !== undefined && stats.likes !== null) {
             html += `<span>❤️ <span class="num">${stats.likes}</span> likes</span>`;
@@ -875,7 +875,7 @@
 
     function renderActions(platform) {
         if (platform.type === 'copy') {
-            return `<button class="copy-btn" data-copy="${platform.username}">📋 Copiar</button>`;
+            return `<button class="copy-btn" data-copy="${platform.username}"> Copiar</button>`;
         } else if (platform.type === 'link' || platform.type === 'manual' || platform.type === 'roblox') {
             return `<a href="${platform.url}" target="_blank">Ver perfil</a>`;
         }
