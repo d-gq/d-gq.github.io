@@ -35,49 +35,39 @@
             align-items: center;
             padding: 20px;
             overflow: hidden;
-            transition: background 0.4s ease, color 0.4s ease;
+            transition: background 0.3s ease;
         }
 
         /* ============================================================
-           THEMES (LIGHT / DARK)
+           TEMAS (LIGHT / DARK)
            ============================================================ */
         body.light-mode {
-            background: #f0f0f0;
+            background: #f5f5f5;
             color: #1a1a1a;
         }
-        body.light-mode .container { 
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.04);
-        }
-        body.light-mode .top-bar { background: transparent; border-bottom-color: rgba(0,0,0,0.06); }
-        body.light-mode .top-bar .badge { background: rgba(255,255,255,0.4); border-color: rgba(0,0,0,0.06); color: #666; }
-        body.light-mode .tabs { background: transparent; border-bottom-color: rgba(0,0,0,0.06); }
+        body.light-mode .container { background: #ffffff; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+        body.light-mode .top-bar { border-bottom-color: #eee; }
+        body.light-mode .top-bar .badge { background: #f5f5f5; border-color: #eee; color: #888; }
+        body.light-mode .tabs { border-bottom-color: #eee; background: #fafafa; }
         body.light-mode .tab-btn { color: #888; }
         body.light-mode .tab-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
-        body.light-mode .tab-btn:hover { color: #333; background: rgba(0,0,0,0.02); }
-        body.light-mode .home-container { background: rgba(255,255,255,0.4); border-color: rgba(0,0,0,0.06); }
-        body.light-mode .music-player { background: rgba(255,255,255,0.4); border-color: rgba(0,0,0,0.06); }
-        body.light-mode .music-player .controls button { color: #555; }
-        body.light-mode .music-player .controls button:hover { color: #1a1a1a; background: rgba(0,0,0,0.04); }
-        body.light-mode .progress-bar { background: rgba(0,0,0,0.06); }
-        body.light-mode .progress-bar .progress-fill { background: #1a1a1a; }
-        body.light-mode .lyrics-container { background: rgba(255,255,255,0.4); border-color: rgba(0,0,0,0.06); color: #444; }
-        body.light-mode .social-btn { background: rgba(255,255,255,0.4); border-color: rgba(0,0,0,0.06); color: #333; }
-        body.light-mode .social-btn:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); }
-        body.light-mode .playlist-item { border-bottom-color: rgba(0,0,0,0.04); color: #333; }
-        body.light-mode .playlist-item:hover { background: rgba(0,0,0,0.02); }
-        body.light-mode .playlist-item.active { background: rgba(0,0,0,0.04); }
-        body.light-mode #loginScreen { background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); }
-        body.light-mode #loginScreen .login-box input { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.08); }
-        body.light-mode #loginScreen .login-box input:focus { border-color: #1a1a1a; box-shadow: 0 0 0 4px rgba(0,0,0,0.04); }
-        body.light-mode #loginScreen .login-box button { background: #1a1a1a; color: #fff; }
+        body.light-mode .home-container { background: #fafafa; border-color: #eee; }
+        body.light-mode .music-player { background: #fafafa; border-color: #eee; }
+        body.light-mode .lyrics-container { background: #fafafa; border-color: #eee; color: #444; }
+        body.light-mode .social-btn { background: #f5f5f5; border-color: #e8e8e8; color: #333; }
+        body.light-mode .social-btn:hover { background: #eee; border-color: #ccc; }
+        body.light-mode .playlist-item { border-bottom-color: #f0f0f0; color: #333; }
+        body.light-mode .playlist-item:hover { background: #f5f5f5; }
+        body.light-mode .playlist-item.active { background: #f0f0f0; }
+        body.light-mode #loginScreen { background: #ffffff; }
+        body.light-mode #loginScreen .login-box input { background: #fafafa; border-color: #ddd; }
+        body.light-mode #loginScreen .login-box input:focus { border-color: #1a1a1a; background: #ffffff; }
+        body.light-mode #loginScreen .login-box button { background: #1a1a1a; color: #ffffff; }
         body.light-mode #loginScreen .login-box button:hover { background: #333; }
         body.light-mode .panel-title { color: #1a1a1a; }
         body.light-mode .panel-sub { color: #999; }
-        body.light-mode #themeToggle { border-color: rgba(0,0,0,0.08); color: #666; }
-        body.light-mode #themeToggle:hover { background: rgba(0,0,0,0.04); }
+        body.light-mode #themeToggle { border-color: #ddd; color: #333; }
+        body.light-mode #themeToggle:hover { background: #eee; }
         body.light-mode .music-sub-btn { color: #888; }
         body.light-mode .music-sub-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
         body.light-mode .music-sub-btn:hover { color: #333; }
@@ -87,40 +77,30 @@
             background: #0a0a0a;
             color: #eee;
         }
-        body.dark-mode .container { 
-            background: rgba(20,20,20,0.75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-        body.dark-mode .top-bar { background: transparent; border-bottom-color: rgba(255,255,255,0.06); }
-        body.dark-mode .top-bar .badge { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.06); color: #888; }
-        body.dark-mode .tabs { background: transparent; border-bottom-color: rgba(255,255,255,0.06); }
-        body.dark-mode .tab-btn { color: #666; }
+        body.dark-mode .container { background: #111; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+        body.dark-mode .top-bar { border-bottom-color: #2a2a2a; }
+        body.dark-mode .top-bar .badge { background: #1a1a1a; border-color: #2a2a2a; color: #888; }
+        body.dark-mode .tabs { border-bottom-color: #2a2a2a; background: #1a1a1a; }
+        body.dark-mode .tab-btn { color: #888; }
         body.dark-mode .tab-btn.active { color: #eee; border-bottom-color: #eee; }
-        body.dark-mode .tab-btn:hover { color: #eee; background: rgba(255,255,255,0.02); }
-        body.dark-mode .home-container { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); }
-        body.dark-mode .music-player { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); }
-        body.dark-mode .music-player .controls button { color: #888; }
-        body.dark-mode .music-player .controls button:hover { color: #eee; background: rgba(255,255,255,0.04); }
-        body.dark-mode .progress-bar { background: rgba(255,255,255,0.06); }
-        body.dark-mode .progress-bar .progress-fill { background: #eee; }
-        body.dark-mode .lyrics-container { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); color: #aaa; }
-        body.dark-mode .social-btn { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); color: #888; }
-        body.dark-mode .social-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
-        body.dark-mode .playlist-item { border-bottom-color: rgba(255,255,255,0.04); color: #888; }
-        body.dark-mode .playlist-item:hover { background: rgba(255,255,255,0.02); }
-        body.dark-mode .playlist-item.active { background: rgba(255,255,255,0.06); }
-        body.dark-mode #loginScreen { background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); }
-        body.dark-mode #loginScreen .login-box input { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); color: #eee; }
-        body.dark-mode #loginScreen .login-box input:focus { border-color: #eee; box-shadow: 0 0 0 4px rgba(255,255,255,0.04); }
+        body.dark-mode .home-container { background: #1a1a1a; border-color: #2a2a2a; }
+        body.dark-mode .music-player { background: #1a1a1a; border-color: #2a2a2a; }
+        body.dark-mode .lyrics-container { background: #1a1a1a; border-color: #2a2a2a; color: #aaa; }
+        body.dark-mode .social-btn { background: #1a1a1a; border-color: #2a2a2a; color: #888; }
+        body.dark-mode .social-btn:hover { background: #2a2a2a; border-color: #444; }
+        body.dark-mode .playlist-item { border-bottom-color: #2a2a2a; color: #888; }
+        body.dark-mode .playlist-item:hover { background: #1a1a1a; }
+        body.dark-mode .playlist-item.active { background: #2a2a2a; }
+        body.dark-mode #loginScreen { background: #0a0a0a; }
+        body.dark-mode #loginScreen .login-box input { background: #1a1a1a; border-color: #2a2a2a; color: #eee; }
+        body.dark-mode #loginScreen .login-box input:focus { border-color: #eee; background: #1a1a1a; }
         body.dark-mode #loginScreen .login-box button { background: #2a2a2a; color: #eee; }
-        body.dark-mode #loginScreen .login-box button:hover { background: #3a3a3a; }
+        body.dark-mode #loginScreen .login-box button:hover { background: #333; }
         body.dark-mode .panel-title { color: #eee; }
-        body.dark-mode .panel-sub { color: #666; }
-        body.dark-mode #themeToggle { border-color: rgba(255,255,255,0.08); color: #888; }
-        body.dark-mode #themeToggle:hover { background: rgba(255,255,255,0.04); }
-        body.dark-mode .music-sub-btn { color: #666; }
+        body.dark-mode .panel-sub { color: #888; }
+        body.dark-mode #themeToggle { border-color: #444; color: #ccc; }
+        body.dark-mode #themeToggle:hover { background: #2a2a2a; }
+        body.dark-mode .music-sub-btn { color: #888; }
         body.dark-mode .music-sub-btn.active { color: #eee; border-bottom-color: #eee; }
         body.dark-mode .music-sub-btn:hover { color: #eee; }
         body.dark-mode .home-footer { color: #444; }
@@ -129,12 +109,8 @@
            ANIMACIONES
            ============================================================ */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
         }
 
         /* ============================================================
@@ -142,12 +118,12 @@
            ============================================================ */
         #themeToggle {
             background: transparent;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid #ddd;
             border-radius: 20px;
             padding: 4px 14px;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
         }
 
@@ -163,14 +139,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.6s ease;
         }
         #loginScreen .title {
             font-size: 2.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 30px;
-            animation: fadeInUp 0.6s ease;
         }
         #loginScreen .title span { color: #888; font-weight: 300; }
         #loginScreen .login-box {
@@ -180,7 +155,6 @@
             gap: 12px;
             width: 320px;
             max-width: 90%;
-            animation: fadeInUp 0.6s ease 0.2s both;
         }
         #loginScreen .login-box input {
             width: 100%;
@@ -190,37 +164,28 @@
             font-family: 'Inter', sans-serif;
             font-size: 1rem;
             outline: none;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s ease;
         }
         #loginScreen .login-box input:focus {
             border-color: #1a1a1a;
-            box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
         }
         #loginScreen .login-box button {
             width: 100%;
             padding: 14px 18px;
-            background: #1a1a1a;
-            color: #fff;
             border: none;
             border-radius: 10px;
             font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             letter-spacing: 2px;
-        }
-        #loginScreen .login-box button:hover {
-            background: #333;
-            transform: scale(1.01);
         }
         #loginScreen .login-box .error {
             color: #cc3333;
             font-size: 0.85rem;
-            font-weight: 400;
             height: 20px;
             text-align: center;
-            animation: fadeInUp 0.3s ease;
         }
 
         /* ===== CONTAINER ===== */
@@ -230,7 +195,7 @@
             border-radius: 16px;
             overflow: hidden;
             opacity: 0;
-            transition: opacity 0.8s ease, background 0.3s ease, border 0.3s ease;
+            transition: opacity 0.6s ease;
             position: relative;
             max-height: 95vh;
             display: flex;
@@ -238,20 +203,7 @@
         }
         .container.active {
             opacity: 1;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        #particles-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.15;
-            border-radius: 16px;
-            transition: opacity 0.5s ease;
+            animation: fadeInUp 0.4s ease;
         }
 
         /* ===== TOP BAR ===== */
@@ -261,25 +213,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 1;
             flex-shrink: 0;
-            transition: all 0.3s ease;
+            transition: border-color 0.2s ease;
         }
         .top-bar .title {
             font-size: 1.4rem;
             font-weight: 600;
             letter-spacing: -0.5px;
-            transition: color 0.3s ease;
         }
-        .top-bar .title span { font-weight: 300; transition: color 0.3s ease; }
+        .top-bar .title span { font-weight: 300; }
         .top-bar .right {
             display: flex;
             align-items: center;
             gap: 12px;
             font-size: 0.85rem;
             font-weight: 400;
-            transition: color 0.3s ease;
             flex-wrap: wrap;
         }
         .top-bar .right .badge {
@@ -291,7 +239,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .top-bar .right .badge .icon { font-size: 0.8rem; opacity: 0.5; }
         .top-bar .right .separator { opacity: 0.2; }
@@ -301,12 +249,10 @@
             display: flex;
             padding: 0 24px;
             gap: 4px;
-            position: relative;
-            z-index: 1;
             flex-shrink: 0;
             overflow-x: auto;
-            transition: all 0.3s ease;
             border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
         }
         .tab-btn {
             background: transparent;
@@ -316,42 +262,24 @@
             font-weight: 500;
             padding: 14px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border-bottom: 2px solid transparent;
             white-space: nowrap;
-            position: relative;
         }
-        .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: currentColor;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-        .tab-btn:hover::after { width: 40%; }
-        .tab-btn.active::after { width: 100%; }
 
         /* ===== CONTENT AREA ===== */
         .content-area {
             padding: 30px 35px;
-            min-height: 440px;
-            position: relative;
-            z-index: 1;
+            min-height: 400px;
             flex: 1;
-            overflow: hidden;
-            transition: background 0.3s ease;
             display: flex;
             flex-direction: column;
         }
         .panel {
             display: none;
-            animation: fadeInUp 0.5s ease;
+            animation: fadeInUp 0.3s ease;
             flex: 1;
-            min-height: 380px;
+            min-height: 360px;
         }
         .panel.active { display: flex; flex-direction: column; }
 
@@ -366,22 +294,20 @@
             border-radius: 12px;
             border: 1px solid #eee;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .home-greeting {
             font-size: 2.5rem;
             font-weight: 600;
             letter-spacing: -0.5px;
             margin-bottom: 10px;
-            transition: color 0.3s ease;
         }
-        .home-greeting span { font-weight: 300; transition: color 0.3s ease; }
+        .home-greeting span { font-weight: 300; }
         .home-footer {
             margin-top: 25px;
             font-size: 0.6rem;
             letter-spacing: 4px;
-            transition: color 0.3s ease;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         /* ============================================================
@@ -391,7 +317,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             flex: 1;
             overflow-y: auto;
             padding-right: 5px;
@@ -401,31 +327,27 @@
         }
         .music-container::-webkit-scrollbar { width: 4px; }
         .music-container::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
-        .music-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.06); border-radius: 4px; }
-        body.dark-mode .music-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); }
+        .music-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 4px; }
 
         .music-player {
             width: 100%;
             border-radius: 12px;
             border: 1px solid #eee;
-            padding: 20px 25px;
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 12px;
             flex-shrink: 0;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .music-player .song-title {
             font-size: 1.2rem;
             font-weight: 600;
-            transition: color 0.3s ease;
         }
         .music-player .song-artist {
             font-size: 0.85rem;
-            font-weight: 400;
-            transition: color 0.3s ease;
-            opacity: 0.6;
+            opacity: 0.5;
         }
         .music-player .controls {
             display: flex;
@@ -438,46 +360,34 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             padding: 4px 8px;
             border-radius: 6px;
         }
         .music-player .controls .play-btn { font-size: 2.2rem; }
-        .music-player .controls .play-btn:hover { transform: scale(1.05); }
         .music-player .progress-bar {
             width: 100%;
             height: 4px;
             border-radius: 4px;
             cursor: pointer;
             position: relative;
-            transition: background 0.3s ease;
-            overflow: hidden;
+            background: rgba(0,0,0,0.06);
         }
+        body.dark-mode .music-player .progress-bar { background: rgba(255,255,255,0.06); }
         .music-player .progress-bar .progress-fill {
             height: 100%;
             border-radius: 4px;
             width: 0%;
-            transition: width 0.15s ease-out;
-            position: relative;
+            transition: width 0.1s ease-out;
+            background: #1a1a1a;
         }
-        .music-player .progress-bar .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
+        body.dark-mode .music-player .progress-bar .progress-fill { background: #eee; }
         .music-player .time-info {
             font-size: 0.7rem;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            transition: color 0.3s ease;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .playlist {
@@ -491,19 +401,11 @@
             padding: 10px 16px;
             border-bottom: 1px solid #f0f0f0;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border-radius: 6px;
-            position: relative;
         }
-        .playlist-item:hover { transform: translateX(4px); }
+        .playlist-item:hover { background: rgba(0,0,0,0.02); }
         .playlist-item.active { font-weight: 600; }
-        .playlist-item.active::before {
-            content: '▶';
-            position: absolute;
-            left: -4px;
-            font-size: 0.7rem;
-            opacity: 0.6;
-        }
         .playlist-item .title { font-size: 0.95rem; }
         .playlist-item .duration { font-size: 0.8rem; opacity: 0.4; }
 
@@ -511,7 +413,7 @@
             display: flex;
             gap: 8px;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             width: 100%;
         }
         .music-sub-btn {
@@ -523,14 +425,13 @@
             font-weight: 500;
             padding: 6px 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .music-sub-btn:hover { transform: translateY(-1px); }
 
         .music-panel {
             display: none;
             width: 100%;
-            animation: fadeInUp 0.4s ease;
+            animation: fadeInUp 0.3s ease;
         }
         .music-panel.active { display: block; }
 
@@ -543,14 +444,13 @@
             font-family: 'Inter', sans-serif;
             line-height: 2.2;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             width: 100%;
         }
         .lyrics-container::-webkit-scrollbar { width: 4px; }
         .lyrics-container::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
         .lyrics-container::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.06); border-radius: 4px; }
-        body.dark-mode .lyrics-container::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); }
-        .lyrics-container .line { padding: 2px 0; transition: color 0.3s ease; }
+        .lyrics-container .line { padding: 2px 0; }
         .lyrics-container .line.empty { height: 12px; }
 
         /* ===== SOCIAL ===== */
@@ -571,7 +471,7 @@
             font-weight: 500;
             font-size: 0.95rem;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
             display: block;
             letter-spacing: 0.3px;
@@ -583,7 +483,6 @@
             text-align: center;
             margin-bottom: 4px;
             letter-spacing: -0.5px;
-            transition: color 0.3s ease;
         }
         .panel-sub {
             text-align: center;
@@ -592,8 +491,7 @@
             margin-top: 0;
             margin-bottom: 20px;
             font-weight: 300;
-            transition: color 0.3s ease;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @media (max-width: 700px) {
@@ -602,11 +500,11 @@
             .top-bar .right { font-size: 0.7rem; gap: 8px; justify-content: center; }
             .top-bar .right .badge { padding: 3px 10px; font-size: 0.7rem; }
             .tab-btn { font-size: 0.8rem; padding: 10px 14px; }
-            .content-area { padding: 20px; min-height: 380px; }
-            .home-container { height: 320px; padding: 20px; }
+            .content-area { padding: 20px; min-height: 360px; }
+            .home-container { min-height: 280px; padding: 20px; }
             .home-greeting { font-size: 1.8rem; }
-            .lyrics-container { height: 320px; padding: 20px; font-size: 0.9rem; }
-            .music-container { height: 320px; max-width: 100%; }
+            .lyrics-container { min-height: 280px; padding: 20px; font-size: 0.9rem; }
+            .music-container { max-width: 100%; }
             .music-player { padding: 16px 18px; }
             .social-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
             .social-btn { font-size: 0.8rem; padding: 10px 6px; }
@@ -620,10 +518,9 @@
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
             .tab-btn { font-size: 0.7rem; padding: 8px 12px; }
             .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .home-container { height: 260px; }
+            .home-container { min-height: 240px; }
             .home-greeting { font-size: 1.4rem; }
-            .lyrics-container { height: 260px; padding: 15px; font-size: 0.8rem; }
-            .music-container { height: 260px; max-width: 100%; }
+            .lyrics-container { min-height: 240px; padding: 15px; font-size: 0.8rem; }
             .music-player { padding: 12px 14px; }
             .music-player .controls button { font-size: 1.2rem; }
             .music-player .controls .play-btn { font-size: 1.8rem; }
@@ -652,8 +549,6 @@
 
     <!-- ===== CONTENEDOR PRINCIPAL ===== -->
     <div class="container" id="mainContainer">
-        <canvas id="particles-canvas"></canvas>
-
         <div class="top-bar">
             <div class="title">✦ <span id="greetingDisplay">Welcome</span></div>
             <div class="right">
@@ -827,12 +722,11 @@
         loginScreen.style.opacity = '0';
         setTimeout(() => {
             loginScreen.style.display = 'none';
-        }, 800);
+        }, 600);
 
         setTimeout(() => {
             mainContainer.classList.add('active');
-            initParticles();
-        }, 300);
+        }, 200);
 
         userNameDisplay.textContent = name;
         greetingDisplay.textContent = 'Welcome, ' + name;
@@ -1149,26 +1043,18 @@
         div.textContent = msg;
         div.style.cssText = `
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(10px);
-            color: #333;
-            padding: 12px 28px;
-            border: 1px solid rgba(0,0,0,0.06);
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            z-index: 9999;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-            letter-spacing: 0.5px;
-            text-align: center;
-            animation: fadeInUp 0.3s ease;
+            background: #f5f5f5; color: #333; padding: 12px 28px;
+            border: 1px solid #ddd; border-radius: 8px;
+            font-family: 'Inter', sans-serif; font-weight: 500;
+            z-index: 9999; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            letter-spacing: 0.5px; text-align: center;
         `;
         document.body.appendChild(div);
         setTimeout(() => {
             div.style.opacity = '0';
             div.style.transition = 'opacity 0.5s ease';
             setTimeout(() => div.remove(), 600);
-        }, 2500);
+        }, 2000);
     }
 
     // ============================================================
@@ -1271,63 +1157,7 @@
     }
 
     // ============================================================
-    // 16. PARTICLES
-    // ============================================================
-    function initParticles() {
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            const rect = mainContainer.getBoundingClientRect();
-            width = rect.width;
-            height = rect.height;
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        function createParticles(count) {
-            particles = [];
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    r: 1.5 + Math.random() * 2.5,
-                    alpha: 0.15 + Math.random() * 0.15,
-                });
-            }
-        }
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, width, height);
-            for (const p of particles) {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
-                ctx.fill();
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
-            }
-            requestAnimationFrame(drawParticles);
-        }
-
-        resize();
-        createParticles(50);
-        drawParticles();
-
-        window.addEventListener('resize', () => {
-            resize();
-            createParticles(50);
-        });
-    }
-
-    // ============================================================
-    // 17. INIT SOCIAL
+    // 16. INIT SOCIAL
     // ============================================================
     document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
     document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1338,7 +1168,7 @@
     });
 
     // ============================================================
-    // 18. INIT TABS
+    // 17. INIT TABS
     // ============================================================
     initTabs();
 
