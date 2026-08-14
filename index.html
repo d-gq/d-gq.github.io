@@ -57,7 +57,6 @@
         body.light-mode .home-container { background: #fafafa; border-color: #eee; }
         body.light-mode .home-greeting { color: #1a1a1a; }
         body.light-mode .home-greeting span { color: #888; }
-        body.light-mode .home-sub { color: #888; }
         body.light-mode .home-footer { color: #ccc; }
         body.light-mode .music-player { background: #fafafa; border-color: #eee; }
         body.light-mode .music-player .song-title { color: #1a1a1a; }
@@ -77,7 +76,6 @@
         body.light-mode #loginScreen { background: #ffffff; }
         body.light-mode #loginScreen .title { color: #1a1a1a; }
         body.light-mode #loginScreen .login-box input { background: #fafafa; border-color: #ddd; color: #1a1a1a; }
-        body.light-mode #loginScreen .login-box input:focus { border-color: #1a1a1a; background: #ffffff; }
         body.light-mode #loginScreen .login-box button { background: #1a1a1a; color: #ffffff; }
         body.light-mode #loginScreen .login-box button:hover { background: #333; }
         body.light-mode .panel-title { color: #1a1a1a; }
@@ -86,10 +84,6 @@
         body.light-mode #themeToggle:hover { background: #eee; }
         body.light-mode .switch-btn { background: #f5f5f5; border-color: #ddd; color: #333; }
         body.light-mode .switch-btn:hover { background: #eee; }
-        body.light-mode .wall-post { background: #fafafa; border-color: #eee; }
-        body.light-mode .wall-post .author { color: #1a1a1a; }
-        body.light-mode .wall-post .date { color: #999; }
-        body.light-mode .wall-post .content { color: #333; }
 
         body.dark-mode {
             background: #0a0a0a;
@@ -107,7 +101,6 @@
         body.dark-mode .home-container { background: #1a1a1a; border-color: #2a2a2a; }
         body.dark-mode .home-greeting { color: #eee; }
         body.dark-mode .home-greeting span { color: #888; }
-        body.dark-mode .home-sub { color: #888; }
         body.dark-mode .home-footer { color: #444; }
         body.dark-mode .music-player { background: #1a1a1a; border-color: #2a2a2a; }
         body.dark-mode .music-player .song-title { color: #eee; }
@@ -137,260 +130,6 @@
         body.dark-mode #themeToggle:hover { background: #2a2a2a; }
         body.dark-mode .switch-btn { background: #1a1a1a; border-color: #444; color: #ccc; }
         body.dark-mode .switch-btn:hover { background: #2a2a2a; }
-        body.dark-mode .wall-post { background: #1a1a1a; border-color: #2a2a2a; }
-        body.dark-mode .wall-post .author { color: #eee; }
-        body.dark-mode .wall-post .date { color: #888; }
-        body.dark-mode .wall-post .content { color: #aaa; }
-
-        /* ============================================================
-           ROLES
-           ============================================================ */
-        .author-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: default;
-        }
-        .author-wrapper .name {
-            font-weight: 600;
-        }
-        
-        .role-icon {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            vertical-align: middle;
-            display: inline-block;
-        }
-
-        .role-badge {
-            display: inline-block;
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            padding: 1px 8px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            background: #e0e0e0;
-            color: #333;
-            cursor: default;
-        }
-        body.dark-mode .role-badge {
-            background: #2a2a2a;
-            color: #aaa;
-        }
-        .role-badge.owner {
-            background: #ffd700;
-            color: #1a1a1a;
-        }
-        body.dark-mode .role-badge.owner {
-            background: #ffd700;
-            color: #0a0a0a;
-        }
-        .role-badge.admin {
-            background: #ff6b6b;
-            color: #fff;
-        }
-        body.dark-mode .role-badge.admin {
-            background: #cc3333;
-            color: #fff;
-        }
-
-        .wall-post .author {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        /* ============================================================
-           MODAL DE CONFIRMACIÓN
-           ============================================================ */
-        .confirm-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(6px);
-            z-index: 99999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .confirm-modal.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .confirm-modal .modal-box {
-            background: #fff;
-            border-radius: 16px;
-            padding: 30px 35px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            transform: scale(0.9) translateY(10px);
-            transition: transform 0.3s ease;
-            text-align: center;
-        }
-        body.dark-mode .confirm-modal .modal-box {
-            background: #1a1a1a;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-        .confirm-modal.active .modal-box {
-            transform: scale(1) translateY(0);
-        }
-        .confirm-modal .modal-box h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a1a1a;
-        }
-        body.dark-mode .confirm-modal .modal-box h3 {
-            color: #eee;
-        }
-        .confirm-modal .modal-box p {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        body.dark-mode .confirm-modal .modal-box p {
-            color: #aaa;
-        }
-        .confirm-modal .modal-box .buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-        .confirm-modal .modal-box .buttons button {
-            padding: 10px 28px;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .confirm-modal .modal-box .btn-cancel {
-            background: #f0f0f0;
-            color: #333;
-        }
-        .confirm-modal .modal-box .btn-cancel:hover {
-            background: #e0e0e0;
-        }
-        body.dark-mode .confirm-modal .modal-box .btn-cancel {
-            background: #2a2a2a;
-            color: #ccc;
-        }
-        body.dark-mode .confirm-modal .modal-box .btn-cancel:hover {
-            background: #333;
-        }
-        .confirm-modal .modal-box .btn-delete {
-            background: #cc3333;
-            color: #fff;
-        }
-        .confirm-modal .modal-box .btn-delete:hover {
-            background: #aa2222;
-            transform: scale(1.02);
-        }
-
-        /* ============================================================
-           WALL (MURO)
-           ============================================================ */
-        .wall-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            height: 380px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-        .wall-container::-webkit-scrollbar { width: 4px; }
-        .wall-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
-        .wall-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-
-        .wall-input-area {
-            display: flex;
-            gap: 10px;
-            flex-shrink: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .wall-input-area input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s ease;
-            background: #fafafa;
-        }
-        .wall-input-area input:focus { border-color: #1a1a1a; }
-        .wall-input-area button {
-            padding: 10px 20px;
-            background: #1a1a1a;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            flex-shrink: 0;
-        }
-        .wall-input-area button:hover { background: #333; }
-
-        .wall-posts {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-        .wall-posts::-webkit-scrollbar { width: 4px; }
-        .wall-posts::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
-        .wall-posts::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-
-        .wall-post {
-            border: 1px solid #eee;
-            border-radius: 10px;
-            padding: 12px 16px;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        .wall-post .date {
-            font-size: 0.7rem;
-            margin-left: 10px;
-            color: #999;
-        }
-        .wall-post .content {
-            font-size: 0.95rem;
-            margin-top: 4px;
-            word-wrap: break-word;
-        }
-        .wall-post .delete-btn {
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #cc3333;
-            font-size: 0.8rem;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.2s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        .wall-post .delete-btn:hover { opacity: 1; }
 
         /* ============================================================
            COMMON ELEMENTS
@@ -404,34 +143,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
-        }
-
-        #logoutBtn {
-            background: transparent;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: 'Inter', sans-serif;
-            color: #888;
-            background: #f5f5f5;
-        }
-        #logoutBtn:hover {
-            background: #eee;
-            border-color: #ccc;
-            color: #333;
-        }
-        body.dark-mode #logoutBtn {
-            border-color: #444;
-            color: #aaa;
-            background: #2a2a2a;
-        }
-        body.dark-mode #logoutBtn:hover {
-            background: #333;
-            border-color: #555;
-            color: #eee;
         }
 
         .switch-btn {
@@ -471,7 +182,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             width: 320px;
             max-width: 90%;
         }
@@ -489,23 +200,24 @@
         #loginScreen .login-box button {
             width: 100%;
             padding: 14px 18px;
+            background: #1a1a1a;
+            color: #fff;
             border: none;
             border-radius: 10px;
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
             transition: background 0.2s ease;
+            letter-spacing: 2px;
+        }
+        #loginScreen .login-box button:hover {
+            background: #cc0000;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.3);
         }
         #loginScreen .login-box .error {
             color: #cc3333;
-            font-size: 0.85rem;
-            font-weight: 400;
-            height: 20px;
-            text-align: center;
-        }
-        #loginScreen .login-box .success {
-            color: #33aa33;
             font-size: 0.85rem;
             font-weight: 400;
             height: 20px;
@@ -643,57 +355,10 @@
             transition: color 0.3s ease;
         }
         .home-greeting span { font-weight: 300; transition: color 0.3s ease; }
-        .home-sub {
-            font-size: 1rem;
-            font-weight: 400;
-            transition: color 0.3s ease;
-        }
         .home-footer {
             margin-top: 25px;
             font-size: 0.6rem;
             letter-spacing: 4px;
-            transition: color 0.3s ease;
-        }
-
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 14px;
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .social-btn {
-            border: 1px solid #e8e8e8;
-            border-radius: 10px;
-            padding: 14px 12px;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            display: block;
-            letter-spacing: 0.3px;
-        }
-
-        .panel-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-            transition: color 0.3s ease;
-        }
-        .panel-sub {
-            text-align: center;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-weight: 300;
             transition: color 0.3s ease;
         }
 
@@ -790,6 +455,34 @@
         .playlist-item .title { font-size: 0.95rem; }
         .playlist-item .duration { font-size: 0.8rem; }
 
+        .music-sub-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .music-sub-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 6px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #888;
+        }
+        .music-sub-btn:hover { color: #333; }
+        .music-sub-btn.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+        body.dark-mode .music-sub-btn.active { color: #eee; border-bottom-color: #eee; }
+
+        .music-panel {
+            display: none;
+            width: 100%;
+        }
+        .music-panel.active { display: block; }
+
         .lyrics-container {
             height: 380px;
             overflow-y: auto;
@@ -800,12 +493,57 @@
             line-height: 2;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: #fafafa;
         }
         .lyrics-container::-webkit-scrollbar { width: 4px; }
         .lyrics-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
         .lyrics-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
         .lyrics-container .line { padding: 2px 0; }
         .lyrics-container .line.empty { height: 12px; }
+
+        /* ===== SOCIAL ===== */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .social-btn {
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: block;
+            letter-spacing: 0.3px;
+        }
+        .social-btn:hover { background: #eee; border-color: #ccc; }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 4px;
+            letter-spacing: -0.5px;
+            transition: color 0.3s ease;
+        }
+        .panel-sub {
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
 
         @media (max-width: 700px) {
             .top-bar { padding: 16px 20px; flex-direction: column; gap: 8px; }
@@ -824,12 +562,8 @@
             .panel-title { font-size: 1.4rem; }
             #loginScreen .title { font-size: 1.8rem; }
             #loginScreen .login-box { width: 260px; }
-            .wall-container { height: 320px; }
-            .wall-input-area input { font-size: 0.85rem; }
-            .wall-input-area button { font-size: 0.85rem; padding: 8px 16px; }
-            #logoutBtn { font-size: 0.7rem; padding: 3px 10px; }
-            .role-badge { font-size: 0.5rem; padding: 1px 8px; }
-            .role-icon { width: 16px; height: 16px; }
+            #loginScreen .login-box button { font-size: 1rem; padding: 12px 16px; }
+            .music-sub-btn { font-size: 0.75rem; padding: 4px 12px; }
         }
         @media (max-width: 450px) {
             .tabs { justify-content: center; padding: 0 10px; gap: 2px; }
@@ -848,45 +582,20 @@
             #loginScreen .title { font-size: 1.4rem; }
             #loginScreen .login-box { width: 220px; }
             #loginScreen .login-box input { padding: 10px 14px; font-size: 0.9rem; }
-            #loginScreen .login-box button { padding: 10px 14px; font-size: 0.9rem; }
-            .wall-container { height: 260px; }
-            .wall-input-area { flex-direction: column; gap: 6px; }
-            .wall-input-area input { font-size: 0.8rem; padding: 8px 12px; }
-            .wall-input-area button { font-size: 0.8rem; padding: 8px 12px; }
-            .wall-post { padding: 10px 12px; }
-            .wall-post .author { font-size: 0.85rem; }
-            .wall-post .content { font-size: 0.85rem; }
-            #logoutBtn { font-size: 0.6rem; padding: 2px 8px; }
-            .role-icon { width: 14px; height: 14px; }
-            .role-badge { font-size: 0.45rem; padding: 1px 6px; }
+            #loginScreen .login-box button { font-size: 0.9rem; padding: 10px 14px; }
+            .music-sub-btn { font-size: 0.7rem; padding: 3px 8px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== LOGIN ===== -->
+    <!-- ===== LOGIN (SOLO NOMBRE) ===== -->
     <div id="loginScreen">
         <div class="title">✦ <span>Welcome</span></div>
         <div class="login-box">
-            <input type="text" id="nameInput" placeholder="Name" />
-            <input type="email" id="emailInput" placeholder="Email" autofocus />
-            <input type="password" id="passwordInput" placeholder="Password" />
-            <button id="loginBtn">Sign in</button>
-            <button class="switch-btn" id="switchBtn">Create account</button>
+            <input type="text" id="nameInput" placeholder="Enter your name..." autofocus />
+            <button id="loginBtn">Give your soul</button>
             <div class="error" id="loginError"></div>
-            <div class="success" id="loginSuccess"></div>
-        </div>
-    </div>
-
-    <!-- ===== MODAL DE CONFIRMACIÓN ===== -->
-    <div class="confirm-modal" id="confirmModal">
-        <div class="modal-box">
-            <h3>Delete this post?</h3>
-            <p>This action cannot be undone.</p>
-            <div class="buttons">
-                <button class="btn-cancel" id="confirmCancel">Cancel</button>
-                <button class="btn-delete" id="confirmDelete">Delete</button>
-            </div>
         </div>
     </div>
 
@@ -912,17 +621,13 @@
                 </span>
                 <span class="separator">|</span>
                 <button id="themeToggle" title="Toggle theme">◈</button>
-                <span class="separator">|</span>
-                <button id="logoutBtn">Logout</button>
             </div>
         </div>
 
         <div class="tabs" id="tabContainer">
             <button class="tab-btn active" data-tab="home">Home</button>
-            <button class="tab-btn" data-tab="about">Social</button>
             <button class="tab-btn" data-tab="music">Music</button>
-            <button class="tab-btn" data-tab="lyrics">Lyrics</button>
-            <button class="tab-btn" data-tab="wall">Wall</button>
+            <button class="tab-btn" data-tab="about">Social</button>
         </div>
 
         <div class="content-area">
@@ -931,14 +636,48 @@
             <div class="panel active" id="panel-home">
                 <div class="home-container">
                     <div class="home-greeting">Hey, <span id="userNameDisplay">guest</span></div>
-                    <div class="home-sub">Welcome to draco site</div>
-                    <div class="home-footer">
-                        ✦ ✦ ✦
-                        <br>
-                        <span style="font-size:0.8rem; letter-spacing:2px; color:inherit;">
-                            Views: <span id="visitasGlobal">0</span>
-                        </span>
+                    <div class="home-footer">✦ ✦ ✦</div>
+                </div>
+            </div>
+
+            <!-- ===== MUSIC ===== -->
+            <div class="panel" id="panel-music">
+                <div class="panel-title">Music</div>
+                <div class="panel-sub">E N T R Y &nbsp; L O G</div>
+                <div class="music-container">
+                    
+                    <!-- Sub-tabs: Player / Lyrics -->
+                    <div class="music-sub-tabs" id="musicSubTabs">
+                        <button class="music-sub-btn active" data-sub="player">Player</button>
+                        <button class="music-sub-btn" data-sub="lyrics">Lyrics</button>
                     </div>
+
+                    <!-- Player Panel -->
+                    <div class="music-panel active" id="musicPlayerPanel">
+                        <div class="music-player" id="musicPlayer">
+                            <div class="song-title" id="currentSongTitle">entry 1</div>
+                            <div class="song-artist">jaydes</div>
+                            <div class="controls">
+                                <button id="prevBtn" title="Previous">⏮</button>
+                                <button class="play-btn" id="playBtn" title="Play">▶</button>
+                                <button id="nextBtn" title="Next">⏭</button>
+                            </div>
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="time-info">
+                                <span id="currentTime">0:00</span>
+                                <span id="totalTime">0:00</span>
+                            </div>
+                        </div>
+                        <div class="playlist" id="playlistContainer"></div>
+                    </div>
+
+                    <!-- Lyrics Panel -->
+                    <div class="music-panel" id="musicLyricsPanel">
+                        <div class="lyrics-container" id="lyricsContainer"></div>
+                    </div>
+
                 </div>
             </div>
 
@@ -947,51 +686,6 @@
                 <div class="panel-title">Social</div>
                 <div class="panel-sub">(-_-")</div>
                 <div class="social-grid" id="social-about"></div>
-            </div>
-
-            <!-- ===== MUSIC ===== -->
-            <div class="panel" id="panel-music">
-                <div class="panel-title">Music</div>
-                <div class="panel-sub">E N T R Y &nbsp; L O G</div>
-                <div class="music-container" id="musicContainer">
-                    <div class="music-player" id="musicPlayer">
-                        <div class="song-title" id="currentSongTitle">entry 1</div>
-                        <div class="song-artist">jaydes</div>
-                        <div class="controls">
-                            <button id="prevBtn" title="Previous">⏮</button>
-                            <button class="play-btn" id="playBtn" title="Play">▶</button>
-                            <button id="nextBtn" title="Next">⏭</button>
-                        </div>
-                        <div class="progress-bar" id="progressBar">
-                            <div class="progress-fill" id="progressFill"></div>
-                        </div>
-                        <div class="time-info">
-                            <span id="currentTime">0:00</span>
-                            <span id="totalTime">0:00</span>
-                        </div>
-                    </div>
-                    <div class="playlist" id="playlistContainer"></div>
-                </div>
-            </div>
-
-            <!-- ===== LYRICS ===== -->
-            <div class="panel" id="panel-lyrics">
-                <div class="panel-title">Lyrics</div>
-                <div class="panel-sub" id="lyricsSub">E N T R Y &nbsp; 1</div>
-                <div class="lyrics-container" id="lyricsContainer"></div>
-            </div>
-
-            <!-- ===== WALL ===== -->
-            <div class="panel" id="panel-wall">
-                <div class="panel-title">Wall</div>
-                <div class="panel-sub">S H A R E &nbsp; S O M E T H I N G</div>
-                <div class="wall-container" id="wallContainer">
-                    <div class="wall-input-area">
-                        <input type="text" id="postInput" placeholder="What's on your mind?" maxlength="200" />
-                        <button id="postBtn">Post</button>
-                    </div>
-                    <div class="wall-posts" id="wallPosts"></div>
-                </div>
             </div>
 
         </div>
@@ -1005,11 +699,11 @@
     ============================================================ -->
     <script type="module">
     // ============================================================
-    // 1. FIREBASE IMPORTS
+    // 1. IMPORTS
     // ============================================================
     import { initializeApp } from "firebase/app";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
-    import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, serverTimestamp } from "firebase/firestore";
+    import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+    import { getFirestore } from "firebase/firestore";
 
     // ============================================================
     // 2. FIREBASE CONFIG
@@ -1034,22 +728,15 @@
     const loginScreen = document.getElementById('loginScreen');
     const mainContainer = document.getElementById('mainContainer');
     const nameInput = document.getElementById('nameInput');
-    const emailInput = document.getElementById('emailInput');
-    const passwordInput = document.getElementById('passwordInput');
     const loginBtn = document.getElementById('loginBtn');
-    const switchBtn = document.getElementById('switchBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
     const loginError = document.getElementById('loginError');
-    const loginSuccess = document.getElementById('loginSuccess');
     const userNameDisplay = document.getElementById('userNameDisplay');
     const greetingDisplay = document.getElementById('greetingDisplay');
     const themeToggle = document.getElementById('themeToggle');
     const clockDisplay = document.getElementById('clockDisplay');
     const visitasDisplay = document.getElementById('visitasDisplay');
-    const visitasGlobal = document.getElementById('visitasGlobal');
     const ipDisplay = document.getElementById('ipDisplay');
     const lyricsContainer = document.getElementById('lyricsContainer');
-    const lyricsSub = document.getElementById('lyricsSub');
     const playlistContainer = document.getElementById('playlistContainer');
     const currentSongTitle = document.getElementById('currentSongTitle');
     const playBtn = document.getElementById('playBtn');
@@ -1061,59 +748,70 @@
     const totalTimeDisplay = document.getElementById('totalTime');
     const audioPlayer = document.getElementById('audioPlayer');
     const tabs = document.querySelectorAll('.tab-btn');
+    const musicSubBtns = document.querySelectorAll('.music-sub-btn');
+    const musicPlayerPanel = document.getElementById('musicPlayerPanel');
+    const musicLyricsPanel = document.getElementById('musicLyricsPanel');
     const panels = {
         home: document.getElementById('panel-home'),
-        about: document.getElementById('panel-about'),
         music: document.getElementById('panel-music'),
-        lyrics: document.getElementById('panel-lyrics'),
-        wall: document.getElementById('panel-wall'),
+        about: document.getElementById('panel-about'),
     };
-    const postInput = document.getElementById('postInput');
-    const postBtn = document.getElementById('postBtn');
-    const wallPosts = document.getElementById('wallPosts');
-    const confirmModal = document.getElementById('confirmModal');
-    const confirmCancel = document.getElementById('confirmCancel');
-    const confirmDelete = document.getElementById('confirmDelete');
 
-    let isLoginMode = true;
     let currentIndex = 0;
     let isPlaying = false;
     let isDragging = false;
     let currentUser = null;
-    let pendingDeleteId = null;
 
     // ============================================================
-    // 4. ROLES
+    // 4. LOGIN (SOLO NOMBRE)
     // ============================================================
-    const userRoles = {
-        'iBD9gQPpAJNU0v7SxRaVrn7MZaG2': 'owner',
-        'a0w2us2No8cn8uWzQF3siH5FF5P2': 'admin',
-    };
+    function handleLogin() {
+        const name = nameInput.value.trim();
+        if (name === '') {
+            loginError.textContent = 'Please enter your name.';
+            return;
+        }
+        if (name.length < 2) {
+            loginError.textContent = 'Name must be at least 2 characters.';
+            return;
+        }
 
-    function getUserRole(uid) {
-        return userRoles[uid] || 'member';
+        localStorage.setItem('draco_user', name);
+
+        loginScreen.style.opacity = '0';
+        setTimeout(() => {
+            loginScreen.style.display = 'none';
+        }, 800);
+
+        setTimeout(() => {
+            mainContainer.classList.add('active');
+            initParticles();
+        }, 300);
+
+        userNameDisplay.textContent = name;
+        greetingDisplay.textContent = 'Welcome, ' + name;
+
+        loadSong(0);
+        generatePlaylist();
+        audioPlayer.play().catch(e => console.log('Play error:', e));
+
+        getIP();
+        initTabs();
+        initMusicSubTabs();
+
+        console.log('User logged in as:', name);
     }
 
-    function getRoleData(uid) {
-        const role = getUserRole(uid);
-        const roleMap = {
-            owner: {
-                icon: '',
-                badge: '<span class="role-badge owner">Owner</span>',
-                canDeleteAll: true
-            },
-            admin: {
-                icon: '<img src="admin.png" class="role-icon" alt="admin" />',
-                badge: '<span class="role-badge admin">Admin</span>',
-                canDeleteAll: true
-            },
-            member: {
-                icon: '<img src="member.png" class="role-icon" alt="member" />',
-                badge: '<span class="role-badge">Member</span>',
-                canDeleteAll: false
-            }
-        };
-        return roleMap[role] || roleMap.member;
+    loginBtn.addEventListener('click', handleLogin);
+    nameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleLogin();
+    });
+
+    // Auto-login si ya hay nombre guardado
+    const savedName = localStorage.getItem('draco_user');
+    if (savedName) {
+        nameInput.value = savedName;
+        setTimeout(handleLogin, 300);
     }
 
     // ============================================================
@@ -1232,385 +930,13 @@
     }];
 
     // ============================================================
-    // 6. AUTH FUNCTIONS (SIN VERIFICACIÓN)
-    // ============================================================
-    function showError(msg) {
-        loginError.textContent = msg;
-        loginSuccess.textContent = '';
-        setTimeout(() => {
-            if (loginError.textContent === msg) {
-                loginError.textContent = '';
-            }
-        }, 5000);
-    }
-
-    function showSuccess(msg) {
-        loginSuccess.textContent = msg;
-        loginError.textContent = '';
-        setTimeout(() => {
-            if (loginSuccess.textContent === msg) {
-                loginSuccess.textContent = '';
-            }
-        }, 5000);
-    }
-
-    function registerUser(email, password, displayName) {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                return updateProfile(user, { displayName: displayName })
-                    .then(() => {
-                        showSuccess('✅ Account created! Welcome, ' + displayName + '!');
-                        console.log('User registered:', email);
-                    });
-            })
-            .catch((error) => {
-                let msg = 'Registration error.';
-                if (error.code === 'auth/email-already-in-use') msg = 'Email already registered.';
-                else if (error.code === 'auth/weak-password') msg = 'Password must be at least 6 characters.';
-                else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
-                showError('❌ ' + msg);
-                console.error('Error:', error.message);
-            });
-    }
-
-    function loginUser(email, password) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                const user = auth.currentUser;
-                const displayName = user?.displayName || user?.email?.split('@')[0] || 'user';
-                showSuccess('✅ Logged in! Welcome back, ' + displayName);
-                console.log('User logged in:', email);
-            })
-            .catch((error) => {
-                let msg = 'Login error.';
-                if (error.code === 'auth/user-not-found') msg = 'No account with this email.';
-                else if (error.code === 'auth/wrong-password') msg = 'Wrong password.';
-                else if (error.code === 'auth/invalid-email') msg = 'Invalid email.';
-                else if (error.code === 'auth/too-many-requests') msg = 'Too many attempts. Try later.';
-                showError('❌ ' + msg);
-                console.error('Error:', error.message);
-            });
-    }
-
-    function logoutUser() {
-        signOut(auth).catch((error) => console.error('Logout error:', error.message));
-    }
-
-    // ============================================================
-    // 7. WALL FUNCTIONS (CON MODAL)
-    // ============================================================
-    function loadPosts() {
-        const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
-        
-        onSnapshot(q, (snapshot) => {
-            wallPosts.innerHTML = '';
-            if (snapshot.empty) {
-                wallPosts.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">No posts yet. Be the first!</div>';
-                return;
-            }
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                const postId = doc.id;
-                const isAuthor = currentUser && data.uid === currentUser.uid;
-                const roleData = getRoleData(data.uid);
-                const canDelete = roleData.canDeleteAll || isAuthor;
-                
-                const postDiv = document.createElement('div');
-                postDiv.className = 'wall-post';
-                
-                const date = data.timestamp ? new Date(data.timestamp.seconds * 1000) : new Date();
-                const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-                
-                const authorName = data.author || 'Anonymous';
-                
-                postDiv.innerHTML = `
-                    <div class="author">
-                        ${roleData.icon}
-                        <span class="name">${authorName}</span>
-                        ${roleData.badge}
-                        <span class="date">${dateStr}</span>
-                    </div>
-                    ${canDelete ? `<button class="delete-btn" data-id="${postId}">✕</button>` : ''}
-                    <div class="content">${data.text || ''}</div>
-                `;
-                
-                const deleteBtn = postDiv.querySelector('.delete-btn');
-                if (deleteBtn) {
-                    deleteBtn.addEventListener('click', () => {
-                        pendingDeleteId = postId;
-                        confirmModal.classList.add('active');
-                    });
-                }
-                
-                wallPosts.appendChild(postDiv);
-            });
-            wallPosts.scrollTop = 0;
-        }, (error) => {
-            console.error('Error loading posts:', error);
-            wallPosts.innerHTML = '<div style="text-align:center;color:#cc3333;padding:20px;">Error loading posts.</div>';
-        });
-    }
-
-    async function publishPost() {
-        const text = postInput.value.trim();
-        if (!text || !currentUser) return;
-        
-        try {
-            await addDoc(collection(db, 'posts'), {
-                text: text,
-                author: currentUser.displayName || currentUser.email.split('@')[0] || 'Anonymous',
-                uid: currentUser.uid,
-                timestamp: serverTimestamp()
-            });
-            postInput.value = '';
-        } catch (e) {
-            console.error('Error publishing post:', e);
-            alert('Error publishing post.');
-        }
-    }
-
-    // ============================================================
-    // 8. MODAL EVENTS
-    // ============================================================
-    confirmCancel.addEventListener('click', () => {
-        confirmModal.classList.remove('active');
-        pendingDeleteId = null;
-    });
-
-    confirmDelete.addEventListener('click', async () => {
-        if (!pendingDeleteId) return;
-        try {
-            await deleteDoc(doc(db, 'posts', pendingDeleteId));
-        } catch (e) {
-            console.error('Error deleting post:', e);
-            alert('Error deleting post.');
-        }
-        confirmModal.classList.remove('active');
-        pendingDeleteId = null;
-    });
-
-    confirmModal.addEventListener('click', (e) => {
-        if (e.target === confirmModal) {
-            confirmModal.classList.remove('active');
-            pendingDeleteId = null;
-        }
-    });
-
-    // ============================================================
-    // 9. AUTH OBSERVER (SIN VERIFICACIÓN)
-    // ============================================================
-    onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-        
-        if (user) {
-            loginScreen.style.display = 'none';
-            mainContainer.classList.add('active');
-            
-            const displayName = user.displayName || user.email.split('@')[0] || 'user';
-            userNameDisplay.textContent = displayName;
-            greetingDisplay.textContent = 'Welcome, ' + displayName;
-            
-            loadSong(0);
-            generatePlaylist();
-            audioPlayer.play().catch(e => console.log('Play error:', e));
-            
-            initParticles();
-            getIP();
-            updateGlobalCounter();
-            initTabs();
-            loadPosts();
-            
-            postBtn.addEventListener('click', publishPost);
-            postInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') publishPost();
-            });
-        } else {
-            loginScreen.style.display = 'flex';
-            mainContainer.classList.remove('active');
-            loginError.textContent = '';
-            loginSuccess.textContent = '';
-            isLoginMode = true;
-            loginBtn.textContent = 'Sign in';
-            switchBtn.textContent = 'Create account';
-            nameInput.style.display = 'none';
-            wallPosts.innerHTML = '';
-        }
-    });
-
-    // ============================================================
-    // 10. EVENT LISTENERS (Auth)
-    // ============================================================
-    switchBtn.addEventListener('click', () => {
-        isLoginMode = !isLoginMode;
-        loginBtn.textContent = isLoginMode ? 'Sign in' : 'Register';
-        switchBtn.textContent = isLoginMode ? 'Create account' : 'Back to sign in';
-        nameInput.style.display = isLoginMode ? 'none' : 'block';
-        loginError.textContent = '';
-        loginSuccess.textContent = '';
-    });
-
-    loginBtn.addEventListener('click', () => {
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-        const name = nameInput.value.trim();
-
-        if (!email || !password) {
-            showError('Please fill in all fields.');
-            return;
-        }
-        if (password.length < 6) {
-            showError('Password must be at least 6 characters.');
-            return;
-        }
-
-        if (isLoginMode) {
-            loginUser(email, password);
-        } else {
-            if (!name) {
-                showError('Please enter your name.');
-                return;
-            }
-            registerUser(email, password, name);
-        }
-    });
-
-    emailInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
-    passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
-    nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') loginBtn.click(); });
-    logoutBtn.addEventListener('click', logoutUser);
-
-    nameInput.style.display = 'none';
-
-    // ============================================================
-    // 11. THEME
-    // ============================================================
-    const savedTheme = localStorage.getItem('draco_theme') || 'light';
-    document.body.classList.add(savedTheme + '-mode');
-    themeToggle.textContent = savedTheme === 'dark' ? '◆' : '◈';
-
-    themeToggle.addEventListener('click', function() {
-        const isDark = document.body.classList.contains('dark-mode');
-        document.body.classList.remove('light-mode', 'dark-mode');
-        if (isDark) {
-            document.body.classList.add('light-mode');
-            localStorage.setItem('draco_theme', 'light');
-            this.textContent = '◈';
-        } else {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('draco_theme', 'dark');
-            this.textContent = '◆';
-        }
-    });
-
-    // ============================================================
-    // 12. CLOCK
-    // ============================================================
-    function updateClock() {
-        const now = new Date();
-        clockDisplay.textContent = String(now.getHours()).padStart(2, '0') + ':' +
-                                   String(now.getMinutes()).padStart(2, '0') + ':' +
-                                   String(now.getSeconds()).padStart(2, '0');
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    // ============================================================
-    // 13. VISIT COUNTERS
-    // ============================================================
-    let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
-    visits += 1;
-    localStorage.setItem('draco_visitas', visits);
-    visitasDisplay.textContent = visits;
-
-    function updateGlobalCounter() {
-        const COUNTER_NAME = 'draco_visitas_global';
-        fetch('https://api-count.com/api/v1/counters/' + COUNTER_NAME + '/increment')
-            .then(r => r.json())
-            .then(data => {
-                if (visitasGlobal) visitasGlobal.textContent = data.count || '?';
-            })
-            .catch(() => {
-                if (visitasGlobal) visitasGlobal.textContent = '?';
-                console.log('Global counter error');
-            });
-    }
-
-    // ============================================================
-    // 14. IP
-    // ============================================================
-    function getIP() {
-        fetch('https://api.ipify.org?format=json')
-            .then(r => r.json())
-            .then(data => { ipDisplay.textContent = data.ip || '0.0.0.0'; })
-            .catch(() => { ipDisplay.textContent = '0.0.0.0'; });
-    }
-
-    // ============================================================
-    // 15. PARTICLES
-    // ============================================================
-    function initParticles() {
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-
-        function resize() {
-            const rect = mainContainer.getBoundingClientRect();
-            width = rect.width;
-            height = rect.height;
-            canvas.width = width;
-            canvas.height = height;
-        }
-
-        function createParticles(count) {
-            particles = [];
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    r: 1.5 + Math.random() * 2,
-                    alpha: 0.2 + Math.random() * 0.3,
-                });
-            }
-        }
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, width, height);
-            for (const p of particles) {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
-                ctx.fill();
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > width) p.vx *= -1;
-                if (p.y < 0 || p.y > height) p.vy *= -1;
-            }
-            requestAnimationFrame(drawParticles);
-        }
-
-        resize();
-        createParticles(45);
-        drawParticles();
-
-        window.addEventListener('resize', () => {
-            resize();
-            createParticles(45);
-        });
-    }
-
-    // ============================================================
-    // 16. MUSIC PLAYER FUNCTIONS
+    // 6. MUSIC PLAYER FUNCTIONS
     // ============================================================
     function loadSong(index) {
         const song = playlist[index];
         currentIndex = index;
         audioPlayer.src = 'https://d-gq.github.io/' + song.file;
         currentSongTitle.textContent = song.title;
-        lyricsSub.textContent = song.title.toUpperCase();
         renderLyrics(song.lyrics);
         updatePlaylistUI();
         if (isPlaying) {
@@ -1705,7 +1031,22 @@
     }
 
     // ============================================================
-    // 17. SOCIAL BUTTONS
+    // 7. MUSIC SUB-TABS (Player / Lyrics)
+    // ============================================================
+    function initMusicSubTabs() {
+        musicSubBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                musicSubBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const sub = this.dataset.sub;
+                musicPlayerPanel.classList.toggle('active', sub === 'player');
+                musicLyricsPanel.classList.toggle('active', sub === 'lyrics');
+            });
+        });
+    }
+
+    // ============================================================
+    // 8. SOCIAL BUTTONS
     // ============================================================
     function generateSocialButtons(profiles) {
         let html = '';
@@ -1736,7 +1077,7 @@
     ];
 
     // ============================================================
-    // 18. COPY TO CLIPBOARD
+    // 9. COPY TO CLIPBOARD
     // ============================================================
     function copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1784,7 +1125,7 @@
     }
 
     // ============================================================
-    // 19. TABS
+    // 10. TABS
     // ============================================================
     function initTabs() {
         tabs.forEach(btn => {
@@ -1800,7 +1141,7 @@
     }
 
     // ============================================================
-    // 20. MUSIC EVENTS
+    // 11. MUSIC EVENTS
     // ============================================================
     playBtn.addEventListener('click', togglePlay);
     prevBtn.addEventListener('click', prevSong);
@@ -1832,7 +1173,114 @@
     });
 
     // ============================================================
-    // 21. INIT SOCIAL
+    // 12. THEME
+    // ============================================================
+    const savedTheme = localStorage.getItem('draco_theme') || 'light';
+    document.body.classList.add(savedTheme + '-mode');
+    themeToggle.textContent = savedTheme === 'dark' ? '◆' : '◈';
+
+    themeToggle.addEventListener('click', function() {
+        const isDark = document.body.classList.contains('dark-mode');
+        document.body.classList.remove('light-mode', 'dark-mode');
+        if (isDark) {
+            document.body.classList.add('light-mode');
+            localStorage.setItem('draco_theme', 'light');
+            this.textContent = '◈';
+        } else {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('draco_theme', 'dark');
+            this.textContent = '◆';
+        }
+    });
+
+    // ============================================================
+    // 13. CLOCK
+    // ============================================================
+    function updateClock() {
+        const now = new Date();
+        clockDisplay.textContent = String(now.getHours()).padStart(2, '0') + ':' +
+                                   String(now.getMinutes()).padStart(2, '0') + ':' +
+                                   String(now.getSeconds()).padStart(2, '0');
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ============================================================
+    // 14. LOCAL VISITS
+    // ============================================================
+    let visits = parseInt(localStorage.getItem('draco_visitas')) || 0;
+    visits += 1;
+    localStorage.setItem('draco_visitas', visits);
+    visitasDisplay.textContent = visits;
+
+    // ============================================================
+    // 15. IP
+    // ============================================================
+    function getIP() {
+        fetch('https://api.ipify.org?format=json')
+            .then(r => r.json())
+            .then(data => { ipDisplay.textContent = data.ip || '0.0.0.0'; })
+            .catch(() => { ipDisplay.textContent = '0.0.0.0'; });
+    }
+
+    // ============================================================
+    // 16. PARTICLES
+    // ============================================================
+    function initParticles() {
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            const rect = mainContainer.getBoundingClientRect();
+            width = rect.width;
+            height = rect.height;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function createParticles(count) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    r: 1.5 + Math.random() * 2,
+                    alpha: 0.2 + Math.random() * 0.3,
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (const p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+            }
+            requestAnimationFrame(drawParticles);
+        }
+
+        resize();
+        createParticles(45);
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            resize();
+            createParticles(45);
+        });
+    }
+
+    // ============================================================
+    // 17. INIT SOCIAL
     // ============================================================
     document.getElementById('social-about').innerHTML = generateSocialButtons(socialProfiles);
     document.querySelectorAll('.discord-copy').forEach(btn => {
@@ -1843,11 +1291,11 @@
     });
 
     // ============================================================
-    // 22. INIT TABS
+    // 18. INIT TABS
     // ============================================================
     initTabs();
 
-    console.log('Paradise - Loaded with Firebase Auth (NO verification)');
+    console.log('Paradise - Loaded');
     </script>
 </body>
 </html>
